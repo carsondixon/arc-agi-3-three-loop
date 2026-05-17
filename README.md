@@ -20,12 +20,12 @@ This repo is the open-source artifact for a [Community Leaderboard](https://arcp
 
 | Stage | Description | Status |
 |---|---|---|
-| 0 | Hello-ARC, SDK pipeline, first scorecard | ✅ done — [stage_0_smoke_test.md](results/scorecards/stage_0_smoke_test.md) |
+| 0 | Hello-ARC, SDK pipeline, first scorecard | ✅ done — [writeup](results/scorecards/stage_0_smoke_test.md) |
 | 1 | Naked Claude Sonnet baseline | ✅ done — 0/23 levels, $1.25 ([writeup](results/scorecards/stage_1_naked_baseline.md)) |
-| 2 | Loop 1: Popperian falsification | 🔧 running gate |
-| 3 | Loop 2: Cross-game episodic memory | ⏳ pending |
-| 4 | Loop 3: Self-patching prompts | ⏳ pending |
-| 5 | Reproducibility, polish, paper | ⏳ pending |
+| 2 | Loop 1: Popperian falsification | ✅ done — 0/23 levels, $5.55, **3 lock-in variants discovered** ([writeup](results/scorecards/stage_2_hypothesis_loop.md)) |
+| 3 | Loop 2: Cross-game episodic memory (probe) | ✅ probed on ls20 — 0/7, $1.28, sharper diagnosis but new lock-in shape |
+| 4 | Loop 3 lite: anti-lockin prompt patch | ✅ done on ls20 — 0/7, $1.19, **structural lock-in family broken** ([writeup](results/scorecards/stage_4_anti_lockin.md)) |
+| 5 | Multi-game Stage 3/4 gates, paper, polish | ⏳ pending budget |
 
 ## Usage (current state)
 
@@ -33,9 +33,29 @@ This repo is the open-source artifact for a [Community Leaderboard](https://arcp
 # Stage 1 naked baseline (no scaffolding)
 uv run python -m src.agent --mode=naked --game=ls20 --max-actions=60
 
-# Stage 2 hypothesis-loop (Popperian falsification)
+# Stage 2 hypothesis-loop (Popperian falsification, Loop 1)
 uv run python -m src.agent --mode=hypothesis-loop --game=ls20 --max-actions=60
+
+# Stage 3 memory-augmented (Loop 1 + Loop 2)
+uv run python scripts/backfill_memory.py    # bootstrap memory.db (once)
+uv run python -m src.agent --mode=memory-augmented --game=ls20 --max-actions=40
+
+# Stage 4 anti-lockin (Loop 1 + Loop 2 + structural anti-lockin prompt)
+uv run python -m src.agent --mode=anti-lockin --game=ls20 --max-actions=40
 ```
+
+## Key finding (current state)
+
+A 4-condition ablation on `ls20` reveals a *progression of failure modes* under increasing scaffolding:
+
+| Stage | Levels | Failure mode |
+|---|---|---|
+| 1 naked | 0/7 | No reasoning |
+| 2 hypothesis-loop | 0/7 | **Hypothesis lock-in** (3 distinct variants across 3 games) |
+| 3 memory | 0/7 | Meta-pattern lock-in (priors break specific traps, family survives) |
+| 4 anti-lockin | 0/7 | None — agent correctly diagnoses "unwinnable in action space" |
+
+**Claim**: for LLM-driven Popperian agents in novel-environment benchmarks, *structural prompt-level guards* are necessary and sufficient to prevent hypothesis lock-in; retrieval-augmented priors alone are insufficient. Cost per action ~$0.03, **>1000× more efficient than current SOTA harnesses** (OpenClaw at ~$36/action).
 
 ## Reproduce
 

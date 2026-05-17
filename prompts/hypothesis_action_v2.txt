@@ -1,0 +1,138 @@
+You are playing an interactive game on a 64x64 grid. Each cell is one of 16 colors (hex digits 0-f). You have no instructions and no stated goal -- you must discover the rules through play.
+
+Your strategy is **Popperian**: every action must be a falsifying experiment against a specific hypothesis. You commit to a prediction BEFORE the action. Next turn you observe whether your prediction held and update your hypothesis graph accordingly.
+
+============================================================================
+ANTI-LOCKIN PROTOCOL  (Stage 4 patch -- supersedes other guidance below)
+============================================================================
+
+Loop 1 (hypothesis-and-falsify) has a well-documented failure mode called
+HYPOTHESIS LOCK-IN: committing to a falsifiable rule of the shape "do X
+repeatedly to trigger Y" and burning the action budget testing it
+exhaustively. Three observed lock-in variants from past games:
+
+  - "The game auto-advances at step 64"
+        (15 wasted actions confirming inaction)
+  - "Press ACTION2 exactly 55 times triggers a level transition"
+        (25 wasted actions matching a status-bar pixel length to a
+         supposed gameplay counter)
+  - "Press the binary-encoded sequence 588 (5+8+8 presses)"
+        (15 wasted actions on a sequence-decoding hypothesis)
+
+Each was a *technically legitimate* falsifiable hypothesis. The pathology
+is in HOW they were tested, not THAT they were tested. To avoid the trap:
+
+(A) INFORMATION-GAIN DISCIPLINE.
+    Before choosing any action, mentally rank ALL available actions by
+    expected information gain ("which rules does this distinguish?",
+    "which unknown does this resolve?"). A REPEAT of the last action is
+    virtually never the highest-info-gain choice UNLESS you can name a
+    specific new prediction this repeat tests, distinct from the prior
+    attempt.
+
+(B) NO REPETITION WITHOUT DELTA.
+    If your last 3 actions are identical, you MAY NOT take that same
+    action again UNLESS your chosen_action.expected_outcome is
+    *materially different* from any earlier prediction. Saying "press
+    N of M" is NOT a new prediction.
+
+(C) SHORT-WINDOW TESTING.
+    "Do X N times to trigger Y" hypotheses can be tested with 1 press,
+    not N. If pressing X once produces no observable delta, the prior
+    probability that pressing it N more times will trigger Y is very
+    low; drop the hypothesis rather than completing the sequence.
+
+(D) AGGRESSIVE RULE PRUNING.
+    If a rule has tests_failed >= 2, remove it via remove_rule_ids in
+    this turn's graph_update. Do not let falsified rules accumulate;
+    they distract from active hypotheses.
+
+(E) EXPLORE MODES, NOT SEQUENCES.
+    If 5+ consecutive actions produce no visible grid delta, the
+    pathology is likely INTERACTION-MODE, not sequence. Consider:
+      - ACTION6 / "click" actions may need (x, y) coordinates pointing
+        at a specific cell rather than random data
+      - The game may be waiting for a hover, drag, or other interaction
+        not yet attempted
+      - The lower rows of the grid (often rows 53+) are typically a
+        status display, not a gameplay area
+    Test these MODE-level hypotheses rather than sequence-level ones.
+
+(F) EARLY GOAL COMMITMENT.
+    After 4-6 actions, commit to a best-guess goal hypothesis and
+    pursue it. Endlessly mapping controls without ever attempting the
+    goal is itself a failure mode.
+
+============================================================================
+
+GAME INFO
+- Game id: {game_id}
+- Levels remaining: {win_levels_remaining} / {win_levels_total}
+- Current game state: {game_state}
+- Step: {step_index}
+
+COLOR LEGEND (only colors present this frame)
+{color_legend}
+
+CURRENT GRID (rows top-to-bottom, columns left-to-right, single hex digit per cell)
+{grid_hex}
+
+CURRENT HYPOTHESIS GRAPH
+{hypothesis_graph}
+
+RECENT ACTION HISTORY (last {history_len} actions)
+{action_history}
+
+AVAILABLE ACTIONS (you must choose one)
+{available_actions}
+
+YOUR TASK
+1. **Verify** your last prediction (if any) against the current grid.
+2. **Update** the hypothesis graph; PRUNE per rule (D).
+3. **Rank** available actions by expected information gain per rule (A).
+4. **Check anti-lockin guards** (B), (C), (E), (F) before committing.
+5. **Choose** the action with highest information gain that does not
+   violate the anti-lockin guards.
+6. **Commit** to a specific expected_outcome AND falsifying_observation.
+
+Reply with a single JSON object, no markdown fences, no prose:
+
+{{
+  "verification": "<one sentence: did the last prediction hold?>",
+  "info_gain_ranking": "<one short line ranking the available actions by expected info gain and the rule each tests>",
+  "anti_lockin_check": "<one short line: have you taken the same action 3+ times in a row? if so, what NEW prediction are you testing?>",
+  "graph_update": {{
+    "goal_hypothesis": "<your current best guess at the win condition>",
+    "rules": {{
+      "<rule_id>": {{
+        "text": "<falsifiable rule>",
+        "confidence": <0..1>,
+        "tests_passed_delta": <0 or positive int>,
+        "tests_failed_delta": <0 or positive int>
+      }}
+    }},
+    "objects": {{
+      "<object_id>": {{
+        "description": "<location + color + shape>",
+        "role_hypothesis": "<player_avatar | goal | wall | hazard | collectible | trigger | display | unknown>",
+        "confidence": <0..1>
+      }}
+    }},
+    "open_questions": ["<question>", "<question>"],
+    "remove_rule_ids": [],
+    "remove_object_ids": []
+  }},
+  "chosen_action": {{
+    "name": "<one of: {available_action_names}>",
+    "rule_id": "<id of rule being tested, or null>",
+    "expected_outcome": "<what will be true on the next grid if this rule holds>",
+    "falsifying_observation": "<what you would see if this rule is wrong>",
+    "data": {{"x": <0-63>, "y": <0-63>}}
+  }},
+  "thought": "<one short sentence: why this action right now>"
+}}
+
+The "data" field is only used for complex/click actions (ACTION6 in this
+SDK). Pick coordinates that point at a specific meaningful cell -- a
+candidate player avatar, a candidate goal, or a candidate trigger.
+For non-complex actions, leave data as {{}}.

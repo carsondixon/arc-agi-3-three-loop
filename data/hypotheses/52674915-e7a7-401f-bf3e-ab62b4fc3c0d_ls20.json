@@ -1,0 +1,55 @@
+{
+  "game_id": "ls20",
+  "scorecard_id": "52674915-e7a7-401f-bf3e-ab62b4fc3c0d",
+  "rules": {
+    "R8": {
+      "id": "R8",
+      "text": "The 0/1 digit pattern is a static puzzle element requiring decoding, not a moveable avatar",
+      "confidence": 0.95,
+      "tests_passed": 33,
+      "tests_failed": 0,
+      "last_updated_step": 39
+    },
+    "R15": {
+      "id": "R15",
+      "text": "All 4 actions are genuinely inert in this game configuration; the game will never respond to ACTION1-4 alone",
+      "confidence": 0.99,
+      "tests_passed": 32,
+      "tests_failed": 0,
+      "last_updated_step": 39
+    }
+  },
+  "objects": {
+    "avatar": {
+      "id": "avatar",
+      "description": "Rows 31-33, cols 19-21: 0/1 digit pattern within green corridor",
+      "role_hypothesis": "display",
+      "confidence": 0.95
+    },
+    "goal": {
+      "id": "goal",
+      "description": "Rows 45-49, cols 19-23: magenta (c) and brown (9) cells within green corridor",
+      "role_hypothesis": "display",
+      "confidence": 0.2
+    },
+    "status_display": {
+      "id": "status_display",
+      "description": "Rows 61-63: bottom rows with repeating 588588 pattern and light_blue band",
+      "role_hypothesis": "display",
+      "confidence": 0.95
+    }
+  },
+  "goal_hypothesis": "The game is non-interactive via ACTION1-4; no win condition is reachable with available actions in this SDK configuration.",
+  "open_questions": [
+    "Is there any SDK mechanism beyond ACTION1-4 that could interact with this game?",
+    "Is the game genuinely unwinnable in this SDK configuration?"
+  ],
+  "last_prediction": {
+    "step_index": 39,
+    "action": "ACTION2",
+    "rule_id": "R15",
+    "expected_outcome": "Grid remains completely unchanged; no visual delta of any kind.",
+    "falsifying_observation": "Any visible change to any cell in the grid, or a level transition."
+  },
+  "step_count": 39
+}

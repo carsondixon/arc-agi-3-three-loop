@@ -50,6 +50,7 @@ logger = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 NAKED_PROMPT_PATH = PROJECT_ROOT / "prompts" / "baseline_action_selector.txt"
 HYPOTHESIS_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action.txt"
+HYPOTHESIS_V2_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v2.txt"
 CONFIG_PATH = PROJECT_ROOT / "config" / "models.yaml"
 TRAJ_DIR = PROJECT_ROOT / "data" / "trajectories"
 HYP_DIR = PROJECT_ROOT / "data" / "hypotheses"
@@ -319,8 +320,13 @@ def play_game_hypothesis_loop(
     per_game_budget_usd: float,
     memory_priors: list[Any] | None = None,  # list of (MemoryEntry, similarity) tuples
     mode_label: str = "hypothesis-loop",
+    use_anti_lockin_prompt: bool = False,
 ) -> tuple[Trajectory, HypothesisGraph]:
-    prompt_template = HYPOTHESIS_PROMPT_PATH.read_text()
+    prompt_template = (
+        HYPOTHESIS_V2_PROMPT_PATH.read_text()
+        if use_anti_lockin_prompt
+        else HYPOTHESIS_PROMPT_PATH.read_text()
+    )
     priors_section = _format_priors(memory_priors or [])
     env, frame = _setup_env(arcade, game_id, seed, scorecard_id)
 
@@ -461,7 +467,7 @@ def play_game_hypothesis_loop(
 # --------------------------------------------------------------------------- #
 
 
-MODES = ("naked", "hypothesis-loop", "memory-augmented")
+MODES = ("naked", "hypothesis-loop", "memory-augmented", "anti-lockin")
 
 
 def _format_priors(priors: list[tuple[Any, float]]) -> str:
@@ -527,7 +533,6 @@ def main() -> int:
     elif args.mode == "memory-augmented":
         from src.memory import MemoryStore
         store = MemoryStore()
-        # Retrieve priors from past completed games (any game, similar dynamics)
         query = f"Starting game {args.game}. What general lessons from past games apply?"
         priors = store.retrieve(query, k=3)
         logger.info("Retrieved %d priors from memory.db", len(priors))
@@ -536,6 +541,20 @@ def main() -> int:
             scorecard_id=scorecard_id, seed=args.seed,
             max_actions=args.max_actions, per_game_budget_usd=per_game_budget,
             memory_priors=priors, mode_label="memory-augmented",
+        )
+        graph.save(HYP_DIR)
+    elif args.mode == "anti-lockin":
+        from src.memory import MemoryStore
+        store = MemoryStore()
+        query = f"Starting game {args.game}. What general lessons from past games apply?"
+        priors = store.retrieve(query, k=3)
+        logger.info("Retrieved %d priors from memory.db (anti-lockin mode)", len(priors))
+        traj, graph = play_game_hypothesis_loop(
+            arcade=arcade, client=client, game_id=args.game,
+            scorecard_id=scorecard_id, seed=args.seed,
+            max_actions=args.max_actions, per_game_budget_usd=per_game_budget,
+            memory_priors=priors, mode_label="anti-lockin",
+            use_anti_lockin_prompt=True,
         )
         graph.save(HYP_DIR)
     else:
