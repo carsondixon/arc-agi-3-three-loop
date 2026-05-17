@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Virtual envs
+.venv/
+venv/
+env/
+ENV/
+
+# uv
+.uv-cache/
+
+# Environment variables (NEVER commit these)
+.env
+.env.local
+.env.*.local
+
+# Secrets
+secrets/
+*.pem
+*.key
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Reference repos cloned for study (not part of our submission)
+references/
+
+# Logs and ephemeral artifacts
+*.log
+.coverage
+.pytest_cache/
+.ruff_cache/
+
+# Local-only data (we commit curated samples explicitly)
+data/scratch/
+results/scratch/
+
+# Claude Code: ship agent/skill definitions but not user-specific settings
+.claude/settings.local.json
+.claude/cache/

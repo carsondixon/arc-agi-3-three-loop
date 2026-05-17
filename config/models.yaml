@@ -1,0 +1,22 @@
+# Pinned model IDs for reproducibility.
+# Any scorecard published from this repo was produced with these exact model versions.
+
+models:
+  primary_reasoner: claude-sonnet-4-6
+  fast_explorer: claude-haiku-4-5-20251001
+  critical_decision: claude-opus-4-7
+
+max_tokens:
+  reasoner: 4096
+  explorer: 1024
+  critical: 8192
+
+temperature:
+  reasoner: 0.5
+  explorer: 0.7
+  critical: 0.3
+
+# Hard per-game spend cap (USD). Agent halts and returns the current best action if exceeded.
+budget:
+  per_game_usd: 1.50
+  per_run_usd: 50.00
