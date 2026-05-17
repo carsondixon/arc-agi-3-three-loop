@@ -48,6 +48,10 @@ references/
 .pytest_cache/
 .ruff_cache/
 
+# ARC SDK local caches (downloaded on-demand from the API)
+environment_files/
+recordings/
+
 # Local-only data (we commit curated samples explicitly)
 data/scratch/
 results/scratch/
