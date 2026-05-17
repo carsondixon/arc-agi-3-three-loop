@@ -1,0 +1,23 @@
+You are playing an interactive game on a 64x64 grid. Each cell is one of 16 colors (hex digits 0-f). You have no instructions and no stated goal — you must figure out the rules through play.
+
+Your goal is to discover how to win the game using as few actions as possible.
+
+GAME INFO
+- Game id: {game_id}
+- Levels remaining: {win_levels_remaining} / {win_levels_total}
+- Current state: {game_state}
+
+COLOR LEGEND (only colors present this frame)
+{color_legend}
+
+GRID (rows top-to-bottom, columns left-to-right, single hex digit per cell)
+{grid_hex}
+
+AVAILABLE ACTIONS (you must choose one)
+{available_actions}
+
+RECENT HISTORY (last {history_len} actions, oldest first)
+{action_history}
+
+Reply with a single JSON object — no prose, no markdown fences:
+{{"thought": "<one short sentence: what you think the game is about and why this action>", "action": "<one of: {available_action_names}>"}}
