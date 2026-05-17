@@ -21,6 +21,7 @@ import argparse
 import json
 import logging
 import os
+import random
 import re
 import sys
 from collections import deque
@@ -124,6 +125,7 @@ def play_game(
         raise RuntimeError(f"Failed to make environment for game_id={game_id}")
 
     frame = env.reset()
+    rng = random.Random(seed)
     history: deque[tuple[str, str]] = deque(maxlen=HISTORY_LEN)
     traj = Trajectory(
         game_id=game_id,
@@ -192,15 +194,31 @@ def play_game(
         action, thought = _parse_action(text, available)
 
         if action.is_complex():
-            # Stage 1 doesn't have spatial reasoning; pick a center coordinate.
-            # Stage 2 will let Claude pick (x, y) properly via structured output.
-            action.set_data({"x": 32, "y": 32})
+            # Stage 1 doesn't have spatial reasoning; pick random coords (matches
+            # the reference random_agent behavior). Stage 2 will let Claude pick (x, y).
+            action.set_data({"x": rng.randint(0, 63), "y": rng.randint(0, 63)})
         action.reasoning = thought[:200]
 
         state_before = str(frame.state)
         levels_before = frame.levels_completed
-        frame = env.step(action)
-        levels_after = frame.levels_completed if frame else levels_before
+        next_frame = env.step(action)
+        if next_frame is None:
+            # Action was rejected (e.g. invalid coords). Log and keep current frame
+            # so we don't abort the game on one bad step.
+            logger.warning("env.step returned None for %s; retrying next step", action.name)
+            traj.steps.append(Step(
+                step_index=step_index,
+                action=action.name,
+                thought=thought + " [REJECTED]",
+                state_before=state_before,
+                state_after=state_before,
+                levels_completed_after=levels_before,
+                usd=cost.usd,
+            ))
+            history.append((action.name + "(rejected)", thought))
+            continue
+        frame = next_frame
+        levels_after = frame.levels_completed
 
         traj.steps.append(Step(
             step_index=step_index,

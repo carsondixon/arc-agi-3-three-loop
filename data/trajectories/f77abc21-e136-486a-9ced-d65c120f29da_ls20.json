@@ -1,0 +1,103 @@
+{
+  "game_id": "ls20",
+  "scorecard_id": "f77abc21-e136-486a-9ced-d65c120f29da",
+  "seed": 0,
+  "started_at": "2026-05-17T21:08:25.116393+00:00",
+  "finished_at": "2026-05-17T21:08:48.992200+00:00",
+  "total_usd": 0.062559,
+  "steps": [
+    {
+      "step_index": 0,
+      "action": "ACTION1",
+      "thought": "I need to explore the game to understand the rules, so I'll start with ACTION1.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.005853
+    },
+    {
+      "step_index": 1,
+      "action": "ACTION2",
+      "thought": "I need to continue exploring the game to understand the rules and what actions do.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.0058649999999999996
+    },
+    {
+      "step_index": 2,
+      "action": "ACTION3",
+      "thought": "I need to continue exploring actions to understand the game mechanics, trying ACTION3 next.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.005955
+    },
+    {
+      "step_index": 3,
+      "action": "ACTION4",
+      "thought": "I've tried ACTION1, ACTION2, and ACTION3 so far without winning, so I'll try ACTION4 to see if it produces a different result.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.0062580000000000005
+    },
+    {
+      "step_index": 4,
+      "action": "ACTION1",
+      "thought": "I've cycled through all 4 actions without winning, so I'll try ACTION1 again to see if the pattern changes or if repeated cycling eventually triggers a win condition.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.00639
+    },
+    {
+      "step_index": 5,
+      "action": "ACTION2",
+      "thought": "I've cycled through all actions multiple times without winning, so I'll try ACTION2 again to see if the game state changes or reveals a pattern.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.006398999999999999
+    },
+    {
+      "step_index": 6,
+      "action": "ACTION3",
+      "thought": "I've been cycling through actions without winning; let me try ACTION3 to continue exploring.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.006273
+    },
+    {
+      "step_index": 7,
+      "action": "ACTION4",
+      "thought": "I've been cycling through actions without winning; trying ACTION4 to continue exploring.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.006306
+    },
+    {
+      "step_index": 8,
+      "action": "ACTION1",
+      "thought": "I've been cycling through all 4 actions without winning; the grid shows patterns with colored regions that might represent a puzzle state - let me try ACTION1 again to see if the state has changed.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.0067469999999999995
+    },
+    {
+      "step_index": 9,
+      "action": "ACTION2",
+      "thought": "The grid shows patterns with colored regions and embedded symbols; I'll try ACTION2 to see if it triggers a state change.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.006513
+    }
+  ],
+  "final_state": "GameState.NOT_FINISHED",
+  "levels_completed": 0,
+  "win_levels": 7
+}

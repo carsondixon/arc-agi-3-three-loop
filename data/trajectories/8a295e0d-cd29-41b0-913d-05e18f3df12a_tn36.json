@@ -1,0 +1,22 @@
+{
+  "game_id": "tn36",
+  "scorecard_id": "8a295e0d-cd29-41b0-913d-05e18f3df12a",
+  "seed": 0,
+  "started_at": "2026-05-17T21:17:18.082386+00:00",
+  "finished_at": "2026-05-17T21:17:19.737042+00:00",
+  "total_usd": 0.005664,
+  "steps": [
+    {
+      "step_index": 0,
+      "action": "ACTION6",
+      "thought": "Only one action available, so I'll take it to see what happens.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "?",
+      "levels_completed_after": 0,
+      "usd": 0.005664
+    }
+  ],
+  "final_state": "?",
+  "levels_completed": 0,
+  "win_levels": 7
+}
