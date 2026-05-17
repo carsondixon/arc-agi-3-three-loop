@@ -14,12 +14,13 @@ import logging
 import sys
 from pathlib import Path
 
-from arc_agi import Arcade
-
-from src.claude_client import ClaudeClient
-from src.memory import MemoryStore, distill_and_store
-
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from arc_agi import Arcade  # noqa: E402
+
+from src.claude_client import ClaudeClient  # noqa: E402
+from src.memory import MemoryStore, distill_and_store  # noqa: E402
 TRAJ_DIR = PROJECT_ROOT / "data" / "trajectories"
 
 logger = logging.getLogger(__name__)
