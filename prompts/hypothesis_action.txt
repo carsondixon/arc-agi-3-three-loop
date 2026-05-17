@@ -1,0 +1,64 @@
+You are playing an interactive game on a 64x64 grid. Each cell is one of 16 colors (hex digits 0-f). You have no instructions and no stated goal -- you must discover the rules through play.
+
+Your strategy is **Popperian**: every action must be a falsifying experiment against a specific hypothesis. You commit to a prediction BEFORE the action. Next turn you observe whether your prediction held and update your hypothesis graph accordingly.
+
+GAME INFO
+- Game id: {game_id}
+- Levels remaining: {win_levels_remaining} / {win_levels_total}
+- Current game state: {game_state}
+- Step: {step_index}
+
+COLOR LEGEND (only colors present this frame)
+{color_legend}
+
+CURRENT GRID (rows top-to-bottom, columns left-to-right, single hex digit per cell)
+{grid_hex}
+
+CURRENT HYPOTHESIS GRAPH
+{hypothesis_graph}
+
+RECENT ACTION HISTORY (last {history_len} actions)
+{action_history}
+
+AVAILABLE ACTIONS (you must choose one)
+{available_actions}
+
+YOUR TASK
+1. **Verify** your last prediction (if any) against the current grid. The hypothesis graph above shows what you predicted. Did it hold? If so, increment the relevant rule's tests_passed_delta. If not, increment tests_failed_delta and lower the rule's confidence (or remove the rule).
+2. **Update** the hypothesis graph: revise object descriptions, propose new rules, refine the goal hypothesis, keep the open_questions list curated. Be precise -- rules must be falsifiable ("ACTION3 moves blue cells +1 in y"), not vague ("ACTION3 does something").
+3. **Choose** the next action that most efficiently tests an open hypothesis (highest information gain). If two hypotheses tie, prefer the one with lower current confidence. If no clear test exists, pick an action that produces a NEW observation.
+4. **Commit** to a specific expected_outcome AND a falsifying_observation for your chosen action. If the falsifying_observation matches what you see next turn, your hypothesis is wrong.
+
+Reply with a single JSON object, no markdown fences, no prose:
+
+{{
+  "verification": "<one short sentence: did the last prediction hold? Be specific about what changed and what didn't.>",
+  "graph_update": {{
+    "goal_hypothesis": "<your current best guess at the win condition>",
+    "rules": {{
+      "<rule_id>": {{
+        "text": "<falsifiable rule>",
+        "confidence": <0..1>,
+        "tests_passed_delta": <0 or positive int>,
+        "tests_failed_delta": <0 or positive int>
+      }}
+    }},
+    "objects": {{
+      "<object_id>": {{
+        "description": "<location + color + shape>",
+        "role_hypothesis": "<player_avatar | goal | wall | hazard | collectible | trigger | unknown>",
+        "confidence": <0..1>
+      }}
+    }},
+    "open_questions": ["<question>", "<question>"],
+    "remove_rule_ids": [],
+    "remove_object_ids": []
+  }},
+  "chosen_action": {{
+    "name": "<one of: {available_action_names}>",
+    "rule_id": "<id of rule being tested, or null>",
+    "expected_outcome": "<what will be true on the next grid if this rule holds>",
+    "falsifying_observation": "<what you would see if this rule is wrong>"
+  }},
+  "thought": "<one short sentence: why this action right now>"
+}}

@@ -1,0 +1,121 @@
+{
+  "game_id": "ls20",
+  "scorecard_id": "1b608ae2-a337-4ab1-baaf-0dfc7d3af3c7",
+  "rules": {
+    "R1": {
+      "id": "R1",
+      "text": "There is a player avatar (0/1 pattern) that moves with actions",
+      "confidence": 0.9,
+      "tests_passed": 2,
+      "tests_failed": 1,
+      "last_updated_step": 4
+    },
+    "R2": {
+      "id": "R2",
+      "text": "ACTION1 moves the player avatar upward by ~3 cells",
+      "confidence": 0.3,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 4
+    },
+    "R4": {
+      "id": "R4",
+      "text": "ACTION3 moves the player avatar leftward by ~3 cells",
+      "confidence": 0.65,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 4
+    },
+    "R5": {
+      "id": "R5",
+      "text": "ACTION4 moves the player avatar rightward by ~3 cells",
+      "confidence": 0.7,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 4
+    },
+    "R6": {
+      "id": "R6",
+      "text": "ACTION2 moves the player avatar downward by ~3 cells",
+      "confidence": 0.15,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 4
+    },
+    "R7": {
+      "id": "R7",
+      "text": "ACTION2 does NOT move the player (or moves it in a non-downward direction)",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 4
+    }
+  },
+  "objects": {
+    "OBJ_gray_strip": {
+      "id": "OBJ_gray_strip",
+      "description": "Columns 0-3, rows 0-51: gray (5) vertical strip on left side",
+      "role_hypothesis": "wall",
+      "confidence": 0.5
+    },
+    "OBJ_box_upper": {
+      "id": "OBJ_box_upper",
+      "description": "Rows 8-16, cols 32-40: green-bordered box with gray interior and brown (9) pattern inside",
+      "role_hypothesis": "unknown",
+      "confidence": 0.3
+    },
+    "OBJ_main_corridor": {
+      "id": "OBJ_main_corridor",
+      "description": "Rows 25-49, cols 13-53: large green (3) region forming an L/U shape",
+      "role_hypothesis": "unknown",
+      "confidence": 0.4
+    },
+    "OBJ_player_candidate": {
+      "id": "OBJ_player_candidate",
+      "description": "Rows 31-33, cols 21-22: 0 (black) and 1 (blue) digits within green region, did not move after ACTION2",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.85
+    },
+    "OBJ_magenta_block": {
+      "id": "OBJ_magenta_block",
+      "description": "Rows 45-46, cols 39-43: magenta (c) cells within green region",
+      "role_hypothesis": "goal",
+      "confidence": 0.55
+    },
+    "OBJ_brown_block_lower": {
+      "id": "OBJ_brown_block_lower",
+      "description": "Rows 47-49, cols 39-43: brown (9) cells within green region",
+      "role_hypothesis": "unknown",
+      "confidence": 0.3
+    },
+    "OBJ_lower_scene": {
+      "id": "OBJ_lower_scene",
+      "description": "Rows 53-63, cols 0-63: gray/brown/light_blue pattern - possibly a score or status display",
+      "role_hypothesis": "unknown",
+      "confidence": 0.3
+    },
+    "OBJ_teal_cells": {
+      "id": "OBJ_teal_cells",
+      "description": "Row 61-62, cols 55-63: repeating 8 pattern (teal)",
+      "role_hypothesis": "unknown",
+      "confidence": 0.3
+    }
+  },
+  "goal_hypothesis": "Move the player avatar (0/1 pattern) to reach the magenta (c) block at rows 45-46, cols 39-43 within the green corridor.",
+  "open_questions": [
+    "Does ACTION1 move the player up?",
+    "Does ACTION2 do anything at all (maybe it's a fire/action button)?",
+    "What is the exact step size per action (1 cell or 3 cells)?",
+    "What is the win condition - reach magenta block?",
+    "Are yellow (4) cells blocking movement?",
+    "Is the lower scene (rows 53-63) a separate game view or status display?"
+  ],
+  "last_prediction": {
+    "step_index": 4,
+    "action": "ACTION1",
+    "rule_id": "R2",
+    "expected_outcome": "The 0/1 pattern shifts upward (row decreases by ~3), moving from rows 31-33 to approximately rows 28-30",
+    "falsifying_observation": "The 0/1 pattern does not move upward, or moves in a different direction (down/left/right), or does not move at all"
+  },
+  "step_count": 4
+}

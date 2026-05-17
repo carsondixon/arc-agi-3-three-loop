@@ -17,6 +17,8 @@ temperature:
   critical: 0.3
 
 # Hard per-game spend cap (USD). Agent halts and returns the current best action if exceeded.
+# Bumped from 1.50 -> 2.50 at Stage 2: hypothesis-loop costs ~$0.03/action vs naked's ~$0.006,
+# so a 60-action game needs ~$1.80 budget. Stage 1 was unaffected (max observed: $0.48).
 budget:
-  per_game_usd: 1.50
+  per_game_usd: 2.50
   per_run_usd: 50.00
