@@ -1,0 +1,357 @@
+{
+  "game_id": "tu93",
+  "scorecard_id": "7fc9b366-25c5-4ed6-b18d-5478fa77453e",
+  "rules": {
+    "R6": {
+      "id": "R6",
+      "text": "The bottom row (row 63) contains a fuchsia(6) and black(0) pattern that may be a UI element or score display, not part of the maze.",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 10
+    },
+    "R10": {
+      "id": "R10",
+      "text": "The yellow cell (4) at row 29 col 19 is NOT the player avatar but rather a fixed part of the pattern; the actual player position or state is encoded differently.",
+      "confidence": 0.85,
+      "tests_passed": 7,
+      "tests_failed": 0,
+      "last_updated_step": 17
+    },
+    "R15": {
+      "id": "R15",
+      "text": "The game is a click-based puzzle where actions correspond to selecting grid regions or colors rather than directional movement; the 4 actions may select one of 4 quadrants or color channels.",
+      "confidence": 0.3,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 7
+    },
+    "R16": {
+      "id": "R16",
+      "text": "The game is a click-based puzzle where actions correspond to selecting grid regions or colors rather than directional movement; the 4 actions may select one of 4 quadrants or color channels.",
+      "confidence": 0.5,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 10
+    },
+    "R19": {
+      "id": "R19",
+      "text": "ACTION1 moves the player UP; if the yellow cell is at row 23 col 20, pressing ACTION1 should move it to row 22 col 20 IF that cell is a valid path cell (currently gray=5, which may be a wall). The player cannot move into gray cells.",
+      "confidence": 0.2,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 9
+    },
+    "R21": {
+      "id": "R21",
+      "text": "The grid pattern encodes a static puzzle image and none of ACTION1-4 produce any visible change under any circumstances.",
+      "confidence": 0.92,
+      "tests_passed": 45,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R23": {
+      "id": "R23",
+      "text": "The grid is a static display/puzzle image and ACTION1-4 control something not visible in the grid cells that only becomes visible after a threshold or specific sequence is met.",
+      "confidence": 0.5,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 17
+    },
+    "R25": {
+      "id": "R25",
+      "text": "The maze pattern encodes a specific path/word/number puzzle that must be 'read' rather than navigated; the yellow cell marks a specific position in a sequence and actions advance a counter that changes which cell is highlighted.",
+      "confidence": 0.3,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 11
+    },
+    "R27": {
+      "id": "R27",
+      "text": "The game is completely non-interactive and the grid is a static image; no action produces any change ever.",
+      "confidence": 0.92,
+      "tests_passed": 45,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R28": {
+      "id": "R28",
+      "text": "The 4 actions correspond to 4 answer choices for a multiple-choice question about the displayed pattern; pressing the correct action advances to the next level.",
+      "confidence": 0.15,
+      "tests_passed": 0,
+      "tests_failed": 3,
+      "last_updated_step": 17
+    },
+    "R29": {
+      "id": "R29",
+      "text": "The pattern in rows 15-47 cols 13-52 encodes alphanumeric characters using 3-cell-wide segments (like a 7-segment display), and the game requires identifying the encoded value and pressing the matching action.",
+      "confidence": 0.35,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 15
+    },
+    "R30": {
+      "id": "R30",
+      "text": "The brown(9) region at rows 21-23, cols 19-21 (with yellow=4 at row 21 col 21) is the player marker, and the game requires navigating along black(0) cells as the path; ACTION1=up, ACTION2=down, ACTION3=left, ACTION4=right.",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 14
+    },
+    "R31": {
+      "id": "R31",
+      "text": "The game requires pressing ACTION4 exactly 64 or more times consecutively to trigger a level transition.",
+      "confidence": 0.03,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 15
+    },
+    "R32": {
+      "id": "R32",
+      "text": "The bottom row (row 63) fuchsia region length encodes the current answer selection; the correct answer is ACTION2 (2nd choice) based on the fuchsia spanning cols 0-54 (approximately 55/64 = answer index).",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 15
+    },
+    "R33": {
+      "id": "R33",
+      "text": "The pattern encodes the number '9' or digit sequence, and the correct answer action is ACTION1 (corresponding to answer '1' or first choice).",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 15
+    },
+    "R34": {
+      "id": "R34",
+      "text": "The pattern encodes '9' and ACTION3 is the correct answer choice.",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 17
+    },
+    "R35": {
+      "id": "R35",
+      "text": "The game requires pressing ACTION1 exactly once at the right moment; since all other actions have been tried multiple times with no effect, ACTION1 pressed now will trigger a level change.",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 16
+    },
+    "R36": {
+      "id": "R36",
+      "text": "The pattern encodes a value mapping to choice 1 and ACTION1 is the correct answer.",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 18
+    },
+    "R37": {
+      "id": "R37",
+      "text": "The game requires pressing ACTION2 as the correct answer because the encoded pattern represents '2' or a value mapping to choice 2.",
+      "confidence": 0.15,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 17
+    },
+    "R38": {
+      "id": "R38",
+      "text": "The navy (e) block at rows 45-47 cols 53-55 is the goal/target cell and the game requires navigating a player to it; but since no movement is observed, this hypothesis is unlikely.",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 17
+    },
+    "R40": {
+      "id": "R40",
+      "text": "The game requires a specific repeated sequence of actions (e.g., ACTION2 pressed exactly N times) to trigger a level transition; single presses of any action are insufficient.",
+      "confidence": 0.25,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 19
+    },
+    "R41": {
+      "id": "R41",
+      "text": "The encoded pattern in the grid represents the digit '9' (visible as brown region label), and the correct answer is ACTION2.",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 19
+    },
+    "R42": {
+      "id": "R42",
+      "text": "Pressing ACTION2 exactly 9 times consecutively (matching the brown=9 region value) will trigger a level transition.",
+      "confidence": 0.02,
+      "tests_passed": 4,
+      "tests_failed": 1,
+      "last_updated_step": 25
+    },
+    "R43": {
+      "id": "R43",
+      "text": "The fuchsia(6) region in row 63 spanning cols 0-54 encodes a count of 55, and pressing ACTION2 exactly 55 times total will trigger a level transition.",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 24
+    },
+    "R44": {
+      "id": "R44",
+      "text": "The yellow cell value (4) directly encodes the correct answer action; pressing ACTION4 exactly once will trigger a level transition.",
+      "confidence": 0.2,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 29
+    },
+    "R45": {
+      "id": "R45",
+      "text": "The game requires pressing ACTION1,ACTION2,ACTION3,ACTION4 in exact sequence once each to trigger a level transition.",
+      "confidence": 0.02,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 30
+    },
+    "R46": {
+      "id": "R46",
+      "text": "The fuchsia row (row 63) spanning cols 0-54 (55 cells) and black cols 55-63 (9 cells) encodes a ratio; the correct action is ACTION3 (3rd of 4 choices, since 55/64 \u2248 0.86 rounds to choice 3 or the black region of 9 cells maps to ACTION1 since 9 is odd).",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 22
+    },
+    "R47": {
+      "id": "R47",
+      "text": "The game requires pressing ACTION2 exactly 5 more times (total 9 from step 4) to trigger a level transition; if no change after 9 total ACTION2 presses, R42 is falsified.",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 23
+    },
+    "R48": {
+      "id": "R48",
+      "text": "After completing 9 total ACTION2 presses with no change, R42 is falsified; the correct sequence is ACTION1 followed by ACTION2 followed by ACTION3 followed by ACTION4.",
+      "confidence": 0.15,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 24
+    },
+    "R50": {
+      "id": "R50",
+      "text": "The game requires pressing ACTION3 exactly once as the correct answer.",
+      "confidence": 0.02,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 26
+    },
+    "R51": {
+      "id": "R51",
+      "text": "The game requires pressing ACTION1 exactly once as the correct answer (the pattern encodes '1' or first choice).",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 26
+    },
+    "R52": {
+      "id": "R52",
+      "text": "The game requires pressing ACTION1 followed immediately by ACTION2 (a two-action sequence) to trigger a level transition.",
+      "confidence": 0.2,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 26
+    },
+    "R53": {
+      "id": "R53",
+      "text": "The game requires pressing ACTION4 followed immediately by ACTION1 (a two-action sequence) to trigger a level transition, encoding the navy(e=14) block position as a clue.",
+      "confidence": 0.15,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 26
+    },
+    "R55": {
+      "id": "R55",
+      "text": "The game requires pressing ACTION2 exactly 55 times consecutively (matching the fuchsia row length of 55 cells in row 63) to trigger a level transition.",
+      "confidence": 0.1,
+      "tests_passed": 20,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R56": {
+      "id": "R56",
+      "text": "Pressing ACTION4 now (as the final step of ACTION1,ACTION2,ACTION3,ACTION4 sequence) will trigger a level transition.",
+      "confidence": 0.02,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 30
+    },
+    "R57": {
+      "id": "R57",
+      "text": "The game requires pressing ACTION1 exactly 55 times consecutively (matching the fuchsia row length) to trigger a level transition.",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 30
+    },
+    "R58": {
+      "id": "R58",
+      "text": "The 7-segment display pattern in the grid encodes the digit '4' (matching the yellow cell value), and pressing ACTION4 exactly once at any time is the correct answer - but the game requires a fresh start or reset first.",
+      "confidence": 0.08,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 30
+    },
+    "R59": {
+      "id": "R59",
+      "text": "The game requires pressing ACTION1 exactly 9 consecutive times (matching the brown=9 region value) to trigger a level transition.",
+      "confidence": 0.01,
+      "tests_passed": 7,
+      "tests_failed": 1,
+      "last_updated_step": 38
+    }
+  },
+  "objects": {
+    "player": {
+      "id": "player",
+      "description": "Yellow cell (4) at row 29 col 20 within brown(9) region at rows 27-29 cols 19-21",
+      "role_hypothesis": "unknown",
+      "confidence": 0.05
+    },
+    "goal": {
+      "id": "goal",
+      "description": "3x3 navy (e) block at rows 45-47, cols 53-55",
+      "role_hypothesis": "goal",
+      "confidence": 0.15
+    },
+    "maze_pattern": {
+      "id": "maze_pattern",
+      "description": "Pattern of black(0), red(2), gray(5) cells in rows 15-47 cols 13-52 forming structured 3-cell-wide segments possibly encoding alphanumeric characters in 7-segment style",
+      "role_hypothesis": "unknown",
+      "confidence": 0.55
+    },
+    "ui_row": {
+      "id": "ui_row",
+      "description": "Bottom row (row 63) with fuchsia(6) cells cols 0-54 and black(0) at far right cols 55-63",
+      "role_hypothesis": "unknown",
+      "confidence": 0.3
+    },
+    "player_marker": {
+      "id": "player_marker",
+      "description": "Brown (9) region at rows 27-29 cols 19-21 with yellow (4) at row 29 col 20",
+      "role_hypothesis": "unknown",
+      "confidence": 0.1
+    }
+  },
+  "goal_hypothesis": "Pressing ACTION2 exactly 55 consecutive times (matching the fuchsia row length of 55 cells in row 63) may trigger a level transition; currently on press 23 of 55.",
+  "open_questions": [
+    "Does pressing ACTION2 exactly 55 consecutive times trigger a level transition (matching fuchsia row length)?",
+    "Is the game truly static and non-interactive with no win condition reachable?",
+    "What do the 7-segment-style patterns in rows 15-47 encode alphanumerically?",
+    "Does any combination or sequence of actions ever produce a visible change?"
+  ],
+  "last_prediction": {
+    "step_index": 59,
+    "action": "ACTION2",
+    "rule_id": "R55",
+    "expected_outcome": "No visible change on this press (press 23 of 55); continuing the sequence toward 55 total presses.",
+    "falsifying_observation": "A level transition or visible grid change occurs before 55 total presses, or after 55 total presses no transition occurs."
+  },
+  "step_count": 59
+}

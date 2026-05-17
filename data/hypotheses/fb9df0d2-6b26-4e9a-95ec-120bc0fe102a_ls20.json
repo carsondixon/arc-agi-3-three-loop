@@ -69,10 +69,10 @@
     "R9": {
       "id": "R9",
       "text": "All 4 actions produce no visible change in any part of the grid across consecutive actions",
-      "confidence": 0.97,
-      "tests_passed": 34,
+      "confidence": 0.95,
+      "tests_passed": 56,
       "tests_failed": 0,
-      "last_updated_step": 37
+      "last_updated_step": 59
     },
     "R10": {
       "id": "R10",
@@ -413,10 +413,10 @@
     "R52": {
       "id": "R52",
       "text": "The game advances automatically after a fixed number of steps regardless of input",
-      "confidence": 0.22,
-      "tests_passed": 1,
+      "confidence": 0.6,
+      "tests_passed": 14,
       "tests_failed": 0,
-      "last_updated_step": 35
+      "last_updated_step": 59
     },
     "R53": {
       "id": "R53",
@@ -444,11 +444,11 @@
     },
     "R56": {
       "id": "R56",
-      "text": "The grid is entirely static regardless of any action sequence - the game is a read-only display puzzle where the answer must be interpreted from the visual pattern",
-      "confidence": 0.7,
-      "tests_passed": 4,
+      "text": "The grid is entirely static regardless of any action sequence",
+      "confidence": 0.95,
+      "tests_passed": 26,
       "tests_failed": 0,
-      "last_updated_step": 37
+      "last_updated_step": 59
     },
     "R57": {
       "id": "R57",
@@ -457,71 +457,117 @@
       "tests_passed": 0,
       "tests_failed": 0,
       "last_updated_step": 34
+    },
+    "R_UNIFORM": {
+      "id": "R_UNIFORM",
+      "text": "The current grid is entirely uniform light blue with no other colors present",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 44
+    },
+    "R_NEW_LEVEL": {
+      "id": "R_NEW_LEVEL",
+      "text": "The game has transitioned to a new level where the grid is entirely uniform light blue",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 44
+    },
+    "R_MAGENTA_GOAL": {
+      "id": "R_MAGENTA_GOAL",
+      "text": "The magenta (c) cells at rows 40-41 cols 34-38 are the goal/target that the player must reach",
+      "confidence": 0.4,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 44
+    },
+    "R_01_PLAYER": {
+      "id": "R_01_PLAYER",
+      "text": "The 0 (black) and 1 (blue) cells visible in the green band around rows 31-33 cols 19-21 form the player avatar that can be moved",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 45
+    },
+    "R_588_PATTERN": {
+      "id": "R_588_PATTERN",
+      "text": "The '588588' repeating pattern at rows 61-62 cols 45-63 is a static decorative element encoding no interactive information",
+      "confidence": 0.5,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 44
+    },
+    "R_DECODE": {
+      "id": "R_DECODE",
+      "text": "The game is a static visual puzzle where the answer must be decoded from the grid pattern (e.g., reading the binary 0/1 pattern, the brown patterns, or the 588588 sequence) and submitted via a specific action sequence",
+      "confidence": 0.45,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 45
+    },
+    "R_AUTO_ADVANCE": {
+      "id": "R_AUTO_ADVANCE",
+      "text": "The game will automatically advance to the next level after exactly 64 total steps regardless of which actions are taken",
+      "confidence": 0.48,
+      "tests_passed": 14,
+      "tests_failed": 0,
+      "last_updated_step": 59
     }
   },
   "objects": {
     "OBJ_SMALL_BOX": {
       "id": "OBJ_SMALL_BOX",
-      "description": "Small box at rows 8-16, cols 32-40, green border with gray interior and brown(9) pattern at rows 11-13",
-      "role_hypothesis": "trigger",
-      "confidence": 0.2
-    },
-    "OBJ_LARGE_BOX": {
-      "id": "OBJ_LARGE_BOX",
-      "description": "Large horizontal band at rows 25-49, cols 13-53, green border with green interior containing sub-structures including player token and magenta cells",
+      "description": "Small box at rows 8-16, cols 32-40 with green (3) border and gray (5) interior containing brown (9) pattern at rows 11-13",
       "role_hypothesis": "unknown",
-      "confidence": 0.5
+      "confidence": 0.9
     },
-    "OBJ_PLAYER": {
-      "id": "OBJ_PLAYER",
-      "description": "Black(0) and blue(1) cells at rows 31-33, cols 19-21 within the large green box - unmoved after 34 actions",
-      "role_hypothesis": "player_avatar",
-      "confidence": 0.1
+    "OBJ_LARGE_GREEN_BAND": {
+      "id": "OBJ_LARGE_GREEN_BAND",
+      "description": "Large horizontal green (3) band spanning rows 25-49, cols 13-53, containing various sub-elements",
+      "role_hypothesis": "wall",
+      "confidence": 0.8
+    },
+    "OBJ_01_TOKEN": {
+      "id": "OBJ_01_TOKEN",
+      "description": "Black (0) and blue (1) cells at rows 31-33, cols 19-21 within the green band - pattern: row31=0, row32=10, row33=1",
+      "role_hypothesis": "unknown",
+      "confidence": 0.3
     },
     "OBJ_MAGENTA": {
       "id": "OBJ_MAGENTA",
-      "description": "Magenta (c) cells at rows 30-34, cols 33-37 within the large green box",
+      "description": "Magenta (c) cells at rows 40-41, cols 34-38 within the green band",
       "role_hypothesis": "goal",
-      "confidence": 0.3
-    },
-    "OBJ_BOTTOM_BOX": {
-      "id": "OBJ_BOTTOM_BOX",
-      "description": "Box at rows 53-62, cols 1-10, gray border with brown(9) pattern - unchanged after 34 actions",
-      "role_hypothesis": "trigger",
-      "confidence": 0.15
-    },
-    "OBJ_LIGHT_BLUE": {
-      "id": "OBJ_LIGHT_BLUE",
-      "description": "Light blue (b) cells at rows 61-62, cols 6-58 forming a horizontal band",
-      "role_hypothesis": "unknown",
       "confidence": 0.4
+    },
+    "OBJ_BOTTOM_LEFT_BOX": {
+      "id": "OBJ_BOTTOM_LEFT_BOX",
+      "description": "Box at rows 53-62, cols 1-10 with yellow (4) border and gray (5) interior containing brown (9) pattern",
+      "role_hypothesis": "unknown",
+      "confidence": 0.8
     },
     "OBJ_588_PATTERN": {
       "id": "OBJ_588_PATTERN",
-      "description": "Repeating '588588588' pattern at rows 61-62, cols 45-63 (gray-teal-teal repeating)",
+      "description": "Repeating '588588' pattern at rows 61-62, cols 45-63 (gray=5, teal=8, teal=8)",
       "role_hypothesis": "unknown",
-      "confidence": 0.3
+      "confidence": 0.7
     }
   },
-  "goal_hypothesis": "The game is a static display/interpretation puzzle. The grid encodes information to be READ. The 0/1 binary pattern (black=0, blue=1) at rows 31-33 cols 19-21 likely encodes a value. The brown(9) patterns in the boxes, the magenta cells, light blue cells, and '588588588' pattern all encode the puzzle answer. Since 37 steps of various actions produce zero change, the answer must be derived from interpreting the visual pattern, not from manipulating the grid.",
+  "goal_hypothesis": "The game may auto-advance at step 64, or requires a specific decoded action sequence. At step 59, need 5 more steps to reach 64.",
   "open_questions": [
-    "Does any part of the grid EVER change with any action sequence?",
-    "Is the game a display puzzle where the answer must be READ from the grid pattern?",
-    "What does the '588588588' repeating pattern encode?",
-    "What does the 0/1 binary pattern at rows 31-33 cols 19-21 represent as a number?",
-    "Are all 7 levels identical in behavior (no change on any action)?",
-    "Could the game be already complete and we need to submit/interpret the current state?",
-    "Could the brown(9) patterns in the boxes be read as binary: small box encodes one value, bottom box another?",
-    "Is there a hidden threshold (e.g., 100+ actions) before any change occurs?",
-    "What is the significance of the nested box structure and the specific colors used?",
-    "Do the 7 remaining levels each show a different static grid to interpret?"
+    "Does the game auto-advance at exactly step 64? (currently at step 59, need 5 more steps to test)",
+    "What is the significance of the 0/1 binary pattern at rows 31-33 cols 19-21?",
+    "What is the role of the magenta cells at rows 40-41 cols 34-38?",
+    "Are the nested box structures encoding a puzzle answer that must be decoded?",
+    "What does the 588588 repeating pattern encode?",
+    "Is there a relationship between the brown(9) patterns in the small box and bottom-left box?"
   ],
   "last_prediction": {
-    "step_index": 37,
-    "action": "ACTION3",
-    "rule_id": "R9",
-    "expected_outcome": "No visible change will occur in any cell of the grid",
-    "falsifying_observation": "Any cell in the grid changes color or position"
+    "step_index": 59,
+    "action": "ACTION1",
+    "rule_id": "R_AUTO_ADVANCE",
+    "expected_outcome": "The grid remains unchanged, continuing to count toward the hypothesized auto-advance threshold at step 64",
+    "falsifying_observation": "Any visible change in any cell of the grid"
   },
-  "step_count": 37
+  "step_count": 59
 }
