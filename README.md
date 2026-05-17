@@ -18,9 +18,24 @@ This repo is the open-source artifact for a [Community Leaderboard](https://arcp
 
 ## Status
 
-**Stage 0 — Hello-ARC.** Bootstrapping the SDK and confirming end-to-end scorecard generation.
+| Stage | Description | Status |
+|---|---|---|
+| 0 | Hello-ARC, SDK pipeline, first scorecard | ✅ done — [stage_0_smoke_test.md](results/scorecards/stage_0_smoke_test.md) |
+| 1 | Naked Claude Sonnet baseline | ✅ done — 0/23 levels, $1.25 ([writeup](results/scorecards/stage_1_naked_baseline.md)) |
+| 2 | Loop 1: Popperian falsification | 🔧 running gate |
+| 3 | Loop 2: Cross-game episodic memory | ⏳ pending |
+| 4 | Loop 3: Self-patching prompts | ⏳ pending |
+| 5 | Reproducibility, polish, paper | ⏳ pending |
 
-See [docs/stages.md](docs/stages.md) (coming soon) for the staged execution plan and gates.
+## Usage (current state)
+
+```bash
+# Stage 1 naked baseline (no scaffolding)
+uv run python -m src.agent --mode=naked --game=ls20 --max-actions=60
+
+# Stage 2 hypothesis-loop (Popperian falsification)
+uv run python -m src.agent --mode=hypothesis-loop --game=ls20 --max-actions=60
+```
 
 ## Reproduce
 

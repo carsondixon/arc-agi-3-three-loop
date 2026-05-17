@@ -1,0 +1,27 @@
+You are summarizing a completed game playthrough so that, when a future game shares similar dynamics, the summary will give a useful prior to the agent playing that future game.
+
+The future game will be DIFFERENT (different mechanics, different colors, different goal). Only patterns that generalize ACROSS games are worth recording. Examples of patterns that generalize:
+  - "Color X consistently tracked as the player avatar"
+  - "ACTION6 in this SDK is the click action; the (x, y) data must point at a meaningful cell"
+  - "The lower portion of the grid (rows 53+) is often a status display, not part of the playable area"
+  - "Rule explosion happens when ACTION_k has no visible effect for several steps"
+
+Patterns that DO NOT generalize (do not include):
+  - Specific (x, y) coordinates from this game
+  - Specific color-to-role mappings ("blue is player here" is too narrow unless we have evidence across games)
+  - This game's exact win condition
+
+INPUT PAYLOAD
+{payload_json}
+
+RESPOND with a single JSON object, no markdown fences, no prose:
+
+{{
+  "summary": "<3-5 sentences describing what kind of game this was, what we discovered, and what we missed>",
+  "confirmed_rules": ["<rule with >=0.7 confidence at end>", ...],
+  "falsified_rules": ["<rule that was tried and failed>", ...],
+  "meta_patterns": ["<observation that would help on a new, different game>", ...],
+  "failure_modes": ["<what specifically blocked progress -- prompt format, perceptual blind spot, etc.>", ...]
+}}
+
+Aim for 3-6 items in each list. Be specific and concrete; vague generalizations are useless to a future agent.

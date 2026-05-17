@@ -317,8 +317,11 @@ def play_game_hypothesis_loop(
     seed: int,
     max_actions: int,
     per_game_budget_usd: float,
+    memory_priors: list[Any] | None = None,  # list of (MemoryEntry, similarity) tuples
+    mode_label: str = "hypothesis-loop",
 ) -> tuple[Trajectory, HypothesisGraph]:
     prompt_template = HYPOTHESIS_PROMPT_PATH.read_text()
+    priors_section = _format_priors(memory_priors or [])
     env, frame = _setup_env(arcade, game_id, seed, scorecard_id)
 
     rng = random.Random(seed)
@@ -328,7 +331,7 @@ def play_game_hypothesis_loop(
         game_id=game_id,
         scorecard_id=scorecard_id,
         seed=seed,
-        mode="hypothesis-loop",
+        mode=mode_label,
         started_at=datetime.now(timezone.utc).isoformat(),
         win_levels=frame.win_levels if frame else 0,
     )
@@ -353,7 +356,7 @@ def play_game_hypothesis_loop(
         history_str = "\n".join(
             f"  step {i}: {a} ({t[:60]})" for i, (a, t) in enumerate(history)
         ) or "  (none yet)"
-        prompt = prompt_template.format(
+        prompt = priors_section + prompt_template.format(
             game_id=game_id,
             win_levels_remaining=traj.win_levels - frame.levels_completed,
             win_levels_total=traj.win_levels,
@@ -371,7 +374,7 @@ def play_game_hypothesis_loop(
         text, cost = client.reason(
             prompt=prompt,
             role="reasoner",
-            tags={"game_id": game_id, "step": step_index, "scorecard_id": scorecard_id, "mode": "hypothesis-loop"},
+            tags={"game_id": game_id, "step": step_index, "scorecard_id": scorecard_id, "mode": mode_label},
         )
         traj.total_usd += cost.usd
 
@@ -458,7 +461,22 @@ def play_game_hypothesis_loop(
 # --------------------------------------------------------------------------- #
 
 
-MODES = ("naked", "hypothesis-loop")
+MODES = ("naked", "hypothesis-loop", "memory-augmented")
+
+
+def _format_priors(priors: list[tuple[Any, float]]) -> str:
+    """Render retrieved MemoryEntries as a PRIORS section for the prompt."""
+    if not priors:
+        return ""
+    lines = ["PRIORS FROM PAST GAMES (top similar memories; treat as hints, not facts):"]
+    for entry, sim in priors:
+        lines.append(f"  [sim={sim:.2f}] game={entry.game_id} levels={entry.levels_completed}/{entry.win_levels}")
+        lines.append(f"    summary: {entry.summary}")
+        if entry.meta_patterns:
+            lines.append(f"    meta-patterns: {'; '.join(entry.meta_patterns[:4])}")
+        if entry.failure_modes:
+            lines.append(f"    failure-modes: {'; '.join(entry.failure_modes[:3])}")
+    return "\n".join(lines) + "\n\n"
 
 
 def main() -> int:
@@ -498,14 +516,30 @@ def main() -> int:
             scorecard_id=scorecard_id, seed=args.seed,
             max_actions=args.max_actions, per_game_budget_usd=per_game_budget,
         )
-    else:
+    elif args.mode == "hypothesis-loop":
         traj, graph = play_game_hypothesis_loop(
             arcade=arcade, client=client, game_id=args.game,
             scorecard_id=scorecard_id, seed=args.seed,
             max_actions=args.max_actions, per_game_budget_usd=per_game_budget,
+            memory_priors=None, mode_label="hypothesis-loop",
         )
-        # Final graph snapshot
         graph.save(HYP_DIR)
+    elif args.mode == "memory-augmented":
+        from src.memory import MemoryStore
+        store = MemoryStore()
+        # Retrieve priors from past completed games (any game, similar dynamics)
+        query = f"Starting game {args.game}. What general lessons from past games apply?"
+        priors = store.retrieve(query, k=3)
+        logger.info("Retrieved %d priors from memory.db", len(priors))
+        traj, graph = play_game_hypothesis_loop(
+            arcade=arcade, client=client, game_id=args.game,
+            scorecard_id=scorecard_id, seed=args.seed,
+            max_actions=args.max_actions, per_game_budget_usd=per_game_budget,
+            memory_priors=priors, mode_label="memory-augmented",
+        )
+        graph.save(HYP_DIR)
+    else:
+        raise SystemExit(f"unknown mode: {args.mode}")
 
     arcade.close_scorecard(scorecard_id)
     scorecard_url = f"{SCORECARD_HOST}/scorecards/{scorecard_id}"
