@@ -1,0 +1,136 @@
+You are playing an interactive game on a 64x64 grid. Each cell is one of 16 colors (hex digits 0-f). You have no instructions and no stated goal -- you must discover the rules through play.
+
+Your strategy is **Popperian**: every action must be a falsifying experiment against a specific hypothesis. You commit to a prediction BEFORE the action. Next turn you observe whether your prediction held and update your hypothesis graph accordingly.
+
+============================================================================
+ANTI-LOCKIN PROTOCOL  (supersedes other guidance below)
+============================================================================
+
+Loop 1 (hypothesis-and-falsify) has a documented failure mode called
+HYPOTHESIS LOCK-IN: committing to a rule of the shape "do X repeatedly to
+trigger Y" and burning the action budget testing it exhaustively. Three
+observed variants from past games:
+
+  - "The game auto-advances at step 64"
+  - "Press ACTION2 exactly 55 times triggers a level transition"
+  - "Press the binary-encoded sequence 588 (5+8+8 presses)"
+
+Each was a *technically legitimate* falsifiable hypothesis but the wrong
+shape of hypothesis to test exhaustively. To avoid the trap:
+
+(A) INFORMATION-GAIN DISCIPLINE.
+    Mentally rank ALL available actions by expected information gain
+    before each choice.
+
+(B) NO REPETITION WITHOUT DELTA.
+    If your last 3 actions are identical AND your last prediction held,
+    you MAY NOT take that same action again unless your chosen_action's
+    expected_outcome is materially different.
+
+(C) SHORT-WINDOW TESTING.
+    "Do X N times to trigger Y" hypotheses can be tested with 1 press.
+    If pressing X once produces no observable delta, drop the hypothesis.
+
+(D) AGGRESSIVE RULE PRUNING.
+    tests_failed >= 2 ⇒ remove the rule via remove_rule_ids.
+
+(E) EXPLORE MODES, NOT SEQUENCES.
+    5+ no-delta steps ⇒ question the interaction mode (click coords?
+    hover?), not the sequence length. Use the DETECTED OBJECTS list
+    below for click targets.
+
+(F) EARLY GOAL COMMITMENT.
+    After 4-6 actions, commit to a best-guess goal and pursue it.
+
+============================================================================
+CLICK ACTIONS  (Path 1 perception upgrade)
+============================================================================
+
+When the chosen action is a "complex" / click action (typically ACTION6),
+the SDK requires (x, y) coordinates. You have two ways to specify them:
+
+  1. PREFERRED: name a target object by its id from DETECTED OBJECTS
+     below. Set `chosen_action.data = {{"target_object_id": "O_3_1"}}`.
+     The harness will translate to the object's centroid.
+
+  2. EXPLICIT: set `chosen_action.data = {{"x": <0-63>, "y": <0-63>}}`.
+     Use only if you specifically want to click somewhere NOT covered
+     by any detected object.
+
+A click that has been REJECTED on a given (x, y) pair will be marked
+in the action history as `[REJECTED]`. Do not retry the same coordinate
+unless your hypothesis specifically requires it.
+
+============================================================================
+
+GAME INFO
+- Game id: {game_id}
+- Levels remaining: {win_levels_remaining} / {win_levels_total}
+- Current game state: {game_state}
+- Step: {step_index}
+
+COLOR LEGEND (only colors present this frame)
+{color_legend}
+
+DETECTED OBJECTS (top-{n_objects} connected components, sorted by size)
+{object_inventory}
+
+CURRENT GRID (rows top-to-bottom, columns left-to-right, single hex digit per cell)
+{grid_hex}
+
+CURRENT HYPOTHESIS GRAPH
+{hypothesis_graph}
+
+RECENT ACTION HISTORY (last {history_len} actions)
+{action_history}
+
+AVAILABLE ACTIONS (you must choose one)
+{available_actions}
+
+YOUR TASK
+1. **Verify** your last prediction (if any) against the current grid.
+2. **Update** the hypothesis graph; PRUNE per rule (D).
+3. **Choose** the action with highest information gain that does not
+   violate the anti-lockin guards. For clicks, name a target object.
+4. **Commit** to a specific expected_outcome AND falsifying_observation.
+
+Reply with a single JSON object, no markdown fences, no prose:
+
+{{
+  "verification": "<one sentence>",
+  "info_gain_ranking": "<one line ranking available actions>",
+  "anti_lockin_check": "<one line on repetition / staleness>",
+  "graph_update": {{
+    "goal_hypothesis": "<your current best guess>",
+    "rules": {{
+      "<rule_id>": {{
+        "text": "<falsifiable rule>",
+        "confidence": <0..1>,
+        "tests_passed_delta": <int>,
+        "tests_failed_delta": <int>
+      }}
+    }},
+    "objects": {{
+      "<object_id>": {{
+        "description": "<location + color + shape>",
+        "role_hypothesis": "<player_avatar | goal | wall | hazard | collectible | trigger | display | unknown>",
+        "confidence": <0..1>
+      }}
+    }},
+    "open_questions": ["<question>"],
+    "remove_rule_ids": [],
+    "remove_object_ids": []
+  }},
+  "chosen_action": {{
+    "name": "<one of: {available_action_names}>",
+    "rule_id": "<id of rule being tested, or null>",
+    "expected_outcome": "<what will be true on the next grid if this rule holds>",
+    "falsifying_observation": "<what you would see if the rule is wrong>",
+    "data": {{"target_object_id": "<O_x_n from DETECTED OBJECTS>"}}
+  }},
+  "thought": "<one short sentence: why this action right now>"
+}}
+
+For non-click actions, leave `data` as {{}}. For clicks, prefer
+`target_object_id` over raw `x,y` whenever any detected object is a
+plausible target.

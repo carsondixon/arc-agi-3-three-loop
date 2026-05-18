@@ -43,7 +43,13 @@ from dotenv import load_dotenv
 
 from src.claude_client import ClaudeClient
 from src.hypothesis import HypothesisGraph, Prediction
-from src.perception import color_legend, grid_to_hex
+from src.perception import (
+    color_legend,
+    extract_objects,
+    grid_to_hex,
+    object_index,
+    render_object_inventory,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -51,6 +57,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 NAKED_PROMPT_PATH = PROJECT_ROOT / "prompts" / "baseline_action_selector.txt"
 HYPOTHESIS_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action.txt"
 HYPOTHESIS_V2_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v2.txt"
+HYPOTHESIS_V3_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v3.txt"
 CONFIG_PATH = PROJECT_ROOT / "config" / "models.yaml"
 TRAJ_DIR = PROJECT_ROOT / "data" / "trajectories"
 HYP_DIR = PROJECT_ROOT / "data" / "hypotheses"
@@ -321,12 +328,14 @@ def play_game_hypothesis_loop(
     memory_priors: list[Any] | None = None,  # list of (MemoryEntry, similarity) tuples
     mode_label: str = "hypothesis-loop",
     use_anti_lockin_prompt: bool = False,
+    use_object_perception: bool = False,
 ) -> tuple[Trajectory, HypothesisGraph]:
-    prompt_template = (
-        HYPOTHESIS_V2_PROMPT_PATH.read_text()
-        if use_anti_lockin_prompt
-        else HYPOTHESIS_PROMPT_PATH.read_text()
-    )
+    if use_object_perception:
+        prompt_template = HYPOTHESIS_V3_PROMPT_PATH.read_text()
+    elif use_anti_lockin_prompt:
+        prompt_template = HYPOTHESIS_V2_PROMPT_PATH.read_text()
+    else:
+        prompt_template = HYPOTHESIS_PROMPT_PATH.read_text()
     priors_section = _format_priors(memory_priors or [])
     env, frame = _setup_env(arcade, game_id, seed, scorecard_id)
 
@@ -362,7 +371,16 @@ def play_game_hypothesis_loop(
         history_str = "\n".join(
             f"  step {i}: {a} ({t[:60]})" for i, (a, t) in enumerate(history)
         ) or "  (none yet)"
-        prompt = priors_section + prompt_template.format(
+
+        # Object perception (Path 1) -- only when v3 prompt is active
+        obj_inventory_str = ""
+        obj_lookup: dict = {}
+        if use_object_perception:
+            detected = extract_objects(grid)
+            obj_lookup = object_index(detected)
+            obj_inventory_str = render_object_inventory(detected)
+
+        fmt_kwargs = dict(
             game_id=game_id,
             win_levels_remaining=traj.win_levels - frame.levels_completed,
             win_levels_total=traj.win_levels,
@@ -376,6 +394,11 @@ def play_game_hypothesis_loop(
             action_history=history_str,
             available_action_names=" | ".join(a.name for a in available),
         )
+        if use_object_perception:
+            fmt_kwargs["object_inventory"] = obj_inventory_str
+            fmt_kwargs["n_objects"] = len(obj_lookup)
+
+        prompt = priors_section + prompt_template.format(**fmt_kwargs)
 
         text, cost = client.reason(
             prompt=prompt,
@@ -414,37 +437,66 @@ def play_game_hypothesis_loop(
                 falsifying_observation=falsifying_observation or "",
             )
 
-        # Coordinates: Claude can provide them in chosen_action["data"]; else random
+        # Coordinates: resolve target_object_id, else use explicit (x,y), else random
         chosen_data = (parsed or {}).get("chosen_action", {}).get("data") if parsed else None
-        _apply_action_data(action, chosen_data, rng)
+        click_x = click_y = None
+        click_target_id = None
+        if action.is_complex():
+            if chosen_data and "target_object_id" in chosen_data and obj_lookup:
+                tid = str(chosen_data["target_object_id"])
+                obj = obj_lookup.get(tid)
+                if obj is not None:
+                    click_x, click_y = int(obj.centroid_x), int(obj.centroid_y)
+                    click_target_id = tid
+            if click_x is None and chosen_data and "x" in chosen_data:
+                try:
+                    click_x = int(chosen_data["x"])
+                    click_y = int(chosen_data.get("y", 0))
+                except (TypeError, ValueError):
+                    click_x = click_y = None
+            if click_x is None:
+                click_x = rng.randint(0, 63)
+                click_y = rng.randint(0, 63)
+            click_x = max(0, min(63, click_x))
+            click_y = max(0, min(63, click_y))
+            action.set_data({"x": click_x, "y": click_y})
         action.reasoning = (thought or "")[:200]
+
+        # Action label for history (includes coords + target id for clicks)
+        if action.is_complex():
+            tag = f"@({click_x},{click_y})"
+            if click_target_id:
+                tag += f"=>{click_target_id}"
+            action_label = f"{action.name}{tag}"
+        else:
+            action_label = action.name
 
         state_before = str(frame.state)
         levels_before = frame.levels_completed
         next_frame = env.step(action)
         if next_frame is None:
-            logger.warning("env.step rejected %s; continuing", action.name)
+            logger.warning("env.step rejected %s; continuing", action_label)
             traj.steps.append(Step(
-                step_index=step_index, action=action.name,
+                step_index=step_index, action=action_label,
                 thought=thought + " [REJECTED]",
                 state_before=state_before, state_after=state_before,
                 levels_completed_after=levels_before, usd=cost.usd,
                 expected_outcome=expected_outcome, falsifying_observation=falsifying_observation,
                 rule_id=rule_id, verification=verification,
             ))
-            history.append((action.name + "(rejected)", thought))
+            history.append((action_label + "[REJECTED]", thought))
             graph.save(HYP_DIR)
             continue
 
         frame = next_frame
         traj.steps.append(Step(
-            step_index=step_index, action=action.name, thought=thought,
+            step_index=step_index, action=action_label, thought=thought,
             state_before=state_before, state_after=str(frame.state),
             levels_completed_after=frame.levels_completed, usd=cost.usd,
             expected_outcome=expected_outcome, falsifying_observation=falsifying_observation,
             rule_id=rule_id, verification=verification,
         ))
-        history.append((action.name, thought))
+        history.append((action_label, thought))
         graph.save(HYP_DIR)
 
         logger.info(
@@ -467,7 +519,7 @@ def play_game_hypothesis_loop(
 # --------------------------------------------------------------------------- #
 
 
-MODES = ("naked", "hypothesis-loop", "memory-augmented", "anti-lockin")
+MODES = ("naked", "hypothesis-loop", "memory-augmented", "anti-lockin", "perception-aware")
 
 
 def _format_priors(priors: list[tuple[Any, float]]) -> str:
@@ -555,6 +607,21 @@ def main() -> int:
             max_actions=args.max_actions, per_game_budget_usd=per_game_budget,
             memory_priors=priors, mode_label="anti-lockin",
             use_anti_lockin_prompt=True,
+        )
+        graph.save(HYP_DIR)
+    elif args.mode == "perception-aware":
+        from src.memory import MemoryStore
+        store = MemoryStore()
+        query = f"Starting game {args.game}. What general lessons from past games apply?"
+        priors = store.retrieve(query, k=3)
+        logger.info("Retrieved %d priors from memory.db (perception-aware mode)", len(priors))
+        traj, graph = play_game_hypothesis_loop(
+            arcade=arcade, client=client, game_id=args.game,
+            scorecard_id=scorecard_id, seed=args.seed,
+            max_actions=args.max_actions, per_game_budget_usd=per_game_budget,
+            memory_priors=priors, mode_label="perception-aware",
+            use_anti_lockin_prompt=False,
+            use_object_perception=True,
         )
         graph.save(HYP_DIR)
     else:
