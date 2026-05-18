@@ -1,0 +1,129 @@
+{
+  "game_id": "tr87",
+  "scorecard_id": "b10bfc5a-af0b-4c9d-97ff-ba914cee3fd4",
+  "rules": {
+    "R98": {
+      "id": "R98",
+      "text": "ACTION1-4 bare presses produce no visible grid change regardless of correctness",
+      "confidence": 0.99,
+      "tests_passed": 31,
+      "tests_failed": 0,
+      "last_updated_step": 74
+    },
+    "R204": {
+      "id": "R204",
+      "text": "The game requires selecting the correct answer via ACTION1-4 where each action corresponds to a specific panel option",
+      "confidence": 0.2,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 74
+    },
+    "R205": {
+      "id": "R205",
+      "text": "ACTION2 is the correct answer for the current puzzle based on symbol decoding",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 74
+    },
+    "R206": {
+      "id": "R206",
+      "text": "The black dot patterns (rows 48-49: '300003/303030' and rows 59-60: '303030/300003') encode a counter or state that changes with correct actions",
+      "confidence": 0.4,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 74
+    },
+    "R207": {
+      "id": "R207",
+      "text": "A specific sequence of ACTION1-4 (not a single press) is required to advance the level - e.g., the symbol panels encode a multi-step answer",
+      "confidence": 0.35,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 74
+    }
+  },
+  "objects": {
+    "O_2_1": {
+      "id": "O_2_1",
+      "description": "Large red background covering left half cols 0-33, contains 6 white-bordered symbol panels arranged 2x3",
+      "role_hypothesis": "display",
+      "confidence": 0.8
+    },
+    "O_3_7": {
+      "id": "O_3_7",
+      "description": "Large green background covering right half cols 34-62, contains target panels to match against",
+      "role_hypothesis": "display",
+      "confidence": 0.8
+    },
+    "O_a_7": {
+      "id": "O_a_7",
+      "description": "White blob centroid (43,31) - target symbol panel on green side",
+      "role_hypothesis": "goal",
+      "confidence": 0.75
+    },
+    "O_7_16": {
+      "id": "O_7_16",
+      "description": "Orange blob centroid (54,30) - target orange-encoded panel on green side",
+      "role_hypothesis": "goal",
+      "confidence": 0.65
+    },
+    "O_1_1": {
+      "id": "O_1_1",
+      "description": "Blue line at column 63, full height - possibly border/separator",
+      "role_hypothesis": "wall",
+      "confidence": 0.5
+    },
+    "O_a_3": {
+      "id": "O_a_3",
+      "description": "White panel at centroid (16,15), bbox (13-19,12-18) - top-left option on red side",
+      "role_hypothesis": "option",
+      "confidence": 0.85
+    },
+    "O_a_5": {
+      "id": "O_a_5",
+      "description": "White panel at centroid (25,15), bbox (22-28,12-18) - top-right option on red side",
+      "role_hypothesis": "option",
+      "confidence": 0.85
+    },
+    "O_a_4": {
+      "id": "O_a_4",
+      "description": "White panel at centroid (16,38), bbox (13-19,35-41) - middle-left option on red side",
+      "role_hypothesis": "option",
+      "confidence": 0.85
+    },
+    "O_a_2": {
+      "id": "O_a_2",
+      "description": "White panel at centroid (7,38), bbox (4-10,35-41) - middle-outer-left option on red side",
+      "role_hypothesis": "option",
+      "confidence": 0.85
+    },
+    "O_a_1": {
+      "id": "O_a_1",
+      "description": "White panel at centroid (7,15), bbox (4-10,12-18) - top-outer-left option on red side",
+      "role_hypothesis": "option",
+      "confidence": 0.85
+    },
+    "O_a_6": {
+      "id": "O_a_6",
+      "description": "White panel at centroid (25,38), bbox (22-28,35-41) - middle-right option on red side",
+      "role_hypothesis": "option",
+      "confidence": 0.85
+    }
+  },
+  "goal_hypothesis": "This is a symbol-matching puzzle displayed on a 64x64 grid. The red side shows 6 white-bordered panels with encoded symbols (options), and the green side shows target panels. The game may require clicking on the correct panel rather than pressing ACTION1-4, but only ACTION1-4 are available. The black dot patterns at rows 48-49 and 59-60 may encode state. With 74 steps of no response to any action, the game may be in a state where no action can advance it, or the answer requires a specific sequence.",
+  "open_questions": [
+    "Why does no single action produce any visible change after 74 steps?",
+    "Do the black dot patterns at rows 48-49 and 59-60 encode a required sequence or counter?",
+    "Could a specific sequence of actions (e.g., ACTION1 then ACTION3) be required?",
+    "Are the 6 white panels on the red side encoding a multi-digit answer that requires sequential presses?"
+  ],
+  "last_prediction": {
+    "step_index": 74,
+    "action": "ACTION1",
+    "rule_id": "R207",
+    "expected_outcome": "If a sequence is required, starting with ACTION1 followed by other actions may eventually trigger a state change; at minimum this tests whether ACTION1 as first in a sequence produces any change",
+    "falsifying_observation": "Grid remains completely unchanged after ACTION1"
+  },
+  "step_count": 74
+}

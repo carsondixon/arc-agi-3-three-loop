@@ -58,6 +58,7 @@ NAKED_PROMPT_PATH = PROJECT_ROOT / "prompts" / "baseline_action_selector.txt"
 HYPOTHESIS_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action.txt"
 HYPOTHESIS_V2_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v2.txt"
 HYPOTHESIS_V3_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v3.txt"
+HYPOTHESIS_V4_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v4.txt"
 CONFIG_PATH = PROJECT_ROOT / "config" / "models.yaml"
 TRAJ_DIR = PROJECT_ROOT / "data" / "trajectories"
 HYP_DIR = PROJECT_ROOT / "data" / "hypotheses"
@@ -329,8 +330,11 @@ def play_game_hypothesis_loop(
     mode_label: str = "hypothesis-loop",
     use_anti_lockin_prompt: bool = False,
     use_object_perception: bool = False,
+    use_loose_commitment_prompt: bool = False,
 ) -> tuple[Trajectory, HypothesisGraph]:
-    if use_object_perception:
+    if use_loose_commitment_prompt:
+        prompt_template = HYPOTHESIS_V4_PROMPT_PATH.read_text()
+    elif use_object_perception:
         prompt_template = HYPOTHESIS_V3_PROMPT_PATH.read_text()
     elif use_anti_lockin_prompt:
         prompt_template = HYPOTHESIS_V2_PROMPT_PATH.read_text()
@@ -519,7 +523,7 @@ def play_game_hypothesis_loop(
 # --------------------------------------------------------------------------- #
 
 
-MODES = ("naked", "hypothesis-loop", "memory-augmented", "anti-lockin", "perception-aware")
+MODES = ("naked", "hypothesis-loop", "memory-augmented", "anti-lockin", "perception-aware", "perception-loose")
 
 
 def _format_priors(priors: list[tuple[Any, float]]) -> str:
@@ -622,6 +626,22 @@ def main() -> int:
             memory_priors=priors, mode_label="perception-aware",
             use_anti_lockin_prompt=False,
             use_object_perception=True,
+        )
+        graph.save(HYP_DIR)
+    elif args.mode == "perception-loose":
+        from src.memory import MemoryStore
+        store = MemoryStore()
+        query = f"Starting game {args.game}. What general lessons from past games apply?"
+        priors = store.retrieve(query, k=3)
+        logger.info("Retrieved %d priors from memory.db (perception-loose mode)", len(priors))
+        traj, graph = play_game_hypothesis_loop(
+            arcade=arcade, client=client, game_id=args.game,
+            scorecard_id=scorecard_id, seed=args.seed,
+            max_actions=args.max_actions, per_game_budget_usd=per_game_budget,
+            memory_priors=priors, mode_label="perception-loose",
+            use_anti_lockin_prompt=False,
+            use_object_perception=True,
+            use_loose_commitment_prompt=True,
         )
         graph.save(HYP_DIR)
     else:

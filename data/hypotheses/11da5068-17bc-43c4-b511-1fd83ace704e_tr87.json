@@ -1,0 +1,121 @@
+{
+  "game_id": "tr87",
+  "scorecard_id": "11da5068-17bc-43c4-b511-1fd83ace704e",
+  "rules": {
+    "R1": {
+      "id": "R1",
+      "text": "The red region contains 6 option panels (2 cols x 3 rows); clicking the correct matching panel advances the level.",
+      "confidence": 0.65,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 3
+    },
+    "R5": {
+      "id": "R5",
+      "text": "ACTION1-4 are answer selectors (not bare button presses); each maps to one of the option panels and the correct one advances the level.",
+      "confidence": 0.6,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 4
+    },
+    "R7": {
+      "id": "R7",
+      "text": "The large white/orange panel in the green region (O_a_7, O_7_16) is the target pattern to match against the 6 red-region options.",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 3
+    },
+    "R8": {
+      "id": "R8",
+      "text": "The top-left option panel (O_a_1, centroid 7,15) corresponds to ACTION1; clicking/selecting it may advance the level if it matches the target.",
+      "confidence": 0.45,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 4
+    }
+  },
+  "objects": {
+    "O_2_1": {
+      "id": "O_2_1",
+      "description": "Large red region covering left ~33 columns containing 6 option panels with white/orange/gray encoded patterns",
+      "role_hypothesis": "display",
+      "confidence": 0.65
+    },
+    "O_3_7": {
+      "id": "O_3_7",
+      "description": "Large green region covering right portion rows 34-62 containing target pattern display",
+      "role_hypothesis": "display",
+      "confidence": 0.65
+    },
+    "O_a_7": {
+      "id": "O_a_7",
+      "description": "White blob in green region at centroid (43,31), likely target pattern display",
+      "role_hypothesis": "display",
+      "confidence": 0.65
+    },
+    "O_7_16": {
+      "id": "O_7_16",
+      "description": "Orange blob in green region at centroid (54,30), part of target pattern display",
+      "role_hypothesis": "display",
+      "confidence": 0.65
+    },
+    "O_1_1": {
+      "id": "O_1_1",
+      "description": "Blue line at column 63, full height",
+      "role_hypothesis": "display",
+      "confidence": 0.4
+    },
+    "O_a_3": {
+      "id": "O_a_3",
+      "description": "White blob at centroid (16,15) in red region, top-middle option panel",
+      "role_hypothesis": "option",
+      "confidence": 0.7
+    },
+    "O_a_5": {
+      "id": "O_a_5",
+      "description": "White blob at centroid (25,15) in red region, top-right option panel",
+      "role_hypothesis": "option",
+      "confidence": 0.7
+    },
+    "O_a_4": {
+      "id": "O_a_4",
+      "description": "White blob at centroid (16,38) in red region, bottom-middle option panel",
+      "role_hypothesis": "option",
+      "confidence": 0.7
+    },
+    "O_a_2": {
+      "id": "O_a_2",
+      "description": "White blob at centroid (7,38) in red region, bottom-left option panel",
+      "role_hypothesis": "option",
+      "confidence": 0.7
+    },
+    "O_a_6": {
+      "id": "O_a_6",
+      "description": "White blob at centroid (25,38) in red region, bottom-right option panel",
+      "role_hypothesis": "option",
+      "confidence": 0.7
+    },
+    "O_a_1": {
+      "id": "O_a_1",
+      "description": "White blob at centroid (7,15) in red region, top-left option panel",
+      "role_hypothesis": "option",
+      "confidence": 0.7
+    }
+  },
+  "goal_hypothesis": "This is a pattern-matching game where ACTION1-4 correspond to selecting one of 4 answer options; the correct action matches the target pattern shown in the green region.",
+  "open_questions": [
+    "Do ACTION1-4 map to the 4 option panels visible in the red region?",
+    "Which panel matches the target pattern in the green region?",
+    "What do the encoded patterns represent (letters, digits, symbols)?",
+    "Why are there 6 panels but only 4 actions?"
+  ],
+  "last_prediction": {
+    "step_index": 4,
+    "action": "ACTION1",
+    "rule_id": "R8",
+    "expected_outcome": "ACTION1 selects option panel 1 and either advances the level or produces a visible change indicating selection.",
+    "falsifying_observation": "No change occurs after ACTION1, same as previous steps."
+  },
+  "step_count": 4
+}
