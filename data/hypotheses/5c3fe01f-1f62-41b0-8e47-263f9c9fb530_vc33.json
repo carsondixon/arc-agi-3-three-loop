@@ -1,0 +1,71 @@
+{
+  "game_id": "vc33",
+  "scorecard_id": "5c3fe01f-1f62-41b0-8e47-263f9c9fb530",
+  "rules": {
+    "R6": {
+      "id": "R6",
+      "text": "ACTION6 at arbitrary/non-meaningful coordinates produces no visible grid change.",
+      "confidence": 0.99,
+      "tests_passed": 54,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R27": {
+      "id": "R27",
+      "text": "The game is purely observational/autonomous and ACTION6 has no effect regardless of coordinates.",
+      "confidence": 0.99,
+      "tests_passed": 31,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R28": {
+      "id": "R28",
+      "text": "Clicking directly on the brown(9) block (goal candidate) triggers a level transition.",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 59
+    },
+    "R29": {
+      "id": "R29",
+      "text": "Clicking the yellow(4) segment in the top-right of row 0 triggers a UI/level event.",
+      "confidence": 0.03,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    }
+  },
+  "objects": {
+    "O1": {
+      "id": "O1",
+      "description": "Yellow(4)+light_blue(b) chevron cluster at rows 44-49, cols 44-47",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.2
+    },
+    "O2": {
+      "id": "O2",
+      "description": "Brown(9) 4x6 block at rows 24-27, cols 58-63",
+      "role_hypothesis": "goal",
+      "confidence": 0.1
+    },
+    "O4": {
+      "id": "O4",
+      "description": "Orange(7) top row at row 0, with yellow(4) at cols 58-63",
+      "role_hypothesis": "display",
+      "confidence": 0.8
+    }
+  },
+  "goal_hypothesis": "The game is purely observational or requires a non-ACTION6 mechanism; no interactive effect has been found after 59 steps of ACTION6 at various coordinates.",
+  "open_questions": [
+    "Is this game genuinely non-interactive or does it require a non-ACTION6 input mechanism?",
+    "Will the game ever auto-advance to the next level without player input?"
+  ],
+  "last_prediction": {
+    "step_index": 59,
+    "action": "ACTION6",
+    "rule_id": "R29",
+    "expected_outcome": "No visible grid change (R27 likely holds); if R29 is correct, a level transition or UI change occurs.",
+    "falsifying_observation": "Any visible change to the grid or a level transition would falsify R27 and support R29."
+  },
+  "step_count": 59
+}

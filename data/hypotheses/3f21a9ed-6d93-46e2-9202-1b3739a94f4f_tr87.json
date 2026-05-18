@@ -1,0 +1,121 @@
+{
+  "game_id": "tr87",
+  "scorecard_id": "3f21a9ed-6d93-46e2-9202-1b3739a94f4f",
+  "rules": {
+    "R8": {
+      "id": "R8",
+      "text": "Bare ACTION1-4 without coordinates cannot interact with the white option cells - confirmed by 69+ steps with zero grid changes",
+      "confidence": 0.99,
+      "tests_passed": 65,
+      "tests_failed": 0,
+      "last_updated_step": 69
+    },
+    "R16": {
+      "id": "R16",
+      "text": "The game requires click coordinates to interact; bare ACTION1-4 produce no effect",
+      "confidence": 0.99,
+      "tests_passed": 60,
+      "tests_failed": 0,
+      "last_updated_step": 69
+    },
+    "R19": {
+      "id": "R19",
+      "text": "The 5x5 pixel patterns in white cells encode letters/digits representing answer choices; the green region shows the question/target pattern to match",
+      "confidence": 0.65,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 69
+    },
+    "R25": {
+      "id": "R25",
+      "text": "The game is fundamentally non-interactive with only ACTION1-4 available - no amount of bare action pressing will change the grid state or advance levels",
+      "confidence": 0.99,
+      "tests_passed": 46,
+      "tests_failed": 0,
+      "last_updated_step": 69
+    }
+  },
+  "objects": {
+    "O_2_1": {
+      "id": "O_2_1",
+      "description": "Large red blob covering top half of grid rows 0-33, contains 6 white option cells in 2x3 grid layout",
+      "role_hypothesis": "display",
+      "confidence": 0.7
+    },
+    "O_3_7": {
+      "id": "O_3_7",
+      "description": "Large green blob covering bottom half of grid rows 34-62, contains large white text display and orange display panels",
+      "role_hypothesis": "display",
+      "confidence": 0.7
+    },
+    "O_a_7": {
+      "id": "O_a_7",
+      "description": "White blob centroid (43,31) in green region - large character display panel",
+      "role_hypothesis": "display",
+      "confidence": 0.55
+    },
+    "O_7_16": {
+      "id": "O_7_16",
+      "description": "Orange blob centroid (54,30) in green region - secondary display panel",
+      "role_hypothesis": "display",
+      "confidence": 0.55
+    },
+    "O_1_1": {
+      "id": "O_1_1",
+      "description": "Blue line at column 63, full height - likely a border or progress indicator",
+      "role_hypothesis": "display",
+      "confidence": 0.45
+    },
+    "O_a_3": {
+      "id": "O_a_3",
+      "description": "White blob at centroid (16,15) in red region - top-middle option cell with encoded 5x5 pattern",
+      "role_hypothesis": "trigger",
+      "confidence": 0.7
+    },
+    "O_a_5": {
+      "id": "O_a_5",
+      "description": "White blob at centroid (25,15) in red region - top-right option cell with encoded 5x5 pattern",
+      "role_hypothesis": "trigger",
+      "confidence": 0.7
+    },
+    "O_a_4": {
+      "id": "O_a_4",
+      "description": "White blob at centroid (16,38) in red region - bottom-middle option cell with encoded 5x5 pattern",
+      "role_hypothesis": "trigger",
+      "confidence": 0.7
+    },
+    "O_a_1": {
+      "id": "O_a_1",
+      "description": "White blob at centroid (7,15) in red region - top-left option cell with encoded 5x5 pattern",
+      "role_hypothesis": "trigger",
+      "confidence": 0.7
+    },
+    "O_a_2": {
+      "id": "O_a_2",
+      "description": "White blob at centroid (7,38) in red region - bottom-left option cell with encoded 5x5 pattern",
+      "role_hypothesis": "trigger",
+      "confidence": 0.7
+    },
+    "O_a_6": {
+      "id": "O_a_6",
+      "description": "White blob at centroid (25,38) in red region - bottom-right option cell with encoded 5x5 pattern",
+      "role_hypothesis": "trigger",
+      "confidence": 0.7
+    }
+  },
+  "goal_hypothesis": "This is a visual pattern-matching puzzle where the red region contains 6 white option cells with encoded 5x5 patterns and the green region shows the target pattern. The game requires click/coordinate input not available via bare ACTION1-4. No progress is possible without click actions - the game is effectively locked for this agent.",
+  "open_questions": [
+    "Is ACTION6 available but not listed in AVAILABLE ACTIONS, and would it accept (x,y) coordinates to click option cells?",
+    "What do the black pixel clusters at rows 48-49 and 60-61 represent - cursor position, score, or encoded data?",
+    "Do the 5x5 patterns in the white cells decode to specific letters/symbols that form the answer?",
+    "Is there any way to escape this non-interactive state given only ACTION1-4 are available?"
+  ],
+  "last_prediction": {
+    "step_index": 69,
+    "action": "ACTION1",
+    "rule_id": "R25",
+    "expected_outcome": "Grid remains completely unchanged - zero cell changes, further confirming that bare ACTION1 produces no effect",
+    "falsifying_observation": "Any visible change to any cell in the grid"
+  },
+  "step_count": 69
+}

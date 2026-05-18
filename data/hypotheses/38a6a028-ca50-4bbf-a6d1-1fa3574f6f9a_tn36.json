@@ -1,0 +1,97 @@
+{
+  "game_id": "tn36",
+  "scorecard_id": "38a6a028-ca50-4bbf-a6d1-1fa3574f6f9a",
+  "rules": {
+    "R5": {
+      "id": "R5",
+      "text": "ACTION6 is always rejected regardless of coordinates \u2014 no interactive mechanism exists via ACTION6 in this SDK configuration.",
+      "confidence": 0.99,
+      "tests_passed": 57,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R9": {
+      "id": "R9",
+      "text": "The light_blue clusters move autonomously each step as an animation, independent of any player action.",
+      "confidence": 0.99,
+      "tests_passed": 48,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R10": {
+      "id": "R10",
+      "text": "The digit display in rows 42-46 encodes a static value that does not change across steps.",
+      "confidence": 0.97,
+      "tests_passed": 47,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R12": {
+      "id": "R12",
+      "text": "The light_blue cluster animation loop has a period of exactly 8 steps.",
+      "confidence": 0.88,
+      "tests_passed": 41,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R21": {
+      "id": "R21",
+      "text": "The game auto-advances to the next level after approximately 60 steps of autonomous animation.",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 59
+    }
+  },
+  "objects": {
+    "O1": {
+      "id": "O1",
+      "description": "Light_blue hollow 4x4 block, rows 13-16 cols 31-34",
+      "role_hypothesis": "display",
+      "confidence": 0.95
+    },
+    "O2": {
+      "id": "O2",
+      "description": "Second light_blue cluster, rows 33-37 cols 42-47, larger irregular shape",
+      "role_hypothesis": "display",
+      "confidence": 0.95
+    },
+    "O3": {
+      "id": "O3",
+      "description": "Brown oval/diamond shape rows 51-59 cols 34-42, static",
+      "role_hypothesis": "display",
+      "confidence": 0.6
+    },
+    "O4": {
+      "id": "O4",
+      "description": "Black bordered rectangle rows 8-41 cols 13-50 containing yellow/gray checkerboard pattern",
+      "role_hypothesis": "display",
+      "confidence": 0.9
+    },
+    "O5": {
+      "id": "O5",
+      "description": "Black region rows 41-47 cols 13-50 with blue digit display",
+      "role_hypothesis": "display",
+      "confidence": 0.95
+    },
+    "O6": {
+      "id": "O6",
+      "description": "Brown horizontal bar row 1 cols 1-61",
+      "role_hypothesis": "display",
+      "confidence": 0.95
+    }
+  },
+  "goal_hypothesis": "Pure autonomous animation/demo game with no achievable win condition via ACTION6 in this SDK configuration. All hypotheses exhausted.",
+  "open_questions": [
+    "Is there any coordinate-based click that produces a different result than rejection?",
+    "Is this game entirely non-interactive in this SDK configuration?"
+  ],
+  "last_prediction": {
+    "step_index": 59,
+    "action": "ACTION6",
+    "rule_id": "R5",
+    "expected_outcome": "ACTION6 rejected again; grid continues autonomous animation unchanged.",
+    "falsifying_observation": "Any grid change or level transition after clicking on the light_blue cluster."
+  },
+  "step_count": 59
+}

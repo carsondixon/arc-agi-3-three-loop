@@ -1,0 +1,144 @@
+{
+  "game_id": "cd82",
+  "scorecard_id": "e8685798-8c8a-4d86-a1f4-40f1b8b8540d",
+  "rules": {
+    "R28": {
+      "id": "R28",
+      "text": "The upper-left gray region objects (OBJ1+OBJ2) are a legend/key showing the player piece appearance; the actual player is OBJ8+OBJ4.",
+      "confidence": 0.4,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 45
+    },
+    "R33": {
+      "id": "R33",
+      "text": "No bare button press (ACTION1-5) produces any grid change; the game requires ACTION6 with specific (x,y) coordinates",
+      "confidence": 0.88,
+      "tests_passed": 14,
+      "tests_failed": 2,
+      "last_updated_step": 59
+    },
+    "R71": {
+      "id": "R71",
+      "text": "This is a pure observation/animation game with no interactive win condition reachable via standard actions",
+      "confidence": 0.7,
+      "tests_passed": 4,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R74": {
+      "id": "R74",
+      "text": "Clicking on the upper-left display objects (OBJ1/OBJ2) triggers a game action or level transition",
+      "confidence": 0.3,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 55
+    },
+    "R75": {
+      "id": "R75",
+      "text": "Clicking on OBJ5 (yellow-bordered box) triggers a level transition or visible grid change",
+      "confidence": 0.02,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 55
+    },
+    "R76": {
+      "id": "R76",
+      "text": "Clicking on OBJ1 (black rectangle, rows 3-7, cols 3-12) triggers a visible grid change or level transition",
+      "confidence": 0.02,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 56
+    },
+    "R77": {
+      "id": "R77",
+      "text": "Clicking on OBJ4 (black rectangle rows 39-43, cols 25-35) triggers a visible grid change or level transition",
+      "confidence": 0.02,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 57
+    },
+    "R79": {
+      "id": "R79",
+      "text": "Clicking on the maroon rectangle rows 34-38, cols 25-35 (OBJ9) triggers a visible grid change or level transition",
+      "confidence": 0.02,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 59
+    },
+    "R78": {
+      "id": "R78",
+      "text": "Clicking on OBJ2 (maroon rectangle rows 8-12, cols 3-12) triggers a visible grid change or level transition",
+      "confidence": 0.02,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 58
+    },
+    "R80": {
+      "id": "R80",
+      "text": "Clicking on OBJ8 (maroon diagonal/triangle shape, rows 21-37, cols 14-35) triggers a visible grid change or level transition",
+      "confidence": 0.2,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    }
+  },
+  "objects": {
+    "OBJ1": {
+      "id": "OBJ1",
+      "description": "Black rectangle rows 3-7, cols 3-12, upper-left gray region",
+      "role_hypothesis": "display",
+      "confidence": 0.6
+    },
+    "OBJ2": {
+      "id": "OBJ2",
+      "description": "Maroon rectangle rows 8-12, cols 3-12, in gray region below OBJ1",
+      "role_hypothesis": "trigger",
+      "confidence": 0.3
+    },
+    "OBJ3": {
+      "id": "OBJ3",
+      "description": "Red-bordered maroon filled rectangle rows 24-32, cols 24-36",
+      "role_hypothesis": "goal",
+      "confidence": 0.2
+    },
+    "OBJ4": {
+      "id": "OBJ4",
+      "description": "Black rectangle rows 39-43, cols 25-35, center of lower grid",
+      "role_hypothesis": "display",
+      "confidence": 0.6
+    },
+    "OBJ5": {
+      "id": "OBJ5",
+      "description": "Yellow-bordered box rows 2-7, cols 34-43 with black interior (top) and maroon interior (bottom)",
+      "role_hypothesis": "display",
+      "confidence": 0.5
+    },
+    "OBJ8": {
+      "id": "OBJ8",
+      "description": "Maroon diagonal/triangle shape spanning rows 21-37, cols 14-35, center of grid",
+      "role_hypothesis": "trigger",
+      "confidence": 0.25
+    },
+    "OBJ9": {
+      "id": "OBJ9",
+      "description": "Maroon rectangle rows 34-38, cols 25-35, just above OBJ4",
+      "role_hypothesis": "display",
+      "confidence": 0.6
+    }
+  },
+  "goal_hypothesis": "Clicking on a specific object triggers level transition; OBJ8 (maroon diagonal/triangle shape) is the last major untested clickable object; if it also fails, the game is likely purely observational.",
+  "open_questions": [
+    "Does clicking OBJ8 (maroon triangle/diagonal) trigger anything?",
+    "Is there a specific sequence of clicks required rather than single clicks?",
+    "Is this game purely observational with no win condition reachable?"
+  ],
+  "last_prediction": {
+    "step_index": 59,
+    "action": "ACTION6",
+    "rule_id": "R80",
+    "expected_outcome": "Clicking on OBJ8 (maroon triangle region) causes a visible grid change or level transition",
+    "falsifying_observation": "Grid remains completely identical with no change after clicking OBJ8"
+  },
+  "step_count": 59
+}

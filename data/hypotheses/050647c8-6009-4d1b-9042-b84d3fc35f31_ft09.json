@@ -1,0 +1,76 @@
+{
+  "game_id": "ft09",
+  "scorecard_id": "050647c8-6009-4d1b-9042-b84d3fc35f31",
+  "rules": {
+    "R7": {
+      "id": "R7",
+      "text": "ACTION6 with any coordinates produces no visible grid change; the game is non-interactive via clicks.",
+      "confidence": 0.99,
+      "tests_passed": 55,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R11": {
+      "id": "R11",
+      "text": "The game auto-advances to the next level after a fixed number of steps without any player input required.",
+      "confidence": 0.75,
+      "tests_passed": 38,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R19": {
+      "id": "R19",
+      "text": "The game will auto-advance at or before step 64 with no input required.",
+      "confidence": 0.6,
+      "tests_passed": 26,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    }
+  },
+  "objects": {
+    "O1": {
+      "id": "O1",
+      "description": "Upper-left quadrant (rows 2-23, cols 4-27): 3x3 arrangement of 6x6 colored blocks (brown/teal) on gray background",
+      "role_hypothesis": "display",
+      "confidence": 0.95
+    },
+    "O2": {
+      "id": "O2",
+      "description": "Lower-right quadrant (rows 32-61, cols 31-63): yellow-bordered region containing 3x3 arrangement of brown blocks with inner red/teal 2x2 patterns",
+      "role_hypothesis": "display",
+      "confidence": 0.92
+    },
+    "O3": {
+      "id": "O3",
+      "description": "Bottom row (row 63): solid magenta bar spanning full width",
+      "role_hypothesis": "display",
+      "confidence": 0.85
+    },
+    "O4": {
+      "id": "O4",
+      "description": "Upper-right quadrant (rows 2-23, cols 36-59): 3x3 arrangement of brown/teal blocks on gray",
+      "role_hypothesis": "display",
+      "confidence": 0.92
+    },
+    "O5": {
+      "id": "O5",
+      "description": "Lower-left quadrant (rows 36-57, cols 4-27): 3x3 arrangement of brown/teal blocks similar to upper panels",
+      "role_hypothesis": "display",
+      "confidence": 0.92
+    }
+  },
+  "goal_hypothesis": "This is a pure observation/display game that auto-advances after a fixed number of steps. No player interaction is possible via ACTION6 regardless of coordinates.",
+  "open_questions": [
+    "Will the game auto-advance at exactly step 64?",
+    "Does clicking the magenta bottom bar (row 63) have any special trigger effect?",
+    "Do the colored block patterns encode puzzle information or are they purely decorative?"
+  ],
+  "last_prediction": {
+    "step_index": 59,
+    "action": "ACTION6",
+    "rule_id": "R7",
+    "expected_outcome": "No visible grid change; game remains static at step 60.",
+    "falsifying_observation": "Any visible change to the grid or a level transition."
+  },
+  "step_count": 59
+}

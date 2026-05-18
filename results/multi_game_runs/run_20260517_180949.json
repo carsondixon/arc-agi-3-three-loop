@@ -1,0 +1,78 @@
+{
+  "run_id": "20260517_180949",
+  "mode": "anti-lockin",
+  "max_actions": 60,
+  "max_total_usd": 12.0,
+  "tag": "phase-1",
+  "started_at": "2026-05-17 18:09:49",
+  "games": [
+    {
+      "game": "cd82",
+      "mode": "anti-lockin",
+      "elapsed_s": 1285.1,
+      "usd": 2.1672,
+      "levels": 0,
+      "win_levels": 6,
+      "scorecard_url": "https://three.arcprize.org/scorecards/e8685798-8c8a-4d86-a1f4-40f1b8b8540d",
+      "returncode": 0,
+      "stderr_tail": []
+    },
+    {
+      "game": "ft09",
+      "mode": "anti-lockin",
+      "elapsed_s": 1886.2,
+      "usd": 1.9656,
+      "levels": 0,
+      "win_levels": 6,
+      "scorecard_url": "https://three.arcprize.org/scorecards/050647c8-6009-4d1b-9042-b84d3fc35f31",
+      "returncode": 0,
+      "stderr_tail": []
+    },
+    {
+      "game": "sb26",
+      "mode": "anti-lockin",
+      "elapsed_s": 1106.0,
+      "usd": 2.1312,
+      "levels": 0,
+      "win_levels": 8,
+      "scorecard_url": "https://three.arcprize.org/scorecards/f7aa15b4-cdd0-4921-80e2-618862d7b42a",
+      "returncode": 0,
+      "stderr_tail": []
+    },
+    {
+      "game": "r11l",
+      "mode": "anti-lockin",
+      "elapsed_s": 971.4,
+      "usd": 2.0374,
+      "levels": 0,
+      "win_levels": 6,
+      "scorecard_url": "https://three.arcprize.org/scorecards/2dd69fd5-d424-4ec1-b58d-f9f59f49bbf1",
+      "returncode": 0,
+      "stderr_tail": []
+    },
+    {
+      "game": "vc33",
+      "mode": "anti-lockin",
+      "elapsed_s": 1474.5,
+      "usd": 1.8996,
+      "levels": 0,
+      "win_levels": 7,
+      "scorecard_url": "https://three.arcprize.org/scorecards/5c3fe01f-1f62-41b0-8e47-263f9c9fb530",
+      "returncode": 0,
+      "stderr_tail": []
+    },
+    {
+      "game": "tn36",
+      "mode": "anti-lockin",
+      "elapsed_s": 2227.6,
+      "usd": 2.0411,
+      "levels": 0,
+      "win_levels": 7,
+      "scorecard_url": "https://three.arcprize.org/scorecards/38a6a028-ca50-4bbf-a6d1-1fa3574f6f9a",
+      "returncode": 0,
+      "stderr_tail": []
+    }
+  ],
+  "finished_at": "2026-05-17 20:39:00",
+  "total_added_usd": 12.2421
+}

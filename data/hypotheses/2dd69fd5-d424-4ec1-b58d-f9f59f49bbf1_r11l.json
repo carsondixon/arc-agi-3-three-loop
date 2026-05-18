@@ -1,0 +1,72 @@
+{
+  "game_id": "r11l",
+  "scorecard_id": "2dd69fd5-d424-4ec1-b58d-f9f59f49bbf1",
+  "rules": {
+    "R5": {
+      "id": "R5",
+      "text": "The game auto-animates and ACTION6 clicks are irrelevant \u2014 the grid changes on its own schedule regardless of input",
+      "confidence": 0.99,
+      "tests_passed": 55,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R7": {
+      "id": "R7",
+      "text": "The avatar/trail/goal objects move autonomously; a level completes when the avatar reaches the fuchsia goal without any player input",
+      "confidence": 0.95,
+      "tests_passed": 54,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R8": {
+      "id": "R8",
+      "text": "There are two separate animated entities (O2 blue trail and O5 f/3 cluster) moving along independent paths; the level completes when both reach their respective goals",
+      "confidence": 0.72,
+      "tests_passed": 50,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R12": {
+      "id": "R12",
+      "text": "O4 diamond at rows 18-24 is purely decorative and not interactive",
+      "confidence": 0.95,
+      "tests_passed": 7,
+      "tests_failed": 1,
+      "last_updated_step": 59
+    }
+  },
+  "objects": {
+    "O2": {
+      "id": "O2",
+      "description": "diagonal trail of blue '1' cells at rows 38-54 cols 7-22, advancing toward fuchsia goal",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.65
+    },
+    "O3": {
+      "id": "O3",
+      "description": "fuchsia '6' cell at row 47 col 16, surrounded by maroon 'f' cells in 5x5 block",
+      "role_hypothesis": "goal",
+      "confidence": 0.82
+    },
+    "O5": {
+      "id": "O5",
+      "description": "f/3 cluster at rows 57-61 cols 24-26 with green '3' and maroon 'f' cells, moving diagonally toward goal",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.7
+    }
+  },
+  "goal_hypothesis": "The game is a pure auto-animation where two entities (O2 blue trail and O5 f/3 cluster) converge toward the fuchsia goal; level completes autonomously when both reach it",
+  "open_questions": [
+    "Will the level auto-complete when O2 fully merges with the fuchsia goal?",
+    "Is O5 converging toward the same goal as O2 or a different target?",
+    "How many more auto-animation steps until a level transition occurs?"
+  ],
+  "last_prediction": {
+    "step_index": 59,
+    "action": "ACTION6",
+    "rule_id": "R5",
+    "expected_outcome": "Grid continues auto-animating one more step; O2 and O5 advance further toward goal regardless of click position on fuchsia goal",
+    "falsifying_observation": "O5 or O2 changes direction, speed, or disappears in response to the click on the fuchsia goal cell"
+  },
+  "step_count": 59
+}

@@ -1,0 +1,78 @@
+{
+  "run_id": "20260517_231746",
+  "mode": "perception-aware",
+  "max_actions": 60,
+  "max_total_usd": 15.0,
+  "tag": "path-1-retest",
+  "started_at": "2026-05-17 23:17:46",
+  "games": [
+    {
+      "game": "cd82",
+      "mode": "perception-aware",
+      "elapsed_s": 946.1,
+      "usd": 2.0497,
+      "levels": 0,
+      "win_levels": 6,
+      "scorecard_url": "https://three.arcprize.org/scorecards/9c55f381-85d7-4172-a012-7079a46df5ae",
+      "returncode": 0,
+      "stderr_tail": []
+    },
+    {
+      "game": "ft09",
+      "mode": "perception-aware",
+      "elapsed_s": 2720.7,
+      "usd": 1.9728,
+      "levels": 0,
+      "win_levels": 6,
+      "scorecard_url": "https://three.arcprize.org/scorecards/bb1690cb-a225-4a43-a411-05536c423e66",
+      "returncode": 0,
+      "stderr_tail": []
+    },
+    {
+      "game": "sb26",
+      "mode": "perception-aware",
+      "elapsed_s": 1006.9,
+      "usd": 2.1933,
+      "levels": 0,
+      "win_levels": 8,
+      "scorecard_url": "https://three.arcprize.org/scorecards/ce48cb43-cd26-460b-acff-ced07a654719",
+      "returncode": 0,
+      "stderr_tail": []
+    },
+    {
+      "game": "r11l",
+      "mode": "perception-aware",
+      "elapsed_s": 893.7,
+      "usd": 2.0177,
+      "levels": 0,
+      "win_levels": 6,
+      "scorecard_url": "https://three.arcprize.org/scorecards/1fa8e4c5-9ce9-439f-947d-942bb3898088",
+      "returncode": 0,
+      "stderr_tail": []
+    },
+    {
+      "game": "vc33",
+      "mode": "perception-aware",
+      "elapsed_s": 752.2,
+      "usd": 1.8147,
+      "levels": 0,
+      "win_levels": 7,
+      "scorecard_url": "https://three.arcprize.org/scorecards/c310210f-4a42-4e3b-b319-fd490afe4ff6",
+      "returncode": 0,
+      "stderr_tail": []
+    },
+    {
+      "game": "tn36",
+      "mode": "perception-aware",
+      "elapsed_s": 798.5,
+      "usd": 2.0182,
+      "levels": 0,
+      "win_levels": 7,
+      "scorecard_url": "https://three.arcprize.org/scorecards/db5a2d9b-4259-4685-b908-350a0af234c7",
+      "returncode": 0,
+      "stderr_tail": []
+    }
+  ],
+  "finished_at": "2026-05-18 01:16:24",
+  "total_added_usd": 12.0664
+}

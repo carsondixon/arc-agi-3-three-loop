@@ -1,0 +1,86 @@
+{
+  "game_id": "sb26",
+  "scorecard_id": "f7aa15b4-cdd0-4921-80e2-618862d7b42a",
+  "rules": {
+    "R4": {
+      "id": "R4",
+      "text": "Row 53 progress bar advances with each action",
+      "confidence": 0.05,
+      "tests_passed": 1,
+      "tests_failed": 3,
+      "last_updated_step": 59
+    },
+    "R120": {
+      "id": "R120",
+      "text": "The bottom palette blocks must be clicked in the order matching the top display (9/e/b/f = brown/navy/light_blue/maroon)",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 59
+    },
+    "R123": {
+      "id": "R123",
+      "text": "Clicking the brown(9) block at rows 57-60, cols 34-37 is the first correct action in the sequence",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 59
+    },
+    "R124": {
+      "id": "R124",
+      "text": "ACTION5 cycles a selection cursor among the bottom palette blocks, and ACTION6 confirms the selection",
+      "confidence": 0.25,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R125": {
+      "id": "R125",
+      "text": "ACTION7 moves selection in the opposite direction from ACTION5 among the bottom palette blocks",
+      "confidence": 0.2,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    }
+  },
+  "objects": {
+    "O1": {
+      "id": "O1",
+      "description": "Rows 1-7, cols 17-43: gray-bordered region with 4 colored boxes brown/navy/light_blue/maroon left-to-right",
+      "role_hypothesis": "display",
+      "confidence": 0.9
+    },
+    "O2": {
+      "id": "O2",
+      "description": "Rows 57-60, cols 18-45: 4 colored blocks navy(e)/maroon(f)/brown(9)/light_blue(b) in that order",
+      "role_hypothesis": "trigger",
+      "confidence": 0.6
+    },
+    "O3": {
+      "id": "O3",
+      "description": "Rows 24-35, cols 17-46: rectangular teal-bordered frame with 4 pairs of red dots at rows 29-30",
+      "role_hypothesis": "display",
+      "confidence": 0.7
+    },
+    "O4": {
+      "id": "O4",
+      "description": "Row 53: red/green progress bar spanning full width",
+      "role_hypothesis": "display",
+      "confidence": 0.8
+    }
+  },
+  "goal_hypothesis": "The game may require ACTION5 or ACTION7 to cycle through options, with the bottom palette blocks (rows 57-60) serving as selectable choices that are navigated via ACTION5/ACTION7 and confirmed via ACTION6, or the game requires a specific non-click interaction not yet discovered.",
+  "open_questions": [
+    "Does ACTION5 or ACTION7 move a selection cursor among the bottom palette blocks?",
+    "Is there a cursor/highlight indicator that changes when ACTION5/ACTION7 is pressed?",
+    "What does the teal frame with red dots represent - is it a response indicator?"
+  ],
+  "last_prediction": {
+    "step_index": 59,
+    "action": "ACTION5",
+    "rule_id": "R124",
+    "expected_outcome": "A visible cursor or highlight appears on one of the bottom palette blocks, or the teal frame changes, indicating ACTION5 navigates a selection",
+    "falsifying_observation": "The grid remains completely identical with no highlight, cursor, or any change visible"
+  },
+  "step_count": 59
+}

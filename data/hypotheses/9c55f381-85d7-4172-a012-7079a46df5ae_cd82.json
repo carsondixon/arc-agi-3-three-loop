@@ -1,0 +1,109 @@
+{
+  "game_id": "cd82",
+  "scorecard_id": "9c55f381-85d7-4172-a012-7079a46df5ae",
+  "rules": {
+    "R62": {
+      "id": "R62",
+      "text": "Clicking on the large gray region O_5_2 at an untested interior coordinate causes a visible change.",
+      "confidence": 0.03,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R37": {
+      "id": "R37",
+      "text": "ACTION3 pressed once causes a visible change in the grid.",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 59
+    }
+  },
+  "objects": {
+    "O_5_2": {
+      "id": "O_5_2",
+      "description": "Large gray region covering most of grid centroid (37,33)",
+      "role_hypothesis": "wall",
+      "confidence": 0.5
+    },
+    "O_3_1": {
+      "id": "O_3_1",
+      "description": "Green rect left side rows 18-63 cols 0-8",
+      "role_hypothesis": "wall",
+      "confidence": 0.4
+    },
+    "O_5_1": {
+      "id": "O_5_1",
+      "description": "Gray blob top-left bbox 0-15,0-15 containing black cells rows 3-7 and maroon cells rows 8-12 \u2014 clicked twice, no effect",
+      "role_hypothesis": "display",
+      "confidence": 0.7
+    },
+    "O_f_3": {
+      "id": "O_f_3",
+      "description": "Maroon rect centroid (28,32) bbox 25-31,26-37",
+      "role_hypothesis": "display",
+      "confidence": 0.3
+    },
+    "O_4_1": {
+      "id": "O_4_1",
+      "description": "Yellow blob top-left bbox 0-17,0-17",
+      "role_hypothesis": "display",
+      "confidence": 0.3
+    },
+    "O_4_4": {
+      "id": "O_4_4",
+      "description": "Yellow line at right edge col 63, full height \u2014 clicked, no effect",
+      "role_hypothesis": "display",
+      "confidence": 0.6
+    },
+    "O_f_2": {
+      "id": "O_f_2",
+      "description": "Maroon rect top-left area bbox 8-12,3-12 \u2014 clicked, no effect",
+      "role_hypothesis": "display",
+      "confidence": 0.6
+    },
+    "O_2_1": {
+      "id": "O_2_1",
+      "description": "Red bordered box rows 25-38 cols 24-32 with maroon interior \u2014 clicked, no effect",
+      "role_hypothesis": "display",
+      "confidence": 0.4
+    },
+    "O_4_2": {
+      "id": "O_4_2",
+      "description": "Yellow blob centroid (4,37) left side bbox 2-6,35-39",
+      "role_hypothesis": "unknown",
+      "confidence": 0.1
+    },
+    "O_4_3": {
+      "id": "O_4_3",
+      "description": "Yellow blob centroid (4,43) left side bbox 2-6,41-45",
+      "role_hypothesis": "display",
+      "confidence": 0.3
+    },
+    "O_f_1": {
+      "id": "O_f_1",
+      "description": "Maroon rect centroid (4,43) bbox 3-5,42-44 \u2014 overlaps O_4_3",
+      "role_hypothesis": "unknown",
+      "confidence": 0.2
+    },
+    "O_f_4": {
+      "id": "O_f_4",
+      "description": "Maroon rect centroid (36,32) bbox 34-38,27-36 \u2014 clicked twice with no effect",
+      "role_hypothesis": "display",
+      "confidence": 0.6
+    }
+  },
+  "goal_hypothesis": "This game is almost certainly non-interactive or requires a prerequisite condition that cannot be met. All 5 non-click actions and 10+ click coordinates have produced zero observable changes across 59 steps. One final untested click on the large gray interior region O_5_2 remains before concluding the game is a pure observation/animation.",
+  "open_questions": [
+    "Is this game completely non-interactive (like tn36/tu93)?",
+    "Does clicking the interior of the large gray region O_5_2 at a specific coordinate do anything?"
+  ],
+  "last_prediction": {
+    "step_index": 59,
+    "action": "ACTION6",
+    "rule_id": "R62",
+    "expected_outcome": "A visible change appears in the grid \u2014 movement, color shift, or level transition \u2014 after clicking the interior of the large gray region.",
+    "falsifying_observation": "Grid remains completely identical after the click."
+  },
+  "step_count": 59
+}

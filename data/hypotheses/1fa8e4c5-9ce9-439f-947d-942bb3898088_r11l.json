@@ -1,0 +1,128 @@
+{
+  "game_id": "r11l",
+  "scorecard_id": "1fa8e4c5-9ce9-439f-947d-942bb3898088",
+  "rules": {
+    "R10": {
+      "id": "R10",
+      "text": "The game is purely autonomous/animated and no click produces any effect; the avatar/trail moves on its own schedule",
+      "confidence": 0.99,
+      "tests_passed": 54,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R18": {
+      "id": "R18",
+      "text": "The level will auto-advance on a fixed timer independent of trail position",
+      "confidence": 0.25,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R19": {
+      "id": "R19",
+      "text": "The small 0/f pattern is the moving avatar/projectile; it moves diagonally down-left each step autonomously",
+      "confidence": 0.95,
+      "tests_passed": 19,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R22": {
+      "id": "R22",
+      "text": "The level auto-advances when the avatar exits the bottom/left edge of the grid",
+      "confidence": 0.45,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R23": {
+      "id": "R23",
+      "text": "The avatar is currently near bottom area and moving toward the black region at col 0, suggesting it loops or exits at left/bottom edge",
+      "confidence": 0.6,
+      "tests_passed": 4,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    }
+  },
+  "objects": {
+    "O_5_1": {
+      "id": "O_5_1",
+      "description": "Large gray blob covering most of grid, centroid (32,30)",
+      "role_hypothesis": "wall",
+      "confidence": 0.4
+    },
+    "O_2_1": {
+      "id": "O_2_1",
+      "description": "Red blob left side centroid (2,24)",
+      "role_hypothesis": "wall",
+      "confidence": 0.8
+    },
+    "O_2_3": {
+      "id": "O_2_3",
+      "description": "Red blob bottom-right, centroid (58,54)",
+      "role_hypothesis": "wall",
+      "confidence": 0.7
+    },
+    "O_f_14": {
+      "id": "O_f_14",
+      "description": "Maroon diamond shape centroid (47,17), size 20",
+      "role_hypothesis": "display",
+      "confidence": 0.7
+    },
+    "O_3_1": {
+      "id": "O_3_1",
+      "description": "Small green blob centroid (59,27), size 12",
+      "role_hypothesis": "goal",
+      "confidence": 0.35
+    },
+    "O_5_2": {
+      "id": "O_5_2",
+      "description": "Large gray blob covering most of grid, centroid (32,31)",
+      "role_hypothesis": "wall",
+      "confidence": 0.35
+    },
+    "O_2_4": {
+      "id": "O_2_4",
+      "description": "Small red blob top-right, centroid (60,3)",
+      "role_hypothesis": "wall",
+      "confidence": 0.6
+    },
+    "O_1_4": {
+      "id": "O_1_4",
+      "description": "Tiny blue object centroid (42,12), size 2, along diagonal trail",
+      "role_hypothesis": "display",
+      "confidence": 0.7
+    },
+    "O_1_9": {
+      "id": "O_1_9",
+      "description": "Tiny blue object centroid (50,20), size 2, along diagonal trail",
+      "role_hypothesis": "display",
+      "confidence": 0.6
+    },
+    "O_1_14": {
+      "id": "O_1_14",
+      "description": "Tiny blue object centroid (56,25), size 2, along diagonal trail",
+      "role_hypothesis": "display",
+      "confidence": 0.6
+    },
+    "O_2_2": {
+      "id": "O_2_2",
+      "description": "Red blob bottom-left, centroid (7,59)",
+      "role_hypothesis": "wall",
+      "confidence": 0.65
+    }
+  },
+  "goal_hypothesis": "This is a purely autonomous animation game where the avatar (0/f pattern) moves diagonally across the gray field without player input. No click has ever produced any effect in 59 steps. The level likely auto-advances when the avatar completes its path or exits the grid edge.",
+  "open_questions": [
+    "Will the level auto-advance when the avatar reaches the black cell at row 63 col 0?",
+    "Is there any untested coordinate that could trigger a level transition?",
+    "How many more autonomous steps until the avatar exits the grid?"
+  ],
+  "last_prediction": {
+    "step_index": 59,
+    "action": "ACTION6",
+    "rule_id": "R22",
+    "expected_outcome": "No change from click; avatar continues moving autonomously toward grid edge; level still not advanced",
+    "falsifying_observation": "Any grid element changes or level transitions due to the click"
+  },
+  "step_count": 59
+}
