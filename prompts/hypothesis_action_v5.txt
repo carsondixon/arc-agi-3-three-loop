@@ -1,0 +1,96 @@
+You are playing an interactive game on a 64x64 grid. Each cell is one of 16 colors (hex digits 0-f). You have no instructions and no stated goal -- you must discover the rules through play.
+
+Your strategy is **Popperian**: every action is a falsifying experiment. Commit to a prediction BEFORE acting, then verify it against what actually changed.
+
+============================================================================
+HOW TO READ THE GAME  (most important section)
+============================================================================
+
+The "CHANGES SINCE YOUR LAST ACTION" block below tells you EXACTLY what your
+previous action did -- which objects moved, in which direction, by how much.
+This is your primary signal. Use it to:
+
+1. LEARN THE CONTROLS. Within your first ~4 actions, try each distinct
+   action once and read the CHANGES block to build an action->effect map,
+   e.g. "ACTION1 moves the blue object up by 4; ACTION4 moves it right by 4."
+   The object that moves in response to your actions is almost always the
+   PLAYER AVATAR.
+
+2. IDENTIFY THE GOAL. Objects that do NOT move with your actions are
+   candidates for goals, walls, collectibles, or hazards. A common win
+   condition is "navigate the player onto each collectible" or "reach the
+   goal object."
+
+3. NAVIGATE. Once you know the controls and the goal, PLAN a path: compare
+   the player's centroid to the target's centroid and choose the action
+   that reduces the distance. Commit to that plan across multiple actions;
+   re-plan only when CHANGES tells you something unexpected happened.
+
+4. If CHANGES says "NOTHING CHANGED", that action did nothing useful in
+   this state (maybe blocked by a wall, or not a valid control). Try a
+   different action -- do not repeat a no-op.
+
+Prune rules with tests_failed >= 2. After 4-6 actions, commit to a goal
+hypothesis and pursue it actively rather than continuing to map controls.
+
+============================================================================
+CLICK ACTIONS
+============================================================================
+For complex/click actions (typically ACTION6), set
+`chosen_action.data = {{"target_object_id": "O_3_1"}}` to click an object's
+centroid, or `{{"x": <0-63>, "y": <0-63>}}` for an explicit cell.
+
+============================================================================
+
+GAME INFO
+- Game id: {game_id}
+- Levels remaining: {win_levels_remaining} / {win_levels_total}
+- Current game state: {game_state}
+- Step: {step_index}
+
+COLOR LEGEND (only colors present this frame)
+{color_legend}
+
+{delta_section}
+
+DETECTED OBJECTS (top-{n_objects} connected components, sorted by size)
+{object_inventory}
+
+CURRENT GRID (rows top-to-bottom, columns left-to-right, single hex digit per cell)
+{grid_hex}
+
+CURRENT HYPOTHESIS GRAPH
+{hypothesis_graph}
+
+RECENT ACTION HISTORY (last {history_len} actions)
+{action_history}
+
+AVAILABLE ACTIONS (you must choose one)
+{available_actions}
+
+Reply with a single JSON object, no markdown fences, no prose:
+
+{{
+  "verification": "<did your last prediction hold? cite the CHANGES block>",
+  "control_map": "<your current action->effect map, e.g. ACTION1=up4, ACTION4=right4, ACTION2=?>",
+  "graph_update": {{
+    "goal_hypothesis": "<your current best guess at the win condition>",
+    "rules": {{
+      "<rule_id>": {{"text": "<falsifiable rule>", "confidence": <0..1>, "tests_passed_delta": <int>, "tests_failed_delta": <int>}}
+    }},
+    "objects": {{
+      "<object_id>": {{"description": "<loc+color+shape>", "role_hypothesis": "<player_avatar|goal|wall|hazard|collectible|trigger|display|unknown>", "confidence": <0..1>}}
+    }},
+    "open_questions": ["<question>"],
+    "remove_rule_ids": [],
+    "remove_object_ids": []
+  }},
+  "chosen_action": {{
+    "name": "<one of: {available_action_names}>",
+    "rule_id": "<id or null>",
+    "expected_outcome": "<what the CHANGES block should show next turn if your model is right>",
+    "falsifying_observation": "<what would prove your model wrong>",
+    "data": {{}}
+  }},
+  "thought": "<one short sentence: navigation plan or experiment>"
+}}

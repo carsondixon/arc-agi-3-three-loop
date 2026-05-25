@@ -45,9 +45,11 @@ from src.claude_client import ClaudeClient
 from src.hypothesis import HypothesisGraph, Prediction
 from src.perception import (
     color_legend,
+    diff_objects,
     extract_objects,
     grid_to_hex,
     object_index,
+    render_delta,
     render_object_inventory,
 )
 
@@ -59,6 +61,7 @@ HYPOTHESIS_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action.txt"
 HYPOTHESIS_V2_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v2.txt"
 HYPOTHESIS_V3_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v3.txt"
 HYPOTHESIS_V4_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v4.txt"
+HYPOTHESIS_V5_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v5.txt"
 CONFIG_PATH = PROJECT_ROOT / "config" / "models.yaml"
 TRAJ_DIR = PROJECT_ROOT / "data" / "trajectories"
 HYP_DIR = PROJECT_ROOT / "data" / "hypotheses"
@@ -331,8 +334,11 @@ def play_game_hypothesis_loop(
     use_anti_lockin_prompt: bool = False,
     use_object_perception: bool = False,
     use_loose_commitment_prompt: bool = False,
+    use_frame_diff: bool = False,
 ) -> tuple[Trajectory, HypothesisGraph]:
-    if use_loose_commitment_prompt:
+    if use_frame_diff:
+        prompt_template = HYPOTHESIS_V5_PROMPT_PATH.read_text()
+    elif use_loose_commitment_prompt:
         prompt_template = HYPOTHESIS_V4_PROMPT_PATH.read_text()
     elif use_object_perception:
         prompt_template = HYPOTHESIS_V3_PROMPT_PATH.read_text()
@@ -340,12 +346,18 @@ def play_game_hypothesis_loop(
         prompt_template = HYPOTHESIS_V2_PROMPT_PATH.read_text()
     else:
         prompt_template = HYPOTHESIS_PROMPT_PATH.read_text()
+    # frame-diff mode also uses object perception (v5 has DETECTED OBJECTS)
+    if use_frame_diff:
+        use_object_perception = True
     priors_section = _format_priors(memory_priors or [])
     env, frame = _setup_env(arcade, game_id, seed, scorecard_id)
 
     rng = random.Random(seed)
     history: deque[tuple[str, str]] = deque(maxlen=HISTORY_LEN)
     graph = HypothesisGraph(game_id=game_id, scorecard_id=scorecard_id)
+    prev_grid = None
+    prev_objects: list = []
+    last_action_name = "(none)"
     traj = Trajectory(
         game_id=game_id,
         scorecard_id=scorecard_id,
@@ -376,13 +388,23 @@ def play_game_hypothesis_loop(
             f"  step {i}: {a} ({t[:60]})" for i, (a, t) in enumerate(history)
         ) or "  (none yet)"
 
-        # Object perception (Path 1) -- only when v3 prompt is active
+        # Object perception (Path 1) -- only when v3/v5 prompt is active
         obj_inventory_str = ""
         obj_lookup: dict = {}
+        detected: list = []
         if use_object_perception:
             detected = extract_objects(grid)
             obj_lookup = object_index(detected)
             obj_inventory_str = render_object_inventory(detected)
+
+        # Frame differencing (Stage 4.6) -- show Claude what its last action did
+        delta_section = ""
+        if use_frame_diff:
+            if prev_grid is not None:
+                delta = diff_objects(prev_objects, detected, prev_grid, grid)
+                delta_section = render_delta(delta, last_action_name)
+            else:
+                delta_section = "CHANGES SINCE YOUR LAST ACTION: (first action -- no prior frame yet)"
 
         fmt_kwargs = dict(
             game_id=game_id,
@@ -401,8 +423,15 @@ def play_game_hypothesis_loop(
         if use_object_perception:
             fmt_kwargs["object_inventory"] = obj_inventory_str
             fmt_kwargs["n_objects"] = len(obj_lookup)
+        if use_frame_diff:
+            fmt_kwargs["delta_section"] = delta_section
 
         prompt = priors_section + prompt_template.format(**fmt_kwargs)
+
+        # Remember this frame for next-step differencing (before we step)
+        if use_frame_diff:
+            prev_grid = grid
+            prev_objects = detected
 
         text, cost = client.reason(
             prompt=prompt,
@@ -474,6 +503,7 @@ def play_game_hypothesis_loop(
             action_label = f"{action.name}{tag}"
         else:
             action_label = action.name
+        last_action_name = action_label
 
         state_before = str(frame.state)
         levels_before = frame.levels_completed
@@ -523,7 +553,7 @@ def play_game_hypothesis_loop(
 # --------------------------------------------------------------------------- #
 
 
-MODES = ("naked", "hypothesis-loop", "memory-augmented", "anti-lockin", "perception-aware", "perception-loose")
+MODES = ("naked", "hypothesis-loop", "memory-augmented", "anti-lockin", "perception-aware", "perception-loose", "perception-diff")
 
 
 def _format_priors(priors: list[tuple[Any, float]]) -> str:
@@ -642,6 +672,20 @@ def main() -> int:
             use_anti_lockin_prompt=False,
             use_object_perception=True,
             use_loose_commitment_prompt=True,
+        )
+        graph.save(HYP_DIR)
+    elif args.mode == "perception-diff":
+        from src.memory import MemoryStore
+        store = MemoryStore()
+        query = f"Starting game {args.game}. What general lessons from past games apply?"
+        priors = store.retrieve(query, k=3)
+        logger.info("Retrieved %d priors from memory.db (perception-diff mode)", len(priors))
+        traj, graph = play_game_hypothesis_loop(
+            arcade=arcade, client=client, game_id=args.game,
+            scorecard_id=scorecard_id, seed=args.seed,
+            max_actions=args.max_actions, per_game_budget_usd=per_game_budget,
+            memory_priors=priors, mode_label="perception-diff",
+            use_frame_diff=True,
         )
         graph.save(HYP_DIR)
     else:

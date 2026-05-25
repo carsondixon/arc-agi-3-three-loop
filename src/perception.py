@@ -185,3 +185,104 @@ def render_object_inventory(objects: list[DetectedObject]) -> str:
 def object_index(objects: list[DetectedObject]) -> dict[str, DetectedObject]:
     """Return {obj_id: DetectedObject} for fast lookup at action-execution time."""
     return {o.obj_id: o for o in objects}
+
+
+# --------------------------------------------------------------------------- #
+# Frame differencing (Stage 4.6 perception upgrade)
+# --------------------------------------------------------------------------- #
+
+
+@dataclass
+class FrameDelta:
+    """What changed between two consecutive frames."""
+    moved: list[tuple[DetectedObject, DetectedObject, int, int]]  # (prev, curr, dy, dx)
+    appeared: list[DetectedObject]
+    disappeared: list[DetectedObject]
+    changed_cells: int
+
+
+def diff_objects(
+    prev_objects: list[DetectedObject],
+    curr_objects: list[DetectedObject],
+    prev_grid: np.ndarray | None = None,
+    curr_grid: np.ndarray | None = None,
+) -> FrameDelta:
+    """Match objects across two frames and report movement / appearance / disappearance.
+
+    Matching heuristic: same color, similar size (within max(3, 50%)), nearest
+    centroid (Manhattan). Greedy, largest-first. This is deliberately simple --
+    it just needs to surface "the player moved" reliably enough for Claude to
+    learn the action->direction mapping.
+    """
+    from collections import defaultdict
+
+    prev_by_color: dict[int, list[DetectedObject]] = defaultdict(list)
+    for o in prev_objects:
+        prev_by_color[o.color].append(o)
+    curr_by_color: dict[int, list[DetectedObject]] = defaultdict(list)
+    for o in curr_objects:
+        curr_by_color[o.color].append(o)
+
+    moved: list[tuple[DetectedObject, DetectedObject, int, int]] = []
+    appeared: list[DetectedObject] = []
+    disappeared: list[DetectedObject] = []
+
+    all_colors = set(prev_by_color) | set(curr_by_color)
+    for color in all_colors:
+        prev_list = sorted(prev_by_color.get(color, []), key=lambda o: -o.size)
+        curr_list = sorted(curr_by_color.get(color, []), key=lambda o: -o.size)
+        used_prev: set[int] = set()
+        for c in curr_list:
+            best_i = -1
+            best_dist = 10**9
+            for i, p in enumerate(prev_list):
+                if i in used_prev:
+                    continue
+                if abs(p.size - c.size) > max(3, 0.5 * c.size):
+                    continue
+                dist = abs(p.centroid_y - c.centroid_y) + abs(p.centroid_x - c.centroid_x)
+                if dist < best_dist:
+                    best_dist = dist
+                    best_i = i
+            if best_i >= 0:
+                used_prev.add(best_i)
+                p = prev_list[best_i]
+                dy = c.centroid_y - p.centroid_y
+                dx = c.centroid_x - p.centroid_x
+                if dy != 0 or dx != 0:
+                    moved.append((p, c, dy, dx))
+            else:
+                appeared.append(c)
+        for i, p in enumerate(prev_list):
+            if i not in used_prev:
+                disappeared.append(p)
+
+    changed_cells = 0
+    if prev_grid is not None and curr_grid is not None and prev_grid.shape == curr_grid.shape:
+        changed_cells = int(np.count_nonzero(prev_grid != curr_grid))
+
+    return FrameDelta(moved=moved, appeared=appeared, disappeared=disappeared, changed_cells=changed_cells)
+
+
+def render_delta(delta: FrameDelta, last_action: str) -> str:
+    """Render a FrameDelta as a CHANGES section for the prompt."""
+    lines = [f"CHANGES SINCE YOUR LAST ACTION ({last_action}):"]
+    if not delta.moved and not delta.appeared and not delta.disappeared and delta.changed_cells == 0:
+        lines.append("  NOTHING CHANGED -- this action had zero visible effect on the grid.")
+        return "\n".join(lines)
+    for p, c, dy, dx in delta.moved:
+        parts = []
+        if dy:
+            parts.append(f"{dy:+d} in y ({'down' if dy > 0 else 'up'})")
+        if dx:
+            parts.append(f"{dx:+d} in x ({'right' if dx > 0 else 'left'})")
+        lines.append(
+            f"  object color={c.color:x}({c.color_name}) size={c.size} MOVED "
+            f"({p.centroid_y},{p.centroid_x})->({c.centroid_y},{c.centroid_x})  [{', '.join(parts)}]"
+        )
+    for c in delta.appeared:
+        lines.append(f"  object color={c.color:x}({c.color_name}) size={c.size} APPEARED at ({c.centroid_y},{c.centroid_x})")
+    for p in delta.disappeared:
+        lines.append(f"  object color={p.color:x}({p.color_name}) size={p.size} DISAPPEARED from ({p.centroid_y},{p.centroid_x})")
+    lines.append(f"  ({delta.changed_cells} cells changed total)")
+    return "\n".join(lines)
