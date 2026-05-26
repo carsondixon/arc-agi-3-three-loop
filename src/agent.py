@@ -690,6 +690,8 @@ def play_game_autopilot(
         available = _available_actions(frame)
         if not available:
             frame = env.step(GameAction.RESET); continue
+        if not frame.frame:
+            frame = env.step(GameAction.RESET); continue
 
         grid = frame.frame[0]
         detected = extract_objects(grid)
@@ -751,6 +753,7 @@ def play_game_autopilot(
             blocked: set[str] = set()
             avail_names = [a.name for a in available]
             steps_taken = 0
+            arrived = False
             logger.info("[pilot] action=%d AUTOPILOT player=%s->target=%s vec=%s", action_counter, player_id, nav_id, {k: (round(v[0],1),round(v[1],1)) for k,v in vectors.items()})
             for _ in range(autopilot_steps):
                 if action_counter >= max_actions or traj.total_usd > per_game_budget_usd:
@@ -768,6 +771,8 @@ def play_game_autopilot(
                 steps_taken += 1
                 if nxt is None:
                     blocked.add(move); continue
+                if not nxt.frame:
+                    frame = nxt; break  # empty grid (state/level transition) -> let main loop re-evaluate
                 after_grid = nxt.frame[0]; after_objs = extract_objects(after_grid)
                 d = diff_objects(before_objs, after_objs, before_grid, after_grid)
                 world_graph.observe(levels_before, action.name, d, nxt.levels_completed > levels_before, action_counter)
@@ -787,10 +792,10 @@ def play_game_autopilot(
                 player_yx = (new_player.centroid_y, new_player.centroid_x)
                 new_target = _find_object(after_objs, t_color, t_size, target_yx)
                 if new_target is None:
-                    break  # target gone (collected!) -> re-plan
+                    arrived = True; break  # target gone (collected!) -> re-plan
                 target_yx = (new_target.centroid_y, new_target.centroid_x)
                 if abs(player_yx[0]-target_yx[0]) + abs(player_yx[1]-target_yx[1]) <= 1:
-                    break  # reached -> re-plan
+                    arrived = True; break  # reached -> re-plan
             if steps_taken == 0:
                 # Autopilot could not move toward the target with known vectors.
                 # Break the stall: take one forced exploration action (least-mapped
@@ -800,7 +805,7 @@ def play_game_autopilot(
                 before_grid = frame.frame[0]; before_objs = extract_objects(before_grid)
                 nxt = env.step(explore)
                 action_counter += 1
-                if nxt is not None:
+                if nxt is not None and nxt.frame:
                     d = diff_objects(before_objs, extract_objects(nxt.frame[0]), before_grid, nxt.frame[0])
                     world_graph.observe(levels_before, explore.name, d, nxt.levels_completed > levels_before, action_counter)
                     _record_step(action_counter - 1, f"{explore.name}[explore]", thought, state_before, levels_before, 0.0, nxt)
@@ -812,6 +817,12 @@ def play_game_autopilot(
                     f"(the path may be blocked or require an unmapped control). I took one exploration "
                     f"step ({explore.name}) instead. Pick a DIFFERENT, reachable target or keep exploring "
                     f"to map controls."
+                )
+            elif not arrived:
+                autopilot_note = (
+                    f"AUTOPILOT moved toward {nav_id} but did NOT reach it (ran out of steps or got "
+                    f"blocked near it). It may be behind a wall. Try a DIFFERENT target, or approach it "
+                    f"from another side."
                 )
             world_graph.save(WORLD_GRAPH_DIR)
         else:
@@ -832,8 +843,10 @@ def play_game_autopilot(
             before_grid = frame.frame[0]; before_objs = detected
             nxt = env.step(action)
             action_counter += 1
-            if nxt is None:
+            if nxt is None or not nxt.frame:
                 _record_step(action_counter - 1, action.name + "[REJECTED]", thought, state_before, levels_before, cost.usd, frame)
+                if nxt is not None:
+                    frame = nxt
                 continue
             d = diff_objects(before_objs, extract_objects(nxt.frame[0]), before_grid, nxt.frame[0])
             world_graph.observe(levels_before, action.name, d, nxt.levels_completed > levels_before, action_counter)
