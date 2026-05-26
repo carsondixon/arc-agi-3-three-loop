@@ -466,10 +466,16 @@ def play_game_hypothesis_loop(
             prev_objects = detected
 
         call_tags = {"game_id": game_id, "step": step_index, "scorecard_id": scorecard_id, "mode": mode_label}
-        if use_vision:
-            text, cost = client.reason_vision(prompt, vision_images, role="reasoner", tags=call_tags)
-        else:
-            text, cost = client.reason(prompt=prompt, role="reasoner", tags=call_tags)
+        try:
+            if use_vision:
+                text, cost = client.reason_vision(prompt, vision_images, role="reasoner", tags=call_tags)
+            else:
+                text, cost = client.reason(prompt=prompt, role="reasoner", tags=call_tags)
+        except Exception as e:
+            # API error mid-run (e.g. usage limit, transient 5xx): stop cleanly so
+            # the partial trajectory is still saved by the caller, rather than crashing.
+            logger.warning("Reasoner call failed at step %d (%s); ending game with partial trajectory", step_index, e)
+            break
         traj.total_usd += cost.usd
 
         parsed = _extract_json(text)
