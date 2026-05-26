@@ -2,7 +2,20 @@
 
 **Status:** outline for the next session to expand into a blog post + Paper Track submission.
 **Format target:** ~2,500-word technical blog post (primary), convertible to a short paper.
-**Audience:** ARC Prize community + AI lab recruiters (Anthropic especially). Tone: rigorous, honest, self-aware. The 0% is owned, not hidden — the contribution is the *diagnosis*.
+**Audience:** ARC Prize community + AI lab recruiters (Anthropic especially). Tone: rigorous, honest, self-aware.
+
+> **UPDATE 2026-05-26 — the story has evolved past "zero points."** After the prior-art research we (a) pivoted to **vision perception** (render the grid to an image), which immediately unblocked navigation where every hex-text mode scored 0 — confirming the field's finding that perception, not reasoning, is the binding constraint; and (b) built the **novel contribution**: an LLM reasoning over a *harness-maintained, deterministic state-transition world graph* (`src/world_graph.py`, `--mode=vision-graph`) — the unclaimed gap between pure graph-search/RL winners and pure-LLM scaffolds. The final framing depends on the overnight score runs (TODO: fill leaderboard result). Two candidate spines: **success** ("vision + a training-free world graph gets a single agent onto the board cheaply") or **honest-progress** ("from non-interactive to navigating; here's the remaining gap"). Either way the prior-art-landscape + perception-bottleneck + world-graph sections below are the load-bearing content.
+
+### New prior-art landscape section (insert as Section 1.5)
+- Frontier LLMs score <1% on ARC-AGI-3; CNN/RL and graph-search agents lead (an order of magnitude higher). Pure-LLM scaffolds (e.g. OpenClaw, ~5% at ~$2,912) cap low.
+- ~80% of agent failures are *perception* errors, not reasoning (multiple sources). Motivates the vision pivot directly.
+- The official reference repo already ships vision + frame-diff + think/observe/memory — so those are table stakes, not novelty. **Our novelty must sit above perception**: the harness-maintained world graph.
+- (Verify all external numbers before publishing — some came from web search.)
+
+### New contribution section (replaces/augments old "future work")
+- **Harness-authored world graph vs LLM-authored hypothesis graph.** Two complementary state objects: the LLM writes its *beliefs* (HypothesisGraph); the *harness* writes *ground-truth* action effects observed from frame deltas (WorldGraph) — movement vectors, no-ops, appear/vanish, and the gold signal: which action advanced a level. The LLM then reasons over an objective model it did not author.
+- **Why it matters:** bridges the two prior-art families; training-free (unlike the RL/CNN winners); debuggable (a determinism mismatch caught a real bug the model's narration had masked).
+- Ablation: `--mode=vision` (no graph) vs `--mode=vision-graph` (with graph) on the same game — TODO fill.
 
 ---
 
