@@ -91,6 +91,14 @@ class ClaudeClient:
         self._client = anthropic.Anthropic(api_key=key)
         self._config = _load_config()
 
+    def _resolve_params(self, role: str) -> tuple[str, int, float]:
+        model = self._config["models"][f"primary_{role}"] if role == "reasoner" else (
+            self._config["models"].get(role) or self._config["models"]["primary_reasoner"]
+        )
+        max_tokens = self._config["max_tokens"].get(role, 4096)
+        temperature = self._config["temperature"].get(role, 0.5)
+        return model, max_tokens, temperature
+
     def reason(
         self,
         prompt: str,
@@ -98,12 +106,8 @@ class ClaudeClient:
         system: str | None = None,
         tags: dict[str, Any] | None = None,
     ) -> tuple[str, CallCost]:
-        """Send a single-turn prompt. Returns (text, cost)."""
-        model = self._config["models"][f"primary_{role}"] if role == "reasoner" else (
-            self._config["models"].get(role) or self._config["models"]["primary_reasoner"]
-        )
-        max_tokens = self._config["max_tokens"].get(role, 4096)
-        temperature = self._config["temperature"].get(role, 0.5)
+        """Send a single-turn text prompt. Returns (text, cost)."""
+        model, max_tokens, temperature = self._resolve_params(role)
 
         messages = [{"role": "user", "content": prompt}]
         kwargs: dict[str, Any] = {
@@ -111,6 +115,52 @@ class ClaudeClient:
             "max_tokens": max_tokens,
             "temperature": temperature,
             "messages": messages,
+        }
+        if system:
+            kwargs["system"] = system
+
+        response = self._client.messages.create(**kwargs)
+        text = "".join(block.text for block in response.content if block.type == "text")
+        cost = _compute_cost(model, response.usage)
+        _log_cost(cost, tags=tags)
+        return text, cost
+
+    def reason_vision(
+        self,
+        prompt: str,
+        images: list[bytes],
+        role: str = "reasoner",
+        system: str | None = None,
+        tags: dict[str, Any] | None = None,
+    ) -> tuple[str, CallCost]:
+        """Send a single-turn prompt with one or more PNG images.
+
+        `images` are raw PNG bytes (rendered by perception.grid_to_image /
+        diff_image). They are sent as Anthropic image content blocks, followed
+        by the text prompt, in a single user message -- one call per turn.
+        """
+        import base64
+
+        model, max_tokens, temperature = self._resolve_params(role)
+
+        content: list[dict[str, Any]] = [
+            {
+                "type": "image",
+                "source": {
+                    "type": "base64",
+                    "media_type": "image/png",
+                    "data": base64.b64encode(png).decode("ascii"),
+                },
+            }
+            for png in images
+        ]
+        content.append({"type": "text", "text": prompt})
+
+        kwargs: dict[str, Any] = {
+            "model": model,
+            "max_tokens": max_tokens,
+            "temperature": temperature,
+            "messages": [{"role": "user", "content": content}],
         }
         if system:
             kwargs["system"] = system

@@ -1,0 +1,79 @@
+{
+  "game_id": "ls20",
+  "scorecard_id": "ed759d4a-6354-4f05-9e46-e224dfd6da85",
+  "seed": 0,
+  "mode": "vision",
+  "started_at": "2026-05-26T05:29:25.848984+00:00",
+  "finished_at": "2026-05-26T05:30:29.587327+00:00",
+  "total_usd": 0.131715,
+  "steps": [
+    {
+      "step_index": 0,
+      "action": "ACTION1",
+      "thought": "Testing ACTION1 first to see which object moves and establish the player avatar identity.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.019757999999999998,
+      "expected_outcome": "CHANGES image shows some object moving \u2014 likely the white cross or a small colored cell shifts position",
+      "falsifying_observation": "CHANGES image is all black (no effect)",
+      "rule_id": "R1",
+      "verification": "First action \u2014 no prior frame to verify against."
+    },
+    {
+      "step_index": 1,
+      "action": "ACTION2",
+      "thought": "Test ACTION2 to map another direction before committing to navigation toward the goal.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.026987999999999998,
+      "expected_outcome": "CHANGES image shows the player avatar (brown+magenta block) moving in a new direction (likely down, left, or right)",
+      "falsifying_observation": "CHANGES image is all black (no movement)",
+      "rule_id": "R3",
+      "verification": "Prediction held: CHANGES image shows objects moved. The brown rect (O_9_3) moved from (48,36) to (43,36) \u2014 5 cells up in y \u2014 and magenta rect (O_c_1) moved from (46,36) to (40,36) \u2014 6 cells up. These are the player avatar elements moving upward. ACTION1 = move up."
+    },
+    {
+      "step_index": 2,
+      "action": "ACTION3",
+      "thought": "Test ACTION3 to confirm left movement, then I'll have enough control knowledge to navigate toward the goal (black box at top).",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.028725,
+      "expected_outcome": "CHANGES image shows the player avatar (brown+magenta block) moving LEFT (x coordinate decreases)",
+      "falsifying_observation": "CHANGES image is all black (no movement) or avatar moves in a different direction",
+      "rule_id": "R4",
+      "verification": "Prediction partially held: CHANGES image shows the brown+magenta block (player avatar) moved DOWN (y increased from 36 to 36, but bbox shifted from rows 43-40 to 48-46), confirming ACTION2 moves the player DOWN. The green object O_3_2 also moved right slightly, which may be a camera/scroll artifact or separate element."
+    },
+    {
+      "step_index": 3,
+      "action": "ACTION1",
+      "thought": "Controls confirmed: ACTION1=UP, ACTION2=DOWN, ACTION3=LEFT. Now navigate UP toward the goal (white cross at row 12, col 36 or the black box at top). Player is at row ~47, need to go UP significantly.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.025835999999999998,
+      "expected_outcome": "CHANGES image shows brown+magenta avatar moving UP (y coordinate decreases) from current position (46-48, 31)",
+      "falsifying_observation": "CHANGES image is all black or avatar moves in a different direction",
+      "rule_id": "R1",
+      "verification": "Prediction held: CHANGES image shows brown (O_9_3) moved from (48,36) to (48,31) and magenta (O_c_1) moved from (46,36) to (46,31), both shifting LEFT (x decreased by 5). ACTION3 = LEFT confirmed."
+    },
+    {
+      "step_index": 4,
+      "action": "ACTION1",
+      "thought": "Avatar may have been blocked by wall last step; try ACTION1 again to move UP toward the goal at (12,36).",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.030408,
+      "expected_outcome": "CHANGES image shows brown+magenta avatar moving UP (y decreases by 1), or if blocked, all black except possibly the bar",
+      "falsifying_observation": "Avatar stays at same position and only bar changes - would suggest ACTION1 does not move avatar up",
+      "rule_id": "R1",
+      "verification": "LAST PREDICTION FAILED: Expected avatar (brown+magenta) to move UP (y decrease), but CHANGES image shows O_b_1 (light_blue bar) moved RIGHT by 1 cell (62,35)->(62,36). The avatar did NOT move. ACTION1 appears to affect the bottom bar, not the avatar. Wait - re-reading: the changes show the yellow bar moved right. This suggests ACTION1 moves the bar right, or the bar is a progress indicator that auto-advances. The avatar position unchanged."
+    }
+  ],
+  "final_state": "GameState.NOT_FINISHED",
+  "levels_completed": 0,
+  "win_levels": 7
+}

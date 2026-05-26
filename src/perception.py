@@ -11,9 +11,12 @@ The grid coming from arc_agi is a 64x64 int8 ndarray with values 0-15.
 
 from __future__ import annotations
 
+import base64
+import io
 from dataclasses import dataclass
 
 import numpy as np
+from PIL import Image
 from scipy import ndimage
 
 GRID_W = 64
@@ -39,6 +42,38 @@ COLOR_NAMES = {
     15: "maroon",
 }
 
+# ARC-AGI-3 canonical render palette (RGB), matching how the games actually
+# display. This is the palette the official multimodal template uses; it is
+# NOT the same as COLOR_NAMES above (which is the ARC-AGI-1/2 naming). Vision
+# mode renders with this so Claude sees the true colors.
+VISION_PALETTE = np.array(
+    [
+        (0xFF, 0xFF, 0xFF),  # 0 white
+        (0xCC, 0xCC, 0xCC),  # 1 off-white
+        (0x99, 0x99, 0x99),  # 2 light-gray
+        (0x66, 0x66, 0x66),  # 3 gray
+        (0x33, 0x33, 0x33),  # 4 off-black
+        (0x00, 0x00, 0x00),  # 5 black
+        (0xE5, 0x3A, 0xA3),  # 6 magenta
+        (0xFF, 0x7B, 0xCC),  # 7 pink
+        (0xF9, 0x3C, 0x31),  # 8 red
+        (0x1E, 0x93, 0xFF),  # 9 blue
+        (0x88, 0xD8, 0xF1),  # 10 light-blue
+        (0xFF, 0xDC, 0x00),  # 11 yellow
+        (0xFF, 0x85, 0x1B),  # 12 orange
+        (0x92, 0x12, 0x31),  # 13 maroon
+        (0x4F, 0xCC, 0x30),  # 14 green
+        (0xA3, 0x56, 0xD6),  # 15 purple
+    ],
+    dtype=np.uint8,
+)
+
+VISION_PALETTE_NAMES = {
+    0: "white", 1: "off-white", 2: "light-gray", 3: "gray", 4: "off-black",
+    5: "black", 6: "magenta", 7: "pink", 8: "red", 9: "blue", 10: "light-blue",
+    11: "yellow", 12: "orange", 13: "maroon", 14: "green", 15: "purple",
+}
+
 
 def grid_to_hex(grid: np.ndarray) -> str:
     """Render a 64x64 int8 grid as a multiline hex string.
@@ -62,6 +97,55 @@ def color_legend(grid: np.ndarray) -> str:
     present = sorted({int(v) for v in np.unique(np.clip(grid, 0, 15))})
     parts = [f"{v:x}={COLOR_NAMES.get(v, '?')}" for v in present]
     return ", ".join(parts)
+
+
+def color_legend_visual(grid: np.ndarray) -> str:
+    """Color legend using the ARC-AGI-3 render palette names (matches the image)."""
+    present = sorted({int(v) for v in np.unique(np.clip(grid, 0, 15))})
+    parts = [f"{v:x}={VISION_PALETTE_NAMES.get(v, '?')}" for v in present]
+    return ", ".join(parts)
+
+
+# --------------------------------------------------------------------------- #
+# Image rendering (vision perception)
+# --------------------------------------------------------------------------- #
+
+
+def grid_to_image(grid: np.ndarray, scale: int = 8) -> bytes:
+    """Render a 64x64 int grid to a crisp upscaled PNG (returns raw PNG bytes).
+
+    Each cell -> VISION_PALETTE RGB, then nearest-neighbor upscaled by `scale`
+    (default 8 -> 512x512) so the model sees distinct, blocky cells.
+    """
+    g = np.clip(np.asarray(grid), 0, 15).astype(int)
+    rgb = VISION_PALETTE[g]  # (H, W, 3) uint8
+    img = Image.fromarray(rgb, mode="RGB")
+    img = img.resize((g.shape[1] * scale, g.shape[0] * scale), Image.NEAREST)
+    buf = io.BytesIO()
+    img.save(buf, format="PNG", optimize=True)
+    return buf.getvalue()
+
+
+def diff_image(prev_grid: np.ndarray, curr_grid: np.ndarray, scale: int = 8) -> bytes:
+    """Render a changes-only image: black canvas, changed cells highlighted red.
+
+    Computed on the integer grids (exact), then upscaled like grid_to_image.
+    """
+    a = np.clip(np.asarray(prev_grid), 0, 15).astype(int)
+    b = np.clip(np.asarray(curr_grid), 0, 15).astype(int)
+    canvas = np.zeros((b.shape[0], b.shape[1], 3), dtype=np.uint8)
+    if a.shape == b.shape:
+        canvas[a != b] = (255, 0, 0)
+    img = Image.fromarray(canvas, mode="RGB")
+    img = img.resize((b.shape[1] * scale, b.shape[0] * scale), Image.NEAREST)
+    buf = io.BytesIO()
+    img.save(buf, format="PNG", optimize=True)
+    return buf.getvalue()
+
+
+def image_to_base64(png_bytes: bytes) -> str:
+    """Base64-encode PNG bytes (no data-URL prefix)."""
+    return base64.b64encode(png_bytes).decode("ascii")
 
 
 # --------------------------------------------------------------------------- #

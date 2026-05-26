@@ -45,9 +45,12 @@ from src.claude_client import ClaudeClient
 from src.hypothesis import HypothesisGraph, Prediction
 from src.perception import (
     color_legend,
+    color_legend_visual,
+    diff_image,
     diff_objects,
     extract_objects,
     grid_to_hex,
+    grid_to_image,
     object_index,
     render_delta,
     render_object_inventory,
@@ -62,6 +65,7 @@ HYPOTHESIS_V2_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v2.txt
 HYPOTHESIS_V3_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v3.txt"
 HYPOTHESIS_V4_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v4.txt"
 HYPOTHESIS_V5_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v5.txt"
+VISION_PROMPT_PATH = PROJECT_ROOT / "prompts" / "vision_action.txt"
 CONFIG_PATH = PROJECT_ROOT / "config" / "models.yaml"
 TRAJ_DIR = PROJECT_ROOT / "data" / "trajectories"
 HYP_DIR = PROJECT_ROOT / "data" / "hypotheses"
@@ -335,8 +339,11 @@ def play_game_hypothesis_loop(
     use_object_perception: bool = False,
     use_loose_commitment_prompt: bool = False,
     use_frame_diff: bool = False,
+    use_vision: bool = False,
 ) -> tuple[Trajectory, HypothesisGraph]:
-    if use_frame_diff:
+    if use_vision:
+        prompt_template = VISION_PROMPT_PATH.read_text()
+    elif use_frame_diff:
         prompt_template = HYPOTHESIS_V5_PROMPT_PATH.read_text()
     elif use_loose_commitment_prompt:
         prompt_template = HYPOTHESIS_V4_PROMPT_PATH.read_text()
@@ -346,9 +353,11 @@ def play_game_hypothesis_loop(
         prompt_template = HYPOTHESIS_V2_PROMPT_PATH.read_text()
     else:
         prompt_template = HYPOTHESIS_PROMPT_PATH.read_text()
-    # frame-diff mode also uses object perception (v5 has DETECTED OBJECTS)
-    if use_frame_diff:
+    # frame-diff and vision modes both use object perception + a CHANGES block
+    if use_frame_diff or use_vision:
         use_object_perception = True
+    # vision renders prev/current/diff images and shows the change block as text too
+    show_delta = use_frame_diff or use_vision
     priors_section = _format_priors(memory_priors or [])
     env, frame = _setup_env(arcade, game_id, seed, scorecard_id)
 
@@ -399,12 +408,23 @@ def play_game_hypothesis_loop(
 
         # Frame differencing (Stage 4.6) -- show Claude what its last action did
         delta_section = ""
-        if use_frame_diff:
+        if show_delta:
             if prev_grid is not None:
                 delta = diff_objects(prev_objects, detected, prev_grid, grid)
                 delta_section = render_delta(delta, last_action_name)
             else:
                 delta_section = "CHANGES SINCE YOUR LAST ACTION: (first action -- no prior frame yet)"
+
+        # Vision perception -- render images now, using prev_grid before it is
+        # overwritten below. First action: just the current frame. Otherwise:
+        # previous frame, current frame, and a changes-highlighted image.
+        vision_images: list[bytes] = []
+        if use_vision:
+            if prev_grid is not None:
+                vision_images.append(grid_to_image(prev_grid))
+            vision_images.append(grid_to_image(grid))
+            if prev_grid is not None:
+                vision_images.append(diff_image(prev_grid, grid))
 
         fmt_kwargs = dict(
             game_id=game_id,
@@ -412,7 +432,7 @@ def play_game_hypothesis_loop(
             win_levels_total=traj.win_levels,
             game_state=str(frame.state),
             step_index=step_index,
-            color_legend=color_legend(grid),
+            color_legend=color_legend_visual(grid) if use_vision else color_legend(grid),
             grid_hex=grid_to_hex(grid),
             hypothesis_graph=graph.render_for_prompt(),
             available_actions=", ".join(a.name for a in available),
@@ -423,21 +443,21 @@ def play_game_hypothesis_loop(
         if use_object_perception:
             fmt_kwargs["object_inventory"] = obj_inventory_str
             fmt_kwargs["n_objects"] = len(obj_lookup)
-        if use_frame_diff:
+        if show_delta:
             fmt_kwargs["delta_section"] = delta_section
 
         prompt = priors_section + prompt_template.format(**fmt_kwargs)
 
         # Remember this frame for next-step differencing (before we step)
-        if use_frame_diff:
+        if show_delta:
             prev_grid = grid
             prev_objects = detected
 
-        text, cost = client.reason(
-            prompt=prompt,
-            role="reasoner",
-            tags={"game_id": game_id, "step": step_index, "scorecard_id": scorecard_id, "mode": mode_label},
-        )
+        call_tags = {"game_id": game_id, "step": step_index, "scorecard_id": scorecard_id, "mode": mode_label}
+        if use_vision:
+            text, cost = client.reason_vision(prompt, vision_images, role="reasoner", tags=call_tags)
+        else:
+            text, cost = client.reason(prompt=prompt, role="reasoner", tags=call_tags)
         traj.total_usd += cost.usd
 
         parsed = _extract_json(text)
@@ -553,7 +573,7 @@ def play_game_hypothesis_loop(
 # --------------------------------------------------------------------------- #
 
 
-MODES = ("naked", "hypothesis-loop", "memory-augmented", "anti-lockin", "perception-aware", "perception-loose", "perception-diff")
+MODES = ("naked", "hypothesis-loop", "memory-augmented", "anti-lockin", "perception-aware", "perception-loose", "perception-diff", "vision")
 
 
 def _format_priors(priors: list[tuple[Any, float]]) -> str:
@@ -686,6 +706,20 @@ def main() -> int:
             max_actions=args.max_actions, per_game_budget_usd=per_game_budget,
             memory_priors=priors, mode_label="perception-diff",
             use_frame_diff=True,
+        )
+        graph.save(HYP_DIR)
+    elif args.mode == "vision":
+        from src.memory import MemoryStore
+        store = MemoryStore()
+        query = f"Starting game {args.game}. What general lessons from past games apply?"
+        priors = store.retrieve(query, k=3)
+        logger.info("Retrieved %d priors from memory.db (vision mode)", len(priors))
+        traj, graph = play_game_hypothesis_loop(
+            arcade=arcade, client=client, game_id=args.game,
+            scorecard_id=scorecard_id, seed=args.seed,
+            max_actions=args.max_actions, per_game_budget_usd=per_game_budget,
+            memory_priors=priors, mode_label="vision",
+            use_vision=True,
         )
         graph.save(HYP_DIR)
     else:

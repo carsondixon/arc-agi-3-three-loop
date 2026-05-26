@@ -1,0 +1,106 @@
+{
+  "game_id": "ls20",
+  "scorecard_id": "ed759d4a-6354-4f05-9e46-e224dfd6da85",
+  "rules": {
+    "R1": {
+      "id": "R1",
+      "text": "ACTION1 moves player avatar UP",
+      "confidence": 0.7,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 4
+    },
+    "R2": {
+      "id": "R2",
+      "text": "The brown+magenta stacked rect (O_9_3 + O_c_1) is the player avatar",
+      "confidence": 0.9,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 4
+    },
+    "R3": {
+      "id": "R3",
+      "text": "ACTION2 moves player avatar DOWN",
+      "confidence": 0.8,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 4
+    },
+    "R4": {
+      "id": "R4",
+      "text": "ACTION3 moves player avatar LEFT",
+      "confidence": 0.8,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 4
+    },
+    "R5": {
+      "id": "R5",
+      "text": "ACTION4 moves player avatar RIGHT",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 4
+    },
+    "R6": {
+      "id": "R6",
+      "text": "The light_blue bar (O_b_1) is a progress/health bar that shifts with actions",
+      "confidence": 0.75,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 4
+    }
+  },
+  "objects": {
+    "O_5_2": {
+      "id": "O_5_2",
+      "description": "gray rect at (12,36) with white cross",
+      "role_hypothesis": "goal",
+      "confidence": 0.65
+    },
+    "O_9_3": {
+      "id": "O_9_3",
+      "description": "brown rect at (48,31)",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.9
+    },
+    "O_c_1": {
+      "id": "O_c_1",
+      "description": "magenta rect at (46,31)",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.9
+    },
+    "O_b_1": {
+      "id": "O_b_1",
+      "description": "light_blue bar at bottom row 62",
+      "role_hypothesis": "display",
+      "confidence": 0.85
+    },
+    "O_5_3": {
+      "id": "O_5_3",
+      "description": "gray blob at (58,6) \u2014 bottom-left box area",
+      "role_hypothesis": "display",
+      "confidence": 0.6
+    },
+    "O_9_1": {
+      "id": "O_9_1",
+      "description": "small brown blob at (12,36)",
+      "role_hypothesis": "unknown",
+      "confidence": 0.3
+    }
+  },
+  "goal_hypothesis": "Move the player avatar (brown+magenta block at ~48,31) UP and LEFT to reach the gray rect with white cross at (12,36) or the black box with blue symbol at top",
+  "open_questions": [
+    "Why did ACTION1 only show the bar moving and not the avatar? Was the avatar blocked by a wall above?",
+    "Is the avatar actually at a different position than (46-48, 31)?",
+    "What is the actual goal - white cross at (12,36) or the black box at top?"
+  ],
+  "last_prediction": {
+    "step_index": 4,
+    "action": "ACTION1",
+    "rule_id": "R1",
+    "expected_outcome": "CHANGES image shows brown+magenta avatar moving UP (y decreases by 1), or if blocked, all black except possibly the bar",
+    "falsifying_observation": "Avatar stays at same position and only bar changes - would suggest ACTION1 does not move avatar up"
+  },
+  "step_count": 4
+}

@@ -77,6 +77,7 @@ source = { editable = "." }
 dependencies = [
     { name = "anthropic" },
     { name = "arc-agi" },
+    { name = "pillow" },
     { name = "python-dotenv" },
     { name = "pyyaml" },
     { name = "sentence-transformers" },
@@ -104,6 +105,7 @@ requires-dist = [
     { name = "arc-agi", specifier = ">=0.9.8" },
     { name = "matplotlib", marker = "extra == 'viz'", specifier = ">=3.9.0" },
     { name = "numpy", marker = "extra == 'memory'", specifier = ">=2.0.0" },
+    { name = "pillow", specifier = ">=10.0.0" },
     { name = "pillow", marker = "extra == 'viz'", specifier = ">=10.0.0" },
     { name = "pyright", marker = "extra == 'dev'", specifier = ">=1.1.380" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },

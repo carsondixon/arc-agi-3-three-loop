@@ -11,6 +11,7 @@ keywords = ["arc-agi", "agents", "harness", "claude", "anthropic"]
 dependencies = [
     "anthropic>=0.40.0",
     "arc-agi>=0.9.8",
+    "pillow>=10.0.0",
     "python-dotenv>=1.0.0",
     "pyyaml>=6.0.3",
     "sentence-transformers>=5.5.0",
