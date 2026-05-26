@@ -28,7 +28,15 @@ Plan: prioritize g50t + wa30 (fixed-cam movement) with vision for a first score;
 - Added `--mode=vision-graph` (`prompts/vision_graph_action.txt`): vision + the LEARNED TRANSITION MODEL injected into the prompt so Claude reasons over an objective world model. This is the unclaimed gap (LLM-over-graph) and the paper differentiator.
 - Bug caught + fixed via the deterministic graph: observe() read `frame` before it was reassigned to `next_frame`, so it diffed the before-grid against itself (all no-ops). Fixed to use `next_frame`. Post-fix smoke: ACTION1 recorded moved 6/6, dy=-14 (up), reliable.
 
+## Phase 2 sweep result + diagnosis (vision-graph, g50t/wa30/tr87, 80a each, $7.41)
+All 3 scored 0 levels — but the world graphs + trajectories show the agent IS working, just not finishing:
+- **wa30 (closest):** correct goal hypothesis ("collect all yellow blobs, they turn green"), actively navigating + collecting (7+ blobs vanished=collected). Ran out of actions: the $2.50/game cap stopped it at 80 with multi-cell/diagonal movement. **More actions should score.** → launched focused run (160a/$4.5) + tightened anti-overshoot nav guidance.
+- **g50t:** movement tiny/noisy (avg <1 cell); agent never locks a reliable control map. Weak candidate.
+- **tr87:** moves but spammed ACTION3 31x with little effect; no goal progress.
+Key takeaway: vision+world-graph gives correct goals and real navigation; the gap to a score is execution precision + action budget, not perception or reasoning.
+
 ## Runs (scorecards)
+- vision-graph sweep g50t/wa30/tr87: 7497ea90 / 1b3df412 / 05115f7f (all 0 levels, $7.41)
 - ls20 vision smoke: https://three.arcprize.org/scorecards/ed759d4a-6354-4f05-9e46-e224dfd6da85 (0 levels, 5 actions, $0.13)
 - ls20 vision-graph smoke (pre-fix): 2bd30d4f-ffb1-4b47-acb0-17b5032edafe ($0.17)
 - ls20 vision-graph smoke (post-fix): a4b989b9-09a5-4c6a-a56c-21cdb60075eb (world graph verified)

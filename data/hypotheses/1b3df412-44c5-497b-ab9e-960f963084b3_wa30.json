@@ -1,0 +1,503 @@
+{
+  "game_id": "wa30",
+  "scorecard_id": "1b3df412-44c5-497b-ab9e-960f963084b3",
+  "rules": {
+    "R1": {
+      "id": "R1",
+      "text": "ACTION1 moves player up by ~4 rows, minimal horizontal movement",
+      "confidence": 0.9,
+      "tests_passed": 19,
+      "tests_failed": 2,
+      "last_updated_step": 79
+    },
+    "R2": {
+      "id": "R2",
+      "text": "Yellow blobs are collectibles; moving player onto them scores/advances level",
+      "confidence": 0.55,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 2
+    },
+    "R3": {
+      "id": "R3",
+      "text": "O_2_1 (red rect) is the player avatar",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 2
+    },
+    "R4": {
+      "id": "R4",
+      "text": "ACTION2 moves/scrolls in some direction",
+      "confidence": 0.5,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 5
+    },
+    "R5": {
+      "id": "R5",
+      "text": "ACTION2 moves player DOWN by ~4 rows",
+      "confidence": 0.9,
+      "tests_passed": 5,
+      "tests_failed": 1,
+      "last_updated_step": 72
+    },
+    "R6": {
+      "id": "R6",
+      "text": "ACTION4 moves player right by ~3 cells but is frequently deflected left by obstacles",
+      "confidence": 0.45,
+      "tests_passed": 3,
+      "tests_failed": 3,
+      "last_updated_step": 22
+    },
+    "R8": {
+      "id": "R8",
+      "text": "When player moves onto yellow collectible position, yellow disappears and green appears - this is collection event",
+      "confidence": 0.7,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 4
+    },
+    "R9": {
+      "id": "R9",
+      "text": "O_e_1 (navy rect) is the player avatar that moves with actions",
+      "confidence": 0.97,
+      "tests_passed": 7,
+      "tests_failed": 0,
+      "last_updated_step": 67
+    },
+    "R10": {
+      "id": "R10",
+      "text": "ACTION4 moves player in variable directions - not reliably right",
+      "confidence": 0.4,
+      "tests_passed": 3,
+      "tests_failed": 2,
+      "last_updated_step": 20
+    },
+    "R11": {
+      "id": "R11",
+      "text": "ACTION1 moves player up by ~2 rows per press",
+      "confidence": 0.45,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 9
+    },
+    "R12": {
+      "id": "R12",
+      "text": "When player reaches collectible cell, yellow disappears and green appears - collection confirmed",
+      "confidence": 0.8,
+      "tests_passed": 3,
+      "tests_failed": 1,
+      "last_updated_step": 68
+    },
+    "R13": {
+      "id": "R13",
+      "text": "ACTION1 is blocked when player is at certain positions - wall or boundary condition",
+      "confidence": 0.75,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 24
+    },
+    "R14": {
+      "id": "R14",
+      "text": "ACTION5 does NOT collect nearby collectibles - it creates a green object above the player",
+      "confidence": 0.3,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 19
+    },
+    "R15": {
+      "id": "R15",
+      "text": "Yellow blobs have a brown inner square - they are the actual collectibles; green blobs may be already-collected or intermediate state",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 10
+    },
+    "R17": {
+      "id": "R17",
+      "text": "As player moves up, new objects appear ahead (brown and red flanking objects appear symmetrically around player path)",
+      "confidence": 0.65,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 12
+    },
+    "R18": {
+      "id": "R18",
+      "text": "ACTION4 moves player right by ~3-4 cols",
+      "confidence": 0.7,
+      "tests_passed": 9,
+      "tests_failed": 2,
+      "last_updated_step": 62
+    },
+    "R19": {
+      "id": "R19",
+      "text": "ACTION5 interacts with green objects near player - removes them",
+      "confidence": 0.7,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 34
+    },
+    "R20": {
+      "id": "R20",
+      "text": "ACTION4 sometimes moves player left by 1 cell when blocked by objects to the right",
+      "confidence": 0.5,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 20
+    },
+    "R21": {
+      "id": "R21",
+      "text": "Yellow blobs cycle/rotate positions with each action",
+      "confidence": 0.8,
+      "tests_passed": 11,
+      "tests_failed": 0,
+      "last_updated_step": 61
+    },
+    "R22": {
+      "id": "R22",
+      "text": "Yellow blob O_4_1 is now at (22,42) - same position as player was previously; yellow and green swap each ACTION4",
+      "confidence": 0.7,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 22
+    },
+    "R24": {
+      "id": "R24",
+      "text": "Player needs to reach red rect O_2_1 at (30,34) to complete level",
+      "confidence": 0.75,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 33
+    },
+    "R25": {
+      "id": "R25",
+      "text": "ACTION4 moves player left by 1 when objects block rightward movement",
+      "confidence": 0.65,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 29
+    },
+    "R26": {
+      "id": "R26",
+      "text": "Player position oscillates around (26,41-46) - stuck in local region, ACTION4 keeps moving left when at x=42",
+      "confidence": 0.8,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 33
+    },
+    "R27": {
+      "id": "R27",
+      "text": "ACTION5 removes a nearby green object rather than moving the player",
+      "confidence": 0.75,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 34
+    },
+    "R28": {
+      "id": "R28",
+      "text": "ACTION4 moves player right by ~3 cells (dx+3)",
+      "confidence": 0.5,
+      "tests_passed": 2,
+      "tests_failed": 1,
+      "last_updated_step": 77
+    },
+    "R29": {
+      "id": "R29",
+      "text": "Brown rect O_9_2 is attached to player and moves with it - part of player sprite",
+      "confidence": 0.9,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 36
+    },
+    "R30": {
+      "id": "R30",
+      "text": "ACTION2 moves player down+left (not pure down)",
+      "confidence": 0.75,
+      "tests_passed": 3,
+      "tests_failed": 1,
+      "last_updated_step": 56
+    },
+    "R31": {
+      "id": "R31",
+      "text": "Player is stuck in row 22 - all movement actions keep player in rows 22-30 range; need to find path to row 30 where goal is",
+      "confidence": 0.75,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 37
+    },
+    "R32": {
+      "id": "R32",
+      "text": "ACTION2 moves player down (~dy+3, dx variable)",
+      "confidence": 0.75,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 67
+    },
+    "R34": {
+      "id": "R34",
+      "text": "ACTION3 moves player up+left - FALSIFIED, it moved right",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 78
+    },
+    "R35": {
+      "id": "R35",
+      "text": "ACTION2 moves player DOWN (~dy+4, dx~0) - needs revision",
+      "confidence": 0.5,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 56
+    },
+    "R37": {
+      "id": "R37",
+      "text": "ACTION3 moves player LEFT by ~3-4 cols but is sometimes blocked by walls/boundaries",
+      "confidence": 0.7,
+      "tests_passed": 12,
+      "tests_failed": 2,
+      "last_updated_step": 69
+    },
+    "R38": {
+      "id": "R38",
+      "text": "Red rect O_2_1 moves RIGHT when player approaches from left - it flees the player",
+      "confidence": 0.65,
+      "tests_passed": 2,
+      "tests_failed": 2,
+      "last_updated_step": 50
+    },
+    "R39": {
+      "id": "R39",
+      "text": "Player is now at (30,29) and red rect is at (30,37) - use ACTION4 to move right toward red rect",
+      "confidence": 0.8,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 50
+    },
+    "R40": {
+      "id": "R40",
+      "text": "ACTION5 does not move the player - it creates/reveals a green blob near the red rect position",
+      "confidence": 0.8,
+      "tests_passed": 4,
+      "tests_failed": 0,
+      "last_updated_step": 53
+    },
+    "R41": {
+      "id": "R41",
+      "text": "ACTION4 moves player right toward yellow collectible",
+      "confidence": 0.65,
+      "tests_passed": 2,
+      "tests_failed": 1,
+      "last_updated_step": 57
+    },
+    "R42": {
+      "id": "R42",
+      "text": "Player at (30,22), green blob at (30,18) - ACTION3 blocked here, try ACTION1",
+      "confidence": 0.6,
+      "tests_passed": 3,
+      "tests_failed": 1,
+      "last_updated_step": 65
+    },
+    "R43": {
+      "id": "R43",
+      "text": "Yellow blobs turn green when player approaches/reaches them - collection state change confirmed",
+      "confidence": 0.92,
+      "tests_passed": 8,
+      "tests_failed": 0,
+      "last_updated_step": 77
+    },
+    "R44": {
+      "id": "R44",
+      "text": "ACTION4 moves player right ~2-3 cols",
+      "confidence": 0.6,
+      "tests_passed": 2,
+      "tests_failed": 1,
+      "last_updated_step": 62
+    },
+    "R45": {
+      "id": "R45",
+      "text": "ACTION4 is sometimes blocked/no-op when player is near certain objects",
+      "confidence": 0.75,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 62
+    },
+    "R46": {
+      "id": "R46",
+      "text": "Player may be blocked from moving further left at x=22 with ACTION3 - test again now at row 30",
+      "confidence": 0.7,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 73
+    },
+    "R47": {
+      "id": "R47",
+      "text": "Player at (29,22) - ACTION2 moves down to ~(33,22)",
+      "confidence": 0.9,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 72
+    },
+    "R48": {
+      "id": "R48",
+      "text": "Player at row 30 aligned with collectibles - ACTION3 moves left toward them but may be blocked at x=22",
+      "confidence": 0.5,
+      "tests_passed": 2,
+      "tests_failed": 1,
+      "last_updated_step": 75
+    },
+    "R50": {
+      "id": "R50",
+      "text": "ACTION3 moves player left by ~2 cells from current position",
+      "confidence": 0.3,
+      "tests_passed": 1,
+      "tests_failed": 2,
+      "last_updated_step": 75
+    },
+    "R_wall_left": {
+      "id": "R_wall_left",
+      "text": "Wall at x=22 blocking leftward movement",
+      "confidence": 0.7,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 78
+    },
+    "R_nav_right": {
+      "id": "R_nav_right",
+      "text": "Player at (30,25) can reach yellow blob at (30,34) with ~3 ACTION4 presses (need ~9 more cells right)",
+      "confidence": 0.8,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 76
+    },
+    "R_nav_left": {
+      "id": "R_nav_left",
+      "text": "Player at (30,29) can reach yellow blob at (30,18) with ACTION3 presses (need ~11 more cells left)",
+      "confidence": 0.75,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 77
+    },
+    "R_collect_34": {
+      "id": "R_collect_34",
+      "text": "Yellow blob at (30,34) was collected - green appeared there, yellow disappeared",
+      "confidence": 0.9,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 77
+    },
+    "R_action3_right": {
+      "id": "R_action3_right",
+      "text": "ACTION3 moves player right by ~1-2 cells in x",
+      "confidence": 0.6,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 78
+    },
+    "R_yellow_at_18": {
+      "id": "R_yellow_at_18",
+      "text": "Yellow blob at (30,18) is a collectible - player needs to reach x=18 from x=26",
+      "confidence": 0.85,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 78
+    },
+    "R_action1_left": {
+      "id": "R_action1_left",
+      "text": "ACTION1 moves player up+left - PARTIALLY WRONG, mainly up not left",
+      "confidence": 0.5,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 79
+    },
+    "R_nav_to_18": {
+      "id": "R_nav_to_18",
+      "text": "To reach yellow at (30,18), player needs to go down to row 30 then left to col 18 - use ACTION2 to go down, ACTION3 to go left",
+      "confidence": 0.8,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 79
+    }
+  },
+  "objects": {
+    "O_e_1": {
+      "id": "O_e_1",
+      "description": "navy rect at (26,26) - player avatar",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.99
+    },
+    "O_2_1": {
+      "id": "O_2_1",
+      "description": "red rect at (30,37) - near player",
+      "role_hypothesis": "hazard",
+      "confidence": 0.55
+    },
+    "O_4_1": {
+      "id": "O_4_1",
+      "description": "yellow blob at (22,42) - collectible upper-right",
+      "role_hypothesis": "collectible",
+      "confidence": 0.9
+    },
+    "O_4_2": {
+      "id": "O_4_2",
+      "description": "yellow blob at (30,18) - collectible to lower-left",
+      "role_hypothesis": "collectible",
+      "confidence": 0.9
+    },
+    "O_4_3": {
+      "id": "O_4_3",
+      "description": "yellow blob at (30,34) - collectible to lower-right",
+      "role_hypothesis": "collectible",
+      "confidence": 0.9
+    },
+    "O_9_2": {
+      "id": "O_9_2",
+      "description": "brown blob at (30,38)",
+      "role_hypothesis": "goal",
+      "confidence": 0.55
+    },
+    "O_7_1": {
+      "id": "O_7_1",
+      "description": "pink horizontal line at bottom row 63, scrolling left - display element",
+      "role_hypothesis": "display",
+      "confidence": 0.85
+    },
+    "O_9_4": {
+      "id": "O_9_4",
+      "description": "brown rect at (30,54), moves with player - part of sprite",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.95
+    },
+    "O_9_3": {
+      "id": "O_9_3",
+      "description": "brown blob at (30,34) overlapping red rect",
+      "role_hypothesis": "hazard",
+      "confidence": 0.5
+    },
+    "O_9_1": {
+      "id": "O_9_1",
+      "description": "brown rect at (22,42), co-located with yellow blob",
+      "role_hypothesis": "collectible",
+      "confidence": 0.6
+    },
+    "O_3_1": {
+      "id": "O_3_1",
+      "description": "green blob at (30,34) - recently collected yellow",
+      "role_hypothesis": "collectible",
+      "confidence": 0.85
+    }
+  },
+  "goal_hypothesis": "Collect all yellow blobs by moving player onto them. Player (navy rect) at (26,26) needs to reach yellow blobs at (30,18), (30,34), and (22,42). Yellow turns green when collected.",
+  "open_questions": [
+    "Player is at (26,26), yellow blob at (30,18) - need to go down 4 and left 8. ACTION2 goes down, ACTION3 goes left.",
+    "Does collecting all yellow blobs complete the level?"
+  ],
+  "last_prediction": {
+    "step_index": 79,
+    "action": "ACTION2",
+    "rule_id": "R5",
+    "expected_outcome": "Player moves down ~2 rows from (26,26) to approximately (28,26). CHANGES image shows navy rect moving down.",
+    "falsifying_observation": "If player does not move down, or moves in a different direction."
+  },
+  "step_count": 79
+}

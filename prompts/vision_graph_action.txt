@@ -36,9 +36,20 @@ HOW TO PLAY
 2. IDENTIFY THE GOAL. Things that do NOT move with your actions are
    candidates for goals, walls, collectibles, or hazards. Common win
    conditions: "move the player onto each collectible" or "reach the goal."
-3. NAVIGATE. Compare the player's location to the target and choose the
-   action that reduces the distance. Commit across multiple actions; re-plan
-   only when the CHANGES image or transition model shows something new.
+3. NAVIGATE PRECISELY. The transition model gives MEASURED movement vectors
+   (dy,dx) for each action -- moves are often multi-cell and/or diagonal.
+   To reach a target at (ty,tx) from the player at (py,px):
+     - compute the remaining gap (ty-py, tx-px);
+     - pick the action whose (dy,dx) vector best reduces BOTH components;
+     - close the LARGER gap first, then fine-tune.
+   ANTI-OVERSHOOT: if you find yourself alternating between two nearby cells
+   without landing on the target, you are overshooting -- the move is bigger
+   than the gap. Switch to the action whose vector is smaller in that axis,
+   or approach from the other side. To COLLECT/REACH a target you must land
+   the player's cell exactly ON it, not merely adjacent.
+   Commit across multiple actions; re-plan only when the CHANGES image or
+   transition model shows something new. When several targets remain, go to
+   the NEAREST one first.
 4. If the CHANGES image is ALL BLACK, your last action did nothing here. Try
    a different action -- do not repeat a no-op.
 

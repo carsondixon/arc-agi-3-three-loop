@@ -1,0 +1,45 @@
+{
+  "run_id": "20260526_005806",
+  "mode": "vision-graph",
+  "max_actions": 80,
+  "max_total_usd": 8.0,
+  "tag": "phase2-vgraph",
+  "started_at": "2026-05-26 00:58:06",
+  "games": [
+    {
+      "game": "g50t",
+      "mode": "vision-graph",
+      "elapsed_s": 3860.9,
+      "usd": 2.432,
+      "levels": 0,
+      "win_levels": 7,
+      "scorecard_url": "https://three.arcprize.org/scorecards/7497ea90-402c-44f7-895a-1e8eeffd8eaf",
+      "returncode": 0,
+      "stderr_tail": []
+    },
+    {
+      "game": "wa30",
+      "mode": "vision-graph",
+      "elapsed_s": 1112.2,
+      "usd": 2.4516,
+      "levels": 0,
+      "win_levels": 9,
+      "scorecard_url": "https://three.arcprize.org/scorecards/1b3df412-44c5-497b-ab9e-960f963084b3",
+      "returncode": 0,
+      "stderr_tail": []
+    },
+    {
+      "game": "tr87",
+      "mode": "vision-graph",
+      "elapsed_s": 1185.7,
+      "usd": 2.5242,
+      "levels": 0,
+      "win_levels": 6,
+      "scorecard_url": "https://three.arcprize.org/scorecards/05115f7f-70d5-4e78-85f0-4ca94626beff",
+      "returncode": 0,
+      "stderr_tail": []
+    }
+  ],
+  "finished_at": "2026-05-26 02:40:45",
+  "total_added_usd": 7.4078
+}

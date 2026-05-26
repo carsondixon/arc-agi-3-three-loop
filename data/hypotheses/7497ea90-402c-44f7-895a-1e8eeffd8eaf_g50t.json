@@ -1,0 +1,904 @@
+{
+  "game_id": "g50t",
+  "scorecard_id": "7497ea90-402c-44f7-895a-1e8eeffd8eaf",
+  "rules": {
+    "R1": {
+      "id": "R1",
+      "text": "ACTION4 does not reliably move player - mostly no-op",
+      "confidence": 0.3,
+      "tests_passed": 2,
+      "tests_failed": 3,
+      "last_updated_step": 22
+    },
+    "R2": {
+      "id": "R2",
+      "text": "O_9_4 (brown blob at y=52,x=47) is the goal/target",
+      "confidence": 0.3,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 0
+    },
+    "R6": {
+      "id": "R6",
+      "text": "O_9_6 is NOT the player avatar - it did not move with ACTION4",
+      "confidence": 0.05,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 3
+    },
+    "R7": {
+      "id": "R7",
+      "text": "O_9_4 (brown blob at y=52,x=47) is the goal/target",
+      "confidence": 0.65,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 3
+    },
+    "R8": {
+      "id": "R8",
+      "text": "ACTION4 moves player O_9_3 UP by ~6 cells",
+      "confidence": 0.5,
+      "tests_passed": 2,
+      "tests_failed": 2,
+      "last_updated_step": 11
+    },
+    "R9": {
+      "id": "R9",
+      "text": "ACTION2 moves player upward",
+      "confidence": 0.5,
+      "tests_passed": 2,
+      "tests_failed": 1,
+      "last_updated_step": 49
+    },
+    "R10": {
+      "id": "R10",
+      "text": "ACTION3 moves O_9_6 (bottom display line) left, not the player avatar",
+      "confidence": 0.8,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 4
+    },
+    "R11": {
+      "id": "R11",
+      "text": "ACTION5 moves O_1_2 (blue player) LEFT (not O_9_3)",
+      "confidence": 0.8,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 10
+    },
+    "R14": {
+      "id": "R14",
+      "text": "ACTION5 moves O_1_2 left by ~2 cells",
+      "confidence": 0.8,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 10
+    },
+    "R15": {
+      "id": "R15",
+      "text": "O_2_2 red rect appearing at previous player position may be a collectible or trail marker",
+      "confidence": 0.55,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 8
+    },
+    "R16": {
+      "id": "R16",
+      "text": "ACTION1 moves player O_9_3 RIGHT by ~6 cells",
+      "confidence": 0.5,
+      "tests_passed": 4,
+      "tests_failed": 1,
+      "last_updated_step": 27
+    },
+    "R17": {
+      "id": "R17",
+      "text": "O_1_2 (blue, size=5 at y=63) is the actual player avatar",
+      "confidence": 0.8,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 10
+    },
+    "R19": {
+      "id": "R19",
+      "text": "ACTION3 moves O_1_2 LEFT (not up)",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 12
+    },
+    "R20": {
+      "id": "R20",
+      "text": "ACTION3 moves bottom display elements left, player movement unclear this step",
+      "confidence": 0.7,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 28
+    },
+    "R21": {
+      "id": "R21",
+      "text": "O_9_3 (brown rect in maze) is the actual player avatar; it moves LEFT with ACTION3",
+      "confidence": 0.3,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 36
+    },
+    "R22": {
+      "id": "R22",
+      "text": "O_9_4 (brown blob at y=52,x=47) is the goal; player O_9_3 needs to reach it by moving right and down",
+      "confidence": 0.8,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 45
+    },
+    "R23": {
+      "id": "R23",
+      "text": "ACTION4 does NOT move player right or down - confirmed no-op",
+      "confidence": 0.15,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 14
+    },
+    "R24": {
+      "id": "R24",
+      "text": "ACTION1 moves player O_9_3 RIGHT by ~6 cells",
+      "confidence": 0.5,
+      "tests_passed": 2,
+      "tests_failed": 1,
+      "last_updated_step": 27
+    },
+    "R25": {
+      "id": "R25",
+      "text": "ACTION4 sometimes moves player UP but is unreliable - 50% no-op",
+      "confidence": 0.6,
+      "tests_passed": 1,
+      "tests_failed": 2,
+      "last_updated_step": 20
+    },
+    "R28": {
+      "id": "R28",
+      "text": "ACTION4 moves player DOWN",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 18
+    },
+    "R32": {
+      "id": "R32",
+      "text": "O_2_2 (red rect) follows player O_9_3 with a lag of ~12 cells to the left - it is a trail marker",
+      "confidence": 0.7,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 23
+    },
+    "R33": {
+      "id": "R33",
+      "text": "ACTION4 moves player DOWN by significant amount",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 2,
+      "last_updated_step": 24
+    },
+    "R35": {
+      "id": "R35",
+      "text": "ACTION4 moves O_9_3 DOWN",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 25
+    },
+    "R36": {
+      "id": "R36",
+      "text": "The game requires navigating white corridors in the maze - player can only move along valid paths",
+      "confidence": 0.7,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 24
+    },
+    "R40": {
+      "id": "R40",
+      "text": "O_8_1 (teal blob) is the actual player avatar - it moved DOWN+RIGHT with ACTION4",
+      "confidence": 0.7,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 25
+    },
+    "R41": {
+      "id": "R41",
+      "text": "ACTION4 moves O_8_1 (teal blob) downward",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 26
+    },
+    "R42": {
+      "id": "R42",
+      "text": "ACTION4 primarily affects display objects (bottom row counters), not the main player avatar",
+      "confidence": 0.7,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 26
+    },
+    "R43": {
+      "id": "R43",
+      "text": "O_8_1 (teal blob) is NOT the player avatar - it is a static maze feature or obstacle",
+      "confidence": 0.65,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 26
+    },
+    "R50": {
+      "id": "R50",
+      "text": "O_2_2 (red rect at y=10,x=28) is the actual player avatar - it trails O_9_3 and may be the real mover",
+      "confidence": 0.65,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 27
+    },
+    "R51": {
+      "id": "R51",
+      "text": "ACTION1 is sometimes blocked by walls - player cannot move right if wall is adjacent",
+      "confidence": 0.7,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 27
+    },
+    "R52": {
+      "id": "R52",
+      "text": "Goal is O_9_4 at y=52,x=47; player O_8_1 at y=34,x=32 needs to move down+right ~18y,+15x - ACTION1 is the correct action",
+      "confidence": 0.4,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 31
+    },
+    "R46": {
+      "id": "R46",
+      "text": "O_8_1 teal blob moves with ACTION4",
+      "confidence": 0.45,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 41
+    },
+    "R47": {
+      "id": "R47",
+      "text": "ACTION1 moves O_8_1 teal blob DOWN+RIGHT by ~2 cells each",
+      "confidence": 0.4,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 31
+    },
+    "R53": {
+      "id": "R53",
+      "text": "O_8_1 teal blob is NOT the player avatar - it is a static object or goal marker; the actual player is O_2_2 (red rect) or O_9_3 (brown rect)",
+      "confidence": 0.7,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 31
+    },
+    "R54": {
+      "id": "R54",
+      "text": "ACTION1 moves player right when not blocked by walls",
+      "confidence": 0.7,
+      "tests_passed": 6,
+      "tests_failed": 1,
+      "last_updated_step": 48
+    },
+    "R55": {
+      "id": "R55",
+      "text": "Try ACTION2 to move player left/down to find a path toward goal O_9_4",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 31
+    },
+    "R60": {
+      "id": "R60",
+      "text": "No action reliably moves player DOWN - need to find downward movement action",
+      "confidence": 0.7,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 32
+    },
+    "R65": {
+      "id": "R65",
+      "text": "ACTION4 moves display timer elements left",
+      "confidence": 0.85,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 34
+    },
+    "R70": {
+      "id": "R70",
+      "text": "O_9_6 and O_1_1 are timer bars that shrink/move left with each action - they represent remaining time or moves",
+      "confidence": 0.95,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 36
+    },
+    "R72": {
+      "id": "R72",
+      "text": "ACTION1 moves player down+right when not blocked by walls",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 35
+    },
+    "R80": {
+      "id": "R80",
+      "text": "All tested actions move player LEFT or UP-LEFT - need ACTION4 to find rightward/downward movement",
+      "confidence": 0.7,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 37
+    },
+    "R75": {
+      "id": "R75",
+      "text": "ACTION1 is the only action that moves the player (down+right) - all other actions primarily affect display elements",
+      "confidence": 0.65,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 36
+    },
+    "R81": {
+      "id": "R81",
+      "text": "ACTION1 moves O_9_3 by ~6 cells in y direction - sometimes up, sometimes down depending on position/walls",
+      "confidence": 0.75,
+      "tests_passed": 9,
+      "tests_failed": 4,
+      "last_updated_step": 66
+    },
+    "R82": {
+      "id": "R82",
+      "text": "ACTION4 moves teal blob right/down toward goal",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 38
+    },
+    "R83": {
+      "id": "R83",
+      "text": "No tested action reliably moves player DOWN - the goal may require a different approach or the player starts above the goal requiring downward movement via ACTION1",
+      "confidence": 0.7,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 38
+    },
+    "R84": {
+      "id": "R84",
+      "text": "ACTION1 moves player DOWN+RIGHT by ~+2y,+2x when not blocked by walls",
+      "confidence": 0.4,
+      "tests_passed": 1,
+      "tests_failed": 2,
+      "last_updated_step": 42
+    },
+    "R31": {
+      "id": "R31",
+      "text": "ACTION1 moves player UP-LEFT by ~2 cells (not down+right)",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 39
+    },
+    "R85": {
+      "id": "R85",
+      "text": "O_9_3 brown rect moves right with ACTION1 - it may be a second player or linked object",
+      "confidence": 0.7,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 39
+    },
+    "R90": {
+      "id": "R90",
+      "text": "ACTION4 is a no-op from current position",
+      "confidence": 0.97,
+      "tests_passed": 5,
+      "tests_failed": 0,
+      "last_updated_step": 73
+    },
+    "R92": {
+      "id": "R92",
+      "text": "The timer bars deplete by 1 cell per action regardless of whether player moves - game has limited moves",
+      "confidence": 0.97,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 58
+    },
+    "R93": {
+      "id": "R93",
+      "text": "ACTION5 moves O_8_1 teal blob toward goal",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 43
+    },
+    "R95": {
+      "id": "R95",
+      "text": "From current position, ACTION2 is the best option to try - it moved player left once before",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 43
+    },
+    "R96": {
+      "id": "R96",
+      "text": "The game may require reaching O_9_4 by navigating through the maze using available movement actions",
+      "confidence": 0.7,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 43
+    },
+    "R100": {
+      "id": "R100",
+      "text": "ACTION1 moves O_9_3 RIGHT by ~6 cells (confirmed)",
+      "confidence": 0.7,
+      "tests_passed": 3,
+      "tests_failed": 1,
+      "last_updated_step": 54
+    },
+    "R101": {
+      "id": "R101",
+      "text": "ACTION4 may move player DOWN or RIGHT - needs testing from current position",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 46
+    },
+    "R102": {
+      "id": "R102",
+      "text": "ACTION2 may move player DOWN - needs testing",
+      "confidence": 0.55,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 46
+    },
+    "R104": {
+      "id": "R104",
+      "text": "The game may use a scrolling camera where moving UP/LEFT shifts the world, and the player appears stationary while world moves - need to reconsider orientation",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 47
+    },
+    "R105": {
+      "id": "R105",
+      "text": "ACTION2 moves player DOWN toward goal",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 49
+    },
+    "R106": {
+      "id": "R106",
+      "text": "No action currently moves player DOWN - player may be in a corridor where only left/right movement is possible",
+      "confidence": 0.65,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 49
+    },
+    "R107": {
+      "id": "R107",
+      "text": "Player must first navigate RIGHT to find a downward passage in the maze",
+      "confidence": 0.7,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 49
+    },
+    "R110": {
+      "id": "R110",
+      "text": "ACTION1 moves player DOWN not right - previous right hypothesis was wrong",
+      "confidence": 0.05,
+      "tests_passed": 3,
+      "tests_failed": 2,
+      "last_updated_step": 65
+    },
+    "R112": {
+      "id": "R112",
+      "text": "ACTION4 moves player DOWN",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 52
+    },
+    "R113": {
+      "id": "R113",
+      "text": "Player is stuck in a dead end; need to backtrack LEFT with ACTION3 to find downward passage",
+      "confidence": 0.65,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 51
+    },
+    "R115": {
+      "id": "R115",
+      "text": "No action moves player DOWN - the game may use ACTION1=right to navigate maze corridors that eventually lead downward",
+      "confidence": 0.7,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 52
+    },
+    "R130": {
+      "id": "R130",
+      "text": "ACTION2 may move player DOWN - need to test from current blocked position",
+      "confidence": 0.55,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 54
+    },
+    "R131": {
+      "id": "R131",
+      "text": "ACTION4 may move player DOWN from current position - maze navigation requires finding open corridors",
+      "confidence": 0.5,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 54
+    },
+    "R141": {
+      "id": "R141",
+      "text": "ACTION3 moves player DOWN by ~6 cells (confirmed)",
+      "confidence": 0.5,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 57
+    },
+    "R150": {
+      "id": "R150",
+      "text": "ACTION3 moves player down+left simultaneously",
+      "confidence": 0.5,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 57
+    },
+    "R200": {
+      "id": "R200",
+      "text": "Player movement is blocked by maze walls in many positions; need to find open corridors",
+      "confidence": 0.85,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 57
+    },
+    "R201": {
+      "id": "R201",
+      "text": "ACTION1 does not reliably move player DOWN - movement direction varies",
+      "confidence": 0.7,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 66
+    },
+    "R300": {
+      "id": "R300",
+      "text": "ACTION3 moves player UP by ~6 cells, not down+left",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 59
+    },
+    "R402": {
+      "id": "R402",
+      "text": "ACTION4 is the DOWN action - FALSIFIED, it is a no-op from current position",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 61
+    },
+    "R403": {
+      "id": "R403",
+      "text": "ACTION2=left(dx-6), ACTION1=right(dx+6), ACTION3=up(dy-6), ACTION4=down(dy+6)",
+      "confidence": 0.7,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 60
+    },
+    "R500": {
+      "id": "R500",
+      "text": "No action produces reliable DOWN movement - the game may require a specific corridor/path to descend, or the player moves in a non-obvious way",
+      "confidence": 0.7,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 61
+    },
+    "R600": {
+      "id": "R600",
+      "text": "ACTION1 reliably moves player right by ~6 cells; use repeatedly to reach goal x=47 from current x=28",
+      "confidence": 0.4,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 63
+    },
+    "R602": {
+      "id": "R602",
+      "text": "ACTION1 moved player UP previously - was wrong, it moves DOWN",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 68
+    },
+    "R900": {
+      "id": "R900",
+      "text": "ACTION2 or ACTION4 may move player DOWN toward goal at y=52",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 69
+    },
+    "R_right1": {
+      "id": "R_right1",
+      "text": "ACTION1 moves player RIGHT",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 71
+    },
+    "R_right2": {
+      "id": "R_right2",
+      "text": "ACTION4 may move player RIGHT - need to test",
+      "confidence": 0.5,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 71
+    },
+    "R_nav1": {
+      "id": "R_nav1",
+      "text": "Player at y=16,x=28 needs to go DOWN to y=52 (36 more cells) and RIGHT to x=47 (19 cells right)",
+      "confidence": 0.9,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 71
+    },
+    "R_up1": {
+      "id": "R_up1",
+      "text": "ACTION1 moves player UP by ~6 cells reliably",
+      "confidence": 0.9,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 72
+    },
+    "R_nav2": {
+      "id": "R_nav2",
+      "text": "Player at y=10,x=28 needs to go DOWN to y=52 (42 more cells) and RIGHT to x=47 (19 cells right) - need ACTION2 or ACTION4 for down",
+      "confidence": 0.85,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 72
+    },
+    "R_action4_down": {
+      "id": "R_action4_down",
+      "text": "ACTION4 may move player DOWN - needs testing",
+      "confidence": 0.5,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 72
+    },
+    "R_action3_right": {
+      "id": "R_action3_right",
+      "text": "ACTION3 moves player LEFT by ~6 cells (dx-6), NOT right",
+      "confidence": 0.95,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 75
+    },
+    "R_need_down": {
+      "id": "R_need_down",
+      "text": "No action found yet that reliably moves player DOWN toward goal at y=52",
+      "confidence": 0.85,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 73
+    },
+    "R_action5_left": {
+      "id": "R_action5_left",
+      "text": "ACTION5 moves player LEFT by ~6 cells (dx-6)",
+      "confidence": 0.85,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 74
+    },
+    "R_need_right": {
+      "id": "R_need_right",
+      "text": "Player at x=34 needs to go RIGHT to x=47 (13 more cells) - ACTION3 is the right mover",
+      "confidence": 0.9,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 74
+    },
+    "R_need_down2": {
+      "id": "R_need_down2",
+      "text": "Player at y=10 needs to go DOWN to y=52 - ACTION1 or ACTION2 might move down in some positions",
+      "confidence": 0.75,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 74
+    },
+    "R_action3_left": {
+      "id": "R_action3_left",
+      "text": "ACTION3 moves player LEFT by ~6 cells reliably",
+      "confidence": 0.95,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 75
+    },
+    "R_action1_up": {
+      "id": "R_action1_up",
+      "text": "ACTION1 is mostly a no-op or context-dependent",
+      "confidence": 0.7,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 77
+    },
+    "R_need_right_action": {
+      "id": "R_need_right_action",
+      "text": "ACTION2 may move player RIGHT or DOWN - need to test",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 75
+    },
+    "R_action5_left2": {
+      "id": "R_action5_left2",
+      "text": "ACTION5 also moves player LEFT - same as ACTION3",
+      "confidence": 0.8,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 75
+    },
+    "R_action2_left": {
+      "id": "R_action2_left",
+      "text": "ACTION2 moves player LEFT by ~6 cells (dx-6)",
+      "confidence": 0.9,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 76
+    },
+    "R401": {
+      "id": "R401",
+      "text": "ACTION2 is a no-op for player movement",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 76
+    },
+    "R_all_left": {
+      "id": "R_all_left",
+      "text": "ACTION1,2,3,5 all move player left or up - no action moves right or down reliably",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 76
+    },
+    "R_maze_path": {
+      "id": "R_maze_path",
+      "text": "Player must navigate through maze corridors - direct paths may be blocked by walls",
+      "confidence": 0.85,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 77
+    },
+    "R_action5_small": {
+      "id": "R_action5_small",
+      "text": "ACTION5 moves player by only ~1 cell left when near walls",
+      "confidence": 0.7,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 78
+    },
+    "R_need_right_down": {
+      "id": "R_need_right_down",
+      "text": "Player needs to go RIGHT to x=47 and DOWN to y=52 to reach goal",
+      "confidence": 0.9,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 78
+    },
+    "R_action1_left_confirmed": {
+      "id": "R_action1_left_confirmed",
+      "text": "ACTION1 moves player LEFT by ~6 cells (dx-6) reliably",
+      "confidence": 0.95,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 79
+    },
+    "R_action1_right": {
+      "id": "R_action1_right",
+      "text": "ACTION1 moves player RIGHT - FALSIFIED",
+      "confidence": 0.0,
+      "tests_passed": 0,
+      "tests_failed": 2,
+      "last_updated_step": 79
+    },
+    "R_down1": {
+      "id": "R_down1",
+      "text": "ACTION1 moves player UP - also falsified, it moves LEFT",
+      "confidence": 0.0,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 79
+    },
+    "R_action2_test": {
+      "id": "R_action2_test",
+      "text": "ACTION2 may move player RIGHT or DOWN - needs testing",
+      "confidence": 0.5,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 79
+    }
+  },
+  "objects": {
+    "O_5_1": {
+      "id": "O_5_1",
+      "description": "large black blob - walls/maze",
+      "role_hypothesis": "wall",
+      "confidence": 0.75
+    },
+    "O_8_1": {
+      "id": "O_8_1",
+      "description": "teal blob centroid y=32,x=30, large shape inside maze",
+      "role_hypothesis": "wall",
+      "confidence": 0.6
+    },
+    "O_9_6": {
+      "id": "O_9_6",
+      "description": "brown horizontal line at y=63, timer bar shrinking left",
+      "role_hypothesis": "display",
+      "confidence": 0.98
+    },
+    "O_9_3": {
+      "id": "O_9_3",
+      "description": "brown rect at y=10,x=16, player avatar moving left with actions",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.97
+    },
+    "O_9_4": {
+      "id": "O_9_4",
+      "description": "brown blob at y=52,x=47, stationary goal",
+      "role_hypothesis": "goal",
+      "confidence": 0.92
+    },
+    "O_1_1": {
+      "id": "O_1_1",
+      "description": "blue horizontal line at y=63, timer bar shrinking left",
+      "role_hypothesis": "display",
+      "confidence": 0.98
+    },
+    "O_9_1": {
+      "id": "O_9_1",
+      "description": "brown rect at y=2,x=2, small",
+      "role_hypothesis": "display",
+      "confidence": 0.4
+    },
+    "O_9_2": {
+      "id": "O_9_2",
+      "description": "brown line at y=5,x=2, tiny",
+      "role_hypothesis": "display",
+      "confidence": 0.4
+    },
+    "O_2_1": {
+      "id": "O_2_1",
+      "description": "red rect appeared at y=2,x=2 in display area",
+      "role_hypothesis": "display",
+      "confidence": 0.75
+    },
+    "O_2_2": {
+      "id": "O_2_2",
+      "description": "red rect at y=10,x=28",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.65
+    },
+    "O_1_2": {
+      "id": "O_1_2",
+      "description": "blue size=6 at y=63,x=60 - bottom display area, moves left with actions",
+      "role_hypothesis": "display",
+      "confidence": 0.65
+    }
+  },
+  "goal_hypothesis": "Navigate player O_9_3 to goal O_9_4 at y=52,x=47. Need to find action that moves RIGHT and DOWN.",
+  "open_questions": [
+    "What action moves player RIGHT toward x=47?",
+    "What action moves player DOWN toward y=52?",
+    "Is ACTION2 the only untested action that might move right/down?"
+  ],
+  "last_prediction": {
+    "step_index": 79,
+    "action": "ACTION2",
+    "rule_id": "R_action2_test",
+    "expected_outcome": "CHANGES image shows O_9_3 moving RIGHT (x increases) or DOWN (y increases)",
+    "falsifying_observation": "Player moves left again or no movement"
+  },
+  "step_count": 79
+}

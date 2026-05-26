@@ -1,0 +1,53 @@
+{
+  "run_id": "20260518_123500",
+  "mode": "perception-aware",
+  "max_actions": 80,
+  "max_total_usd": 8.0,
+  "tag": "stage-b-fail",
+  "started_at": "2026-05-18 12:35:00",
+  "games": [
+    {
+      "game": "sc25",
+      "mode": "perception-aware",
+      "elapsed_s": 10756.4,
+      "usd": 2.5234,
+      "levels": 0,
+      "win_levels": 6,
+      "scorecard_url": "https://three.arcprize.org/scorecards/dcb4027b-db81-471d-b582-f8560c7a0fdd",
+      "returncode": 0,
+      "stderr_tail": []
+    },
+    {
+      "game": "su15",
+      "mode": "perception-aware",
+      "elapsed_s": 14866.0,
+      "usd": 0.7667,
+      "levels": 0,
+      "win_levels": 0,
+      "scorecard_url": "",
+      "returncode": 1,
+      "stderr_tail": [
+        "  File \"/Users/cowboydixon/Documents/ARC Project/.venv/lib/python3.12/site-packages/anthropic/_base_client.py\", line 1114, in request",
+        "    raise APIConnectionError(request=request) from err",
+        "anthropic.APIConnectionError: Connection error."
+      ]
+    },
+    {
+      "game": "lp85",
+      "mode": "perception-aware",
+      "elapsed_s": 6.3,
+      "usd": 0.0,
+      "levels": 0,
+      "win_levels": 0,
+      "scorecard_url": "",
+      "returncode": 1,
+      "stderr_tail": [
+        "  File \"/Users/cowboydixon/Documents/ARC Project/.venv/lib/python3.12/site-packages/httpx/_client.py\", line 901, in send",
+        "    raise RuntimeError(\"Cannot send a request, as the client has been closed.\")",
+        "RuntimeError: Cannot send a request, as the client has been closed."
+      ]
+    }
+  ],
+  "finished_at": "2026-05-18 19:42:09",
+  "total_added_usd": 3.29
+}

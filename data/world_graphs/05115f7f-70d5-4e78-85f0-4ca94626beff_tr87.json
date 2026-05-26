@@ -1,0 +1,57 @@
+{
+  "game_id": "tr87",
+  "scorecard_id": "05115f7f-70d5-4e78-85f0-4ca94626beff",
+  "effects": {
+    "0": {
+      "ACTION1": {
+        "action": "ACTION1",
+        "count": 27,
+        "noop_count": 0,
+        "moved_count": 24,
+        "sum_dy": -7,
+        "sum_dx": -62,
+        "appeared_count": 0,
+        "disappeared_count": 0,
+        "level_advanced_count": 0,
+        "last_step": 77
+      },
+      "ACTION2": {
+        "action": "ACTION2",
+        "count": 16,
+        "noop_count": 0,
+        "moved_count": 15,
+        "sum_dy": -29,
+        "sum_dx": -23,
+        "appeared_count": 0,
+        "disappeared_count": 0,
+        "level_advanced_count": 0,
+        "last_step": 56
+      },
+      "ACTION3": {
+        "action": "ACTION3",
+        "count": 31,
+        "noop_count": 0,
+        "moved_count": 7,
+        "sum_dy": 0,
+        "sum_dx": -7,
+        "appeared_count": 1,
+        "disappeared_count": 1,
+        "level_advanced_count": 0,
+        "last_step": 76
+      },
+      "ACTION4": {
+        "action": "ACTION4",
+        "count": 4,
+        "noop_count": 0,
+        "moved_count": 1,
+        "sum_dy": 0,
+        "sum_dx": -1,
+        "appeared_count": 0,
+        "disappeared_count": 0,
+        "level_advanced_count": 0,
+        "last_step": 69
+      }
+    }
+  },
+  "transitions": 78
+}

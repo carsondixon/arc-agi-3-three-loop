@@ -1,0 +1,643 @@
+{
+  "game_id": "tr87",
+  "scorecard_id": "05115f7f-70d5-4e78-85f0-4ca94626beff",
+  "rules": {
+    "R1": {
+      "id": "R1",
+      "text": "The top grid (rows 0-33) contains 6 pairs of light-blue and pink tiles arranged in a 3x2 layout with arrows between them \u2014 this is the puzzle display.",
+      "confidence": 0.8,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 2
+    },
+    "R2": {
+      "id": "R2",
+      "text": "The bottom section (rows 34-62) contains two rows of symbols: a light-blue row and a pink row \u2014 these are answer choices.",
+      "confidence": 0.8,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 2
+    },
+    "R3": {
+      "id": "R3",
+      "text": "O_1_1 (row 63, blue line) may be a progress/status bar, not a cursor.",
+      "confidence": 0.5,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 11
+    },
+    "R4": {
+      "id": "R4",
+      "text": "ACTION2 causes the player to jump to a new grid position (not simply left dx-1). The blue cursor at row 63 moves left. Player movement is complex.",
+      "confidence": 0.6,
+      "tests_passed": 7,
+      "tests_failed": 4,
+      "last_updated_step": 18
+    },
+    "R5": {
+      "id": "R5",
+      "text": "ACTION3 has some effect on the bottom rows \u2014 possibly shifts symbols or toggles cursor row.",
+      "confidence": 0.55,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 4
+    },
+    "R6": {
+      "id": "R6",
+      "text": "ACTION3 moves player left within current row (cols cycle leftward)",
+      "confidence": 0.7,
+      "tests_passed": 6,
+      "tests_failed": 1,
+      "last_updated_step": 28
+    },
+    "R7": {
+      "id": "R7",
+      "text": "The black blob is the player avatar, moving in response to actions.",
+      "confidence": 0.98,
+      "tests_passed": 9,
+      "tests_failed": 0,
+      "last_updated_step": 40
+    },
+    "R8": {
+      "id": "R8",
+      "text": "ACTION1 sometimes causes a large upward+right jump but is unreliable \u2014 it also sometimes just moves the bottom cursor left like ACTION2/3/4.",
+      "confidence": 0.4,
+      "tests_passed": 3,
+      "tests_failed": 1,
+      "last_updated_step": 12
+    },
+    "R11": {
+      "id": "R11",
+      "text": "The player avatar appears to jump between grid positions that correspond to the symbol cells in the top grid layout.",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 9
+    },
+    "R12": {
+      "id": "R12",
+      "text": "All four actions (ACTION1/2/3/4) can move the bottom cursor left. ACTION1 additionally sometimes causes a large avatar jump.",
+      "confidence": 0.6,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 12
+    },
+    "R14": {
+      "id": "R14",
+      "text": "The player avatar navigates a grid of cells. Orange blobs may be collectibles or targets at each grid position.",
+      "confidence": 0.7,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 11
+    },
+    "R15": {
+      "id": "R15",
+      "text": "The blue line at row 63 moves left with each action - it is a cursor or progress indicator.",
+      "confidence": 0.72,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 13
+    },
+    "R16": {
+      "id": "R16",
+      "text": "The bottom section rows 34-62 contains answer choices. The cursor (blue line row 63) selects among them. Correct positioning + confirmation = level complete.",
+      "confidence": 0.65,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 12
+    },
+    "R17": {
+      "id": "R17",
+      "text": "ACTION1 and ACTION2 cause jumps between top grid and answer rows - not reliable for fine navigation",
+      "confidence": 0.9,
+      "tests_passed": 6,
+      "tests_failed": 1,
+      "last_updated_step": 44
+    },
+    "R21": {
+      "id": "R21",
+      "text": "Player is now at (25,38) overlapping O_a_6 (light-blue) - player visits light-blue symbol cells in the answer area.",
+      "confidence": 0.75,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 18
+    },
+    "R22": {
+      "id": "R22",
+      "text": "ACTION1 from top grid jumps player to orange answer row, but destination position varies",
+      "confidence": 0.75,
+      "tests_passed": 5,
+      "tests_failed": 2,
+      "last_updated_step": 51
+    },
+    "R23": {
+      "id": "R23",
+      "text": "The player avatar (black blob) jumps between the symbol grid positions. Each action moves it to a different symbol cell. The grid has positions at rows 7,16,25 and cols 15,25,38,48.",
+      "confidence": 0.8,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 18
+    },
+    "R24": {
+      "id": "R24",
+      "text": "Blue timer line at row 63 moves left by 1 with each action",
+      "confidence": 0.99,
+      "tests_passed": 19,
+      "tests_failed": 0,
+      "last_updated_step": 76
+    },
+    "R25": {
+      "id": "R25",
+      "text": "ACTION2 causes large movement - can jump between top grid and answer rows in various directions",
+      "confidence": 0.75,
+      "tests_passed": 2,
+      "tests_failed": 2,
+      "last_updated_step": 29
+    },
+    "R26": {
+      "id": "R26",
+      "text": "The player moves through a fixed set of grid positions: rows 7,16,25 at cols 15,25,38,48. Each action advances to a different position in this grid.",
+      "confidence": 0.75,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 20
+    },
+    "R27": {
+      "id": "R27",
+      "text": "The player is currently at (25,38) overlapping O_a_6 (light-blue) and O_5_11. The grid positions cycle through the symbol cells.",
+      "confidence": 0.8,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 20
+    },
+    "R28": {
+      "id": "R28",
+      "text": "The player cycles through positions in the symbol grid AND the answer rows. The answer rows (light-blue row 40-46, orange row 51-57) are valid player positions.",
+      "confidence": 0.8,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 21
+    },
+    "R30": {
+      "id": "R30",
+      "text": "Player oscillates between top grid positions (rows 7,16,25, cols 15,25,38,48) and answer rows (rows 40-46 light-blue, rows 51-57 orange) based on ACTION1/ACTION2.",
+      "confidence": 0.8,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 22
+    },
+    "R31": {
+      "id": "R31",
+      "text": "ACTION3 moves player left within same row - sometimes unreliable with large jumps",
+      "confidence": 0.5,
+      "tests_passed": 2,
+      "tests_failed": 1,
+      "last_updated_step": 30
+    },
+    "R32": {
+      "id": "R32",
+      "text": "Player is now at (54,24) in orange answer row after ACTION1 from (25,25)",
+      "confidence": 0.9,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 24
+    },
+    "R33": {
+      "id": "R33",
+      "text": "Player is currently in top grid at (25,25) based on O_5_10 detection after ACTION2",
+      "confidence": 0.85,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 26
+    },
+    "R36": {
+      "id": "R36",
+      "text": "Player is currently at (63,56) in the bottom-right area after ACTION3 from (7,48)",
+      "confidence": 0.85,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 30
+    },
+    "R37": {
+      "id": "R37",
+      "text": "ACTION2 causes large jumps - direction is unpredictable, can go up to top grid or down to answer rows.",
+      "confidence": 0.6,
+      "tests_passed": 2,
+      "tests_failed": 1,
+      "last_updated_step": 33
+    },
+    "R38": {
+      "id": "R38",
+      "text": "Player at (54,31) after ACTION3 moves to (54,38) - ACTION3 moves right in answer rows, not left",
+      "confidence": 0.6,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 32
+    },
+    "R39": {
+      "id": "R39",
+      "text": "The white bracket markers in the bottom section indicate the current player selection position - they move with the player",
+      "confidence": 0.75,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 32
+    },
+    "R40": {
+      "id": "R40",
+      "text": "In the answer rows, ACTION3 moves the selection rightward (dx+1 approx), ACTION4 moves leftward",
+      "confidence": 0.65,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 32
+    },
+    "R41": {
+      "id": "R41",
+      "text": "Player is currently at (7,38) in the top grid after ACTION2 from (54,24) in answer rows.",
+      "confidence": 0.9,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 33
+    },
+    "R42": {
+      "id": "R42",
+      "text": "The player position cycles through the 3x4 grid of symbol cells (rows 7,16,25 and cols 15,25,38,48) and the answer rows. Actions cause jumps between these positions.",
+      "confidence": 0.75,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 33
+    },
+    "R43": {
+      "id": "R43",
+      "text": "Player is currently at (54,24) or (54,31) in orange answer row after ACTION1 from top grid",
+      "confidence": 0.85,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 34
+    },
+    "R44": {
+      "id": "R44",
+      "text": "ACTION2 from (54,24) in orange answer row jumps player back to top grid at (7,38)",
+      "confidence": 0.85,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 35
+    },
+    "R45": {
+      "id": "R45",
+      "text": "Player is currently at (7,38) in top grid overlapping O_a_2 and O_5_3 after ACTION2 from answer row",
+      "confidence": 0.9,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 35
+    },
+    "R50": {
+      "id": "R50",
+      "text": "Player is now at (54,31) in orange answer row after ACTION1 from (7,38) in top grid",
+      "confidence": 0.9,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 36
+    },
+    "R51": {
+      "id": "R51",
+      "text": "ACTION3 moves player left ~7 cells in answer row",
+      "confidence": 0.97,
+      "tests_passed": 21,
+      "tests_failed": 0,
+      "last_updated_step": 77
+    },
+    "R52": {
+      "id": "R52",
+      "text": "Player is currently at (54,31) in orange answer row after ACTION3 from right position",
+      "confidence": 0.8,
+      "tests_passed": 4,
+      "tests_failed": 0,
+      "last_updated_step": 41
+    },
+    "R55": {
+      "id": "R55",
+      "text": "ACTION2 from top grid at (7,15) jumps player to answer row around (54,31)",
+      "confidence": 0.4,
+      "tests_passed": 2,
+      "tests_failed": 1,
+      "last_updated_step": 46
+    },
+    "R53": {
+      "id": "R53",
+      "text": "ACTION1 from answer row moves player RIGHT within answer row (not back to top grid)",
+      "confidence": 0.75,
+      "tests_passed": 2,
+      "tests_failed": 1,
+      "last_updated_step": 48
+    },
+    "R54": {
+      "id": "R54",
+      "text": "Player is now at (7,15) in top grid overlapping O_a_1 after ACTION1 from (54,17)",
+      "confidence": 0.9,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 43
+    },
+    "R56": {
+      "id": "R56",
+      "text": "ACTION2 from answer row ALWAYS jumps player back to top grid (not right movement)",
+      "confidence": 0.95,
+      "tests_passed": 2,
+      "tests_failed": 1,
+      "last_updated_step": 54
+    },
+    "R57": {
+      "id": "R57",
+      "text": "Player is now at approximately (54,17-24) after multiple ACTION3 presses from (54,31)",
+      "confidence": 0.85,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 47
+    },
+    "R60": {
+      "id": "R60",
+      "text": "ACTION1 from top grid jumps to answer row at col ~45",
+      "confidence": 0.95,
+      "tests_passed": 8,
+      "tests_failed": 0,
+      "last_updated_step": 71
+    },
+    "R58": {
+      "id": "R58",
+      "text": "ACTION2 from answer row at (54,31) jumps player to top grid at (7,15)",
+      "confidence": 0.9,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 50
+    },
+    "R61": {
+      "id": "R61",
+      "text": "Player is currently at (54,45) in answer row after ACTION1 from (7,15)",
+      "confidence": 0.9,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 51
+    },
+    "R62": {
+      "id": "R62",
+      "text": "ACTION2 from answer row at any x position jumps player to top grid at (7,15)",
+      "confidence": 0.95,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 57
+    },
+    "R63": {
+      "id": "R63",
+      "text": "Player is now at (7,15) in top grid after ACTION2 from answer row",
+      "confidence": 0.95,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 57
+    },
+    "R65": {
+      "id": "R65",
+      "text": "Player can reach x=17 in answer row by using ACTION3 multiple times from x=45",
+      "confidence": 0.7,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 59
+    },
+    "R64": {
+      "id": "R64",
+      "text": "ACTION1 from (7,15) jumps to answer row at col ~45 (rightmost position)",
+      "confidence": 0.9,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 57
+    },
+    "R70": {
+      "id": "R70",
+      "text": "The timer is running out - blue line now at x=16, yellow at x=48, indicating urgency",
+      "confidence": 0.9,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 60
+    },
+    "R71": {
+      "id": "R71",
+      "text": "Player is at (54,45) after ACTION1 from (7,15) - rightmost answer position",
+      "confidence": 0.97,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 69
+    },
+    "R80": {
+      "id": "R80",
+      "text": "Player at (54,17) after ACTION3 from (54,24) - leftmost answer position",
+      "confidence": 0.95,
+      "tests_passed": 3,
+      "tests_failed": 0,
+      "last_updated_step": 77
+    },
+    "R75": {
+      "id": "R75",
+      "text": "There are 3 fixed answer positions in the orange row at cols 17, 24, 45 - player must select the correct one",
+      "confidence": 0.8,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 68
+    },
+    "R72": {
+      "id": "R72",
+      "text": "Player is now at (54,24) after ACTION3 from (54,31)",
+      "confidence": 0.92,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 75
+    },
+    "R73": {
+      "id": "R73",
+      "text": "Player is now at (54,17) - the leftmost answer position - after ACTION3 from (54,24)",
+      "confidence": 0.85,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 67
+    },
+    "R74": {
+      "id": "R74",
+      "text": "Leftmost answer position (54,17) is NOT the correct answer - pressing ACTION1 there just returns to top grid without level advance",
+      "confidence": 0.85,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 68
+    },
+    "R76": {
+      "id": "R76",
+      "text": "ACTION1 from answer row always returns player to top grid at (7,15)",
+      "confidence": 0.1,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 73
+    },
+    "R81": {
+      "id": "R81",
+      "text": "Being at a specific answer position and pressing ACTION1 or ACTION3 may confirm/select that answer",
+      "confidence": 0.5,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 70
+    },
+    "R77": {
+      "id": "R77",
+      "text": "ACTION1 from answer row moves player RIGHT by ~14 cells (not to top grid)",
+      "confidence": 0.9,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 73
+    }
+  },
+  "objects": {
+    "O_a_7": {
+      "id": "O_a_7",
+      "description": "light-blue blob rows 40-46, cols 14-48 - top answer row",
+      "role_hypothesis": "collectible",
+      "confidence": 0.7
+    },
+    "O_7_16": {
+      "id": "O_7_16",
+      "description": "orange blob rows 51-57 cols 14-48 - answer row background",
+      "role_hypothesis": "display",
+      "confidence": 0.7
+    },
+    "O_1_1": {
+      "id": "O_1_1",
+      "description": "blue horizontal line at row 63, x=0-26, timer counting down from left",
+      "role_hypothesis": "trigger",
+      "confidence": 0.95
+    },
+    "O_5_4": {
+      "id": "O_5_4",
+      "description": "black blob at row 7, col 48 \u2014 player avatar after ACTION1",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.9
+    },
+    "O_7_2": {
+      "id": "O_7_2",
+      "description": "orange blob at row 7, col 48 \u2014 possible target/collectible at player location",
+      "role_hypothesis": "collectible",
+      "confidence": 0.6
+    },
+    "O_5_8": {
+      "id": "O_5_8",
+      "description": "black blob at row 16, col 48 \u2014 current player avatar position",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.95
+    },
+    "O_7_6": {
+      "id": "O_7_6",
+      "description": "orange blob at row 16, col 48 \u2014 same location as player avatar",
+      "role_hypothesis": "collectible",
+      "confidence": 0.7
+    },
+    "O_a_6": {
+      "id": "O_a_6",
+      "description": "light-blue blob at (25,38) - symbol cell where player currently is",
+      "role_hypothesis": "collectible",
+      "confidence": 0.7
+    },
+    "O_7_10": {
+      "id": "O_7_10",
+      "description": "orange blob at (25,25) - symbol cell where player currently is",
+      "role_hypothesis": "collectible",
+      "confidence": 0.7
+    },
+    "O_a_3": {
+      "id": "O_a_3",
+      "description": "light-blue blob at (16,15) - possible next target",
+      "role_hypothesis": "collectible",
+      "confidence": 0.65
+    },
+    "O_5_10": {
+      "id": "O_5_10",
+      "description": "black blob at (25,25) in top grid",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.85
+    },
+    "O_5_19": {
+      "id": "O_5_19",
+      "description": "gray blob at (54,24) - current player avatar position",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.9
+    },
+    "O_5_21": {
+      "id": "O_5_21",
+      "description": "gray blob at (54,38) - previous player position",
+      "role_hypothesis": "display",
+      "confidence": 0.5
+    },
+    "O_4_1": {
+      "id": "O_4_1",
+      "description": "yellow horizontal line at row 63, x=27-63, timer counting down from right",
+      "role_hypothesis": "trigger",
+      "confidence": 0.95
+    },
+    "O_5_20": {
+      "id": "O_5_20",
+      "description": "gray blob at (54,31) in answer row",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.75
+    },
+    "O_5_3": {
+      "id": "O_5_3",
+      "description": "black blob at (7,38) - current player avatar position in top grid",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.92
+    },
+    "O_a_2": {
+      "id": "O_a_2",
+      "description": "light-blue blob at (7,38) - symbol cell where player currently is",
+      "role_hypothesis": "collectible",
+      "confidence": 0.7
+    },
+    "O_5_2": {
+      "id": "O_5_2",
+      "description": "black blob at (7,25) in top grid - player avatar",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.75
+    },
+    "O_5_1": {
+      "id": "O_5_1",
+      "description": "gray blob at (7,15) - player avatar current position in top grid",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.95
+    },
+    "O_a_1": {
+      "id": "O_a_1",
+      "description": "light-blue blob at (7,15) - symbol cell overlapping player",
+      "role_hypothesis": "collectible",
+      "confidence": 0.7
+    },
+    "O_5_18": {
+      "id": "O_5_18",
+      "description": "gray blob at (54,17) - leftmost answer position, player avatar",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.95
+    },
+    "O_5_22": {
+      "id": "O_5_22",
+      "description": "gray blob at (54,45) - player avatar at rightmost answer position",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.95
+    }
+  },
+  "goal_hypothesis": "Multiple-choice puzzle: land on the correct answer column in the orange answer row. Timer counting down. Need to identify which of cols 17,24,31,38,45 is correct from the top grid symbols.",
+  "open_questions": [
+    "Which answer column is correct?",
+    "How many timer steps remain?",
+    "Does the top grid encode the answer?",
+    "Does ACTION1 from (54,17) move right to ~31?"
+  ],
+  "last_prediction": {
+    "step_index": 77,
+    "action": "ACTION1",
+    "rule_id": "R77",
+    "expected_outcome": "Player moves right from (54,17) to approximately (54,31) in the answer row. Timer lines advance inward by 1.",
+    "falsifying_observation": "Player jumps to top grid or stays at (54,17)"
+  },
+  "step_count": 77
+}

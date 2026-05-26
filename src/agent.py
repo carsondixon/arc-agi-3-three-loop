@@ -631,6 +631,7 @@ def main() -> int:
     parser.add_argument("--mode", choices=MODES, default="naked")
     parser.add_argument("--game", default="ls20")
     parser.add_argument("--max-actions", type=int, default=60)
+    parser.add_argument("--max-usd", type=float, default=None, help="override per-game budget cap from config")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--verbose", "-v", action="store_true")
     parser.add_argument("--tag", action="append", default=[])
@@ -646,7 +647,7 @@ def main() -> int:
         raise SystemExit("ARC_API_KEY not set. See .env.example.")
 
     config = _load_config()
-    per_game_budget = float(config["budget"]["per_game_usd"])
+    per_game_budget = float(args.max_usd) if args.max_usd is not None else float(config["budget"]["per_game_usd"])
 
     arcade = Arcade(arc_api_key=arc_key)
     client = ClaudeClient()
