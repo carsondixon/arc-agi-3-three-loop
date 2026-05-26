@@ -1,0 +1,21 @@
+{
+  "game_id": "wa30",
+  "scorecard_id": "4bf9914e-033e-4cb6-ad4c-ef5e1bf0b66e",
+  "effects": {
+    "0": {
+      "ACTION1": {
+        "action": "ACTION1",
+        "count": 1,
+        "noop_count": 0,
+        "moved_count": 1,
+        "sum_dy": -4,
+        "sum_dx": 0,
+        "appeared_count": 0,
+        "disappeared_count": 0,
+        "level_advanced_count": 0,
+        "last_step": 1
+      }
+    }
+  },
+  "transitions": 1
+}

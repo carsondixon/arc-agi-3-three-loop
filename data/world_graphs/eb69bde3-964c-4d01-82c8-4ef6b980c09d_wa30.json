@@ -1,0 +1,69 @@
+{
+  "game_id": "wa30",
+  "scorecard_id": "eb69bde3-964c-4d01-82c8-4ef6b980c09d",
+  "effects": {
+    "0": {
+      "ACTION1": {
+        "action": "ACTION1",
+        "count": 7,
+        "noop_count": 0,
+        "moved_count": 7,
+        "sum_dy": -24,
+        "sum_dx": -16,
+        "appeared_count": 3,
+        "disappeared_count": 2,
+        "level_advanced_count": 0,
+        "last_step": 11
+      },
+      "ACTION2": {
+        "action": "ACTION2",
+        "count": 1,
+        "noop_count": 0,
+        "moved_count": 1,
+        "sum_dy": 0,
+        "sum_dx": -1,
+        "appeared_count": 0,
+        "disappeared_count": 0,
+        "level_advanced_count": 0,
+        "last_step": 2
+      },
+      "ACTION3": {
+        "action": "ACTION3",
+        "count": 5,
+        "noop_count": 0,
+        "moved_count": 5,
+        "sum_dy": 1,
+        "sum_dx": -8,
+        "appeared_count": 1,
+        "disappeared_count": 1,
+        "level_advanced_count": 0,
+        "last_step": 14
+      },
+      "ACTION4": {
+        "action": "ACTION4",
+        "count": 1,
+        "noop_count": 0,
+        "moved_count": 1,
+        "sum_dy": 0,
+        "sum_dx": -1,
+        "appeared_count": 0,
+        "disappeared_count": 0,
+        "level_advanced_count": 0,
+        "last_step": 12
+      },
+      "ACTION5": {
+        "action": "ACTION5",
+        "count": 1,
+        "noop_count": 0,
+        "moved_count": 1,
+        "sum_dy": 0,
+        "sum_dx": -1,
+        "appeared_count": 0,
+        "disappeared_count": 0,
+        "level_advanced_count": 0,
+        "last_step": 15
+      }
+    }
+  },
+  "transitions": 15
+}

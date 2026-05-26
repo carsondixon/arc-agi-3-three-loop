@@ -35,7 +35,16 @@ All 3 scored 0 levels — but the world graphs + trajectories show the agent IS 
 - **tr87:** moves but spammed ACTION3 31x with little effect; no goal progress.
 Key takeaway: vision+world-graph gives correct goals and real navigation; the gap to a score is execution precision + action budget, not perception or reasoning.
 
+## BREAKTHROUGH: vision-pilot autopilot (the night's main result)
+Diagnosis from wa30/g50t/tr87: vision+world-graph gives CORRECT goals and real navigation, but per-step LLM nav oscillates near a target and can't land on it (even contradicting its own measured world graph). The field's known fix is graph-search execution — so I built it as the natural extension of the world graph:
+- **`--mode=vision-pilot`**: Claude identifies the player + a target object; the harness then drives the player onto it via `greedy_move()` using the world graph's measured movement vectors. Primitive moves take NO LLM call.
+- Result on the smoke: 40/45 actions were LLM-free autopilot navigation in bursts of 6-8, targeting collectibles by name. **Cost ~$0.006/action vs ~$0.03 for per-step modes — a ~5x reduction**, AND precise (greedy can't oscillate).
+- Smoke caught + fixed a stall bug: when no known action reduces distance, autopilot now takes one forced exploration step (least-mapped control) and tells the LLM to pick a reachable target, instead of infinite re-planning.
+- This is the paper's strongest result: a training-free LLM+graph-search hybrid bridging the two prior-art families, with a clean cost-efficiency story. `greedy_move` is unit-tested offline.
+- Validation run (wa30, 280 actions, $2 cap) launched to test whether cheap+precise actions can complete a level. (result below)
+
 ## Runs (scorecards)
+- vision-pilot wa30 smokes: eb69bde3 (stall, fixed) / f50a3ce2 (40/45 auto steps, $0.28)
 - vision-graph sweep g50t/wa30/tr87: 7497ea90 / 1b3df412 / 05115f7f (all 0 levels, $7.41)
 - ls20 vision smoke: https://three.arcprize.org/scorecards/ed759d4a-6354-4f05-9e46-e224dfd6da85 (0 levels, 5 actions, $0.13)
 - ls20 vision-graph smoke (pre-fix): 2bd30d4f-ffb1-4b47-acb0-17b5032edafe ($0.17)

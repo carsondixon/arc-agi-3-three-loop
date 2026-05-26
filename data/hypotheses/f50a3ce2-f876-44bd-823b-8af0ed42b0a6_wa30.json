@@ -1,0 +1,105 @@
+{
+  "game_id": "wa30",
+  "scorecard_id": "f50a3ce2-f876-44bd-823b-8af0ed42b0a6",
+  "rules": {},
+  "objects": {
+    "O_1_1": {
+      "id": "O_1_1",
+      "description": "large light-gray background",
+      "role_hypothesis": "wall",
+      "confidence": 0.85
+    },
+    "O_7_1": {
+      "id": "O_7_1",
+      "description": "pink horizontal line at bottom row 63",
+      "role_hypothesis": "display",
+      "confidence": 0.7
+    },
+    "O_9_2": {
+      "id": "O_9_2",
+      "description": "brown blob at (30,34) near player",
+      "role_hypothesis": "hazard",
+      "confidence": 0.5
+    },
+    "O_2_1": {
+      "id": "O_2_1",
+      "description": "red rect at (30,34) near player",
+      "role_hypothesis": "hazard",
+      "confidence": 0.55
+    },
+    "O_4_1": {
+      "id": "O_4_1",
+      "description": "yellow blob at (26,46)",
+      "role_hypothesis": "collectible",
+      "confidence": 0.75
+    },
+    "O_4_2": {
+      "id": "O_4_2",
+      "description": "yellow blob at (30,18)",
+      "role_hypothesis": "collectible",
+      "confidence": 0.75
+    },
+    "O_4_3": {
+      "id": "O_4_3",
+      "description": "yellow blob at (38,34), nearest collectible",
+      "role_hypothesis": "collectible",
+      "confidence": 0.8
+    },
+    "O_e_1": {
+      "id": "O_e_1",
+      "description": "green rect at (33,34), player avatar",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.97
+    },
+    "O_9_1": {
+      "id": "O_9_1",
+      "description": "brown small rect at (26,46) overlapping yellow",
+      "role_hypothesis": "collectible",
+      "confidence": 0.65
+    },
+    "O_9_3": {
+      "id": "O_9_3",
+      "description": "brown small rect at (30,18) overlapping yellow",
+      "role_hypothesis": "collectible",
+      "confidence": 0.65
+    },
+    "O_9_4": {
+      "id": "O_9_4",
+      "description": "brown small rect at (38,34) overlapping yellow",
+      "role_hypothesis": "collectible",
+      "confidence": 0.65
+    },
+    "O_9_5": {
+      "id": "O_9_5",
+      "description": "brown small rect at (38,34) overlapping yellow",
+      "role_hypothesis": "collectible",
+      "confidence": 0.65
+    },
+    "O_2_2": {
+      "id": "O_2_2",
+      "description": "red rect at (30,37) flanking player",
+      "role_hypothesis": "hazard",
+      "confidence": 0.55
+    },
+    "O_4_4": {
+      "id": "O_4_4",
+      "description": "yellow line at bottom row",
+      "role_hypothesis": "display",
+      "confidence": 0.7
+    },
+    "O_3_1": {
+      "id": "O_3_1",
+      "description": "green blob at (38,34), possibly trail or transformed collectible",
+      "role_hypothesis": "unknown",
+      "confidence": 0.4
+    }
+  },
+  "goal_hypothesis": "Move player (green rect O_e_1) onto yellow collectibles to collect them all. O_4_3 at (38,34) is the nearest collectible.",
+  "open_questions": [
+    "Does moving onto a yellow collectible remove it and advance the level?",
+    "Are red/brown objects hazards that block movement or just decorative?",
+    "Why did a green object appear at (38,34) when yellow disappeared - is this a state change of the collectible?"
+  ],
+  "last_prediction": null,
+  "step_count": 41
+}
