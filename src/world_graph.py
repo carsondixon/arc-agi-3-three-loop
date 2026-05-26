@@ -29,6 +29,41 @@ from pathlib import Path
 from src.perception import FrameDelta
 
 
+def greedy_move(
+    player_yx: tuple[int, int],
+    target_yx: tuple[int, int],
+    vectors: dict[str, tuple[float, float]],
+    available: list[str],
+    blocked: set[str] | None = None,
+) -> str | None:
+    """Pick the available, non-blocked movement action that most reduces the
+    Manhattan distance from player to target, given measured action vectors.
+
+    Returns the action name, or None if no action makes progress (arrived,
+    blocked, or no useful vector). Pure function -- unit-testable offline.
+    """
+    blocked = blocked or set()
+    gy, gx = target_yx[0] - player_yx[0], target_yx[1] - player_yx[1]
+    cur = abs(gy) + abs(gx)
+    if cur == 0:
+        return None
+    best: str | None = None
+    best_reduction = 0.0
+    for name in available:
+        if name in blocked:
+            continue
+        v = vectors.get(name)
+        if v is None:
+            continue
+        dy, dx = v
+        new_gap = abs(gy - dy) + abs(gx - dx)
+        reduction = cur - new_gap
+        if reduction > best_reduction + 1e-9:
+            best_reduction = reduction
+            best = name
+    return best
+
+
 @dataclass
 class ActionEffect:
     action: str
@@ -148,6 +183,27 @@ class WorldGraph:
             eff.level_advanced_count += 1
 
         self.transitions += 1
+
+    # ---- Navigation (used by the autopilot) ---------------------------------
+
+    def movement_vectors(self, level: int, min_reliability: float = 0.5) -> dict[str, tuple[float, float]]:
+        """Return {action: (avg_dy, avg_dx)} for actions that reliably move things.
+
+        Only actions whose moved-fraction >= min_reliability and whose mean
+        displacement is non-trivial are returned -- these are the ones the
+        autopilot can steer with.
+        """
+        out: dict[str, tuple[float, float]] = {}
+        for action, eff in self.effects.get(str(level), {}).items():
+            if eff.count == 0 or eff.moved_count == 0:
+                continue
+            if eff.moved_count / eff.count < min_reliability:
+                continue
+            dy, dx = eff.avg_dy, eff.avg_dx
+            if abs(dy) < 0.5 and abs(dx) < 0.5:
+                continue
+            out[action] = (dy, dx)
+        return out
 
     # ---- Prompt-facing render -----------------------------------------------
 

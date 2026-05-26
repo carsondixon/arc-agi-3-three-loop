@@ -43,7 +43,7 @@ from dotenv import load_dotenv
 
 from src.claude_client import ClaudeClient
 from src.hypothesis import HypothesisGraph, Prediction
-from src.world_graph import WorldGraph
+from src.world_graph import WorldGraph, greedy_move
 from src.perception import (
     color_legend,
     color_legend_visual,
@@ -68,6 +68,7 @@ HYPOTHESIS_V4_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v4.txt
 HYPOTHESIS_V5_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v5.txt"
 VISION_PROMPT_PATH = PROJECT_ROOT / "prompts" / "vision_action.txt"
 VISION_GRAPH_PROMPT_PATH = PROJECT_ROOT / "prompts" / "vision_graph_action.txt"
+VISION_AUTOPILOT_PROMPT_PATH = PROJECT_ROOT / "prompts" / "vision_autopilot_action.txt"
 CONFIG_PATH = PROJECT_ROOT / "config" / "models.yaml"
 TRAJ_DIR = PROJECT_ROOT / "data" / "trajectories"
 HYP_DIR = PROJECT_ROOT / "data" / "hypotheses"
@@ -602,11 +603,262 @@ def play_game_hypothesis_loop(
 
 
 # --------------------------------------------------------------------------- #
+# Vision autopilot (LLM picks target; harness executes the path via world graph)
+# --------------------------------------------------------------------------- #
+
+
+def _find_object(objects: list, color: int, size: int, near_yx: tuple[int, int] | None):
+    """Find the object best matching a color+size signature, nearest to near_yx.
+
+    Used to re-locate the player / target across frames during autopilot.
+    Returns a DetectedObject or None.
+    """
+    cands = [o for o in objects if o.color == color and abs(o.size - size) <= max(3, 0.6 * size)]
+    if not cands:
+        cands = [o for o in objects if o.color == color]
+    if not cands:
+        return None
+    if near_yx is None:
+        return max(cands, key=lambda o: o.size)
+    return min(cands, key=lambda o: abs(o.centroid_y - near_yx[0]) + abs(o.centroid_x - near_yx[1]))
+
+
+def _least_observed_action(world_graph: WorldGraph, level: int, available: list) -> Any:
+    """Pick the available action with the fewest observations at this level.
+
+    Used to break autopilot stalls by exploring under-mapped controls, which
+    also improves the movement-vector estimates the autopilot relies on.
+    """
+    bucket = world_graph.effects.get(str(level), {})
+    return min(available, key=lambda a: bucket[a.name].count if a.name in bucket else 0)
+
+
+def play_game_autopilot(
+    arcade: Arcade,
+    client: ClaudeClient,
+    game_id: str,
+    scorecard_id: str,
+    seed: int,
+    max_actions: int,
+    per_game_budget_usd: float,
+    memory_priors: list[Any] | None = None,
+    autopilot_steps: int = 8,
+) -> tuple[Trajectory, HypothesisGraph]:
+    """Vision + world graph + harness-driven navigation.
+
+    Each PLAN turn calls Claude (vision images + transition model) to pick a
+    target object to navigate to (or a single action to take). When a target
+    is given and movement vectors are known, the harness greedily drives the
+    player onto the target for up to `autopilot_steps` primitive moves -- with
+    NO further LLM calls -- using the measured vectors in the world graph.
+    This fixes the per-step oscillation failure and is ~K x cheaper per action.
+    """
+    prompt_template = VISION_AUTOPILOT_PROMPT_PATH.read_text()
+    priors_section = _format_priors(memory_priors or [])
+    env, frame = _setup_env(arcade, game_id, seed, scorecard_id)
+
+    rng = random.Random(seed)
+    history: deque[tuple[str, str]] = deque(maxlen=HISTORY_LEN)
+    graph = HypothesisGraph(game_id=game_id, scorecard_id=scorecard_id)
+    world_graph = WorldGraph(game_id=game_id, scorecard_id=scorecard_id)
+    prev_grid = None
+    prev_objects: list = []
+    last_action_name = "(none)"
+    autopilot_note = ""
+    traj = Trajectory(
+        game_id=game_id, scorecard_id=scorecard_id, seed=seed, mode="vision-pilot",
+        started_at=datetime.now(timezone.utc).isoformat(),
+        win_levels=frame.win_levels if frame else 0,
+    )
+
+    def _record_step(step_index, action_label, thought, state_before, levels_before, usd, frame_after):
+        traj.steps.append(Step(
+            step_index=step_index, action=action_label, thought=thought,
+            state_before=state_before, state_after=str(frame_after.state),
+            levels_completed_after=frame_after.levels_completed, usd=usd,
+        ))
+        history.append((action_label, thought))
+
+    action_counter = 0
+    while action_counter < max_actions:
+        if frame is None:
+            logger.warning("None frame; aborting"); break
+        if frame.state is GameState.WIN:
+            logger.info("WIN at action %d", action_counter); break
+        if frame.state in (GameState.NOT_PLAYED, GameState.GAME_OVER):
+            frame = env.step(GameAction.RESET); continue
+        available = _available_actions(frame)
+        if not available:
+            frame = env.step(GameAction.RESET); continue
+
+        grid = frame.frame[0]
+        detected = extract_objects(grid)
+        obj_lookup = object_index(detected)
+        history_str = "\n".join(f"  step {i}: {a} ({t[:50]})" for i, (a, t) in enumerate(history)) or "  (none yet)"
+
+        delta_section = "CHANGES SINCE YOUR LAST ACTION: (first action -- no prior frame yet)"
+        if prev_grid is not None:
+            delta_section = render_delta(diff_objects(prev_objects, detected, prev_grid, grid), last_action_name)
+        if autopilot_note:
+            delta_section = autopilot_note + "\n\n" + delta_section
+            autopilot_note = ""
+
+        # PLAN: one LLM call.
+        prompt = priors_section + prompt_template.format(
+            game_id=game_id, win_levels_remaining=traj.win_levels - frame.levels_completed,
+            win_levels_total=traj.win_levels, game_state=str(frame.state), step_index=action_counter,
+            color_legend=color_legend_visual(grid), delta_section=delta_section,
+            object_inventory=render_object_inventory(detected),
+            hypothesis_graph=graph.render_for_prompt(),
+            transition_model=world_graph.render_for_prompt(frame.levels_completed, [a.name for a in available]),
+            history_len=len(history), action_history=history_str,
+            available_actions=", ".join(a.name for a in available),
+            available_action_names=" | ".join(a.name for a in available),
+        )
+        images = []
+        if prev_grid is not None:
+            images.append(grid_to_image(prev_grid))
+        images.append(grid_to_image(grid))
+        if prev_grid is not None:
+            images.append(diff_image(prev_grid, grid))
+        prev_grid, prev_objects = grid, detected
+
+        try:
+            text, cost = client.reason_vision(
+                prompt, images, role="reasoner",
+                tags={"game_id": game_id, "step": action_counter, "scorecard_id": scorecard_id, "mode": "vision-pilot"},
+            )
+        except Exception as e:
+            logger.warning("Plan call failed at action %d (%s); ending game", action_counter, e); break
+        traj.total_usd += cost.usd
+
+        parsed = _extract_json(text) or {}
+        graph.apply_update(parsed.get("graph_update") or {}, action_counter)
+        thought = parsed.get("thought") or ""
+        nav_id = parsed.get("navigate_to")
+        player_id = parsed.get("player_object_id")
+        chosen = parsed.get("chosen_action") or {}
+
+        vectors = world_graph.movement_vectors(frame.levels_completed)
+        do_autopilot = bool(nav_id) and bool(player_id) and nav_id in obj_lookup and player_id in obj_lookup and vectors
+
+        if do_autopilot:
+            player = obj_lookup[player_id]; target = obj_lookup[nav_id]
+            p_color, p_size = player.color, player.size
+            t_color, t_size = target.color, target.size
+            player_yx = (player.centroid_y, player.centroid_x)
+            target_yx = (target.centroid_y, target.centroid_x)
+            blocked: set[str] = set()
+            avail_names = [a.name for a in available]
+            steps_taken = 0
+            logger.info("[pilot] action=%d AUTOPILOT player=%s->target=%s vec=%s", action_counter, player_id, nav_id, {k: (round(v[0],1),round(v[1],1)) for k,v in vectors.items()})
+            for _ in range(autopilot_steps):
+                if action_counter >= max_actions or traj.total_usd > per_game_budget_usd:
+                    break
+                move = greedy_move(player_yx, target_yx, vectors, avail_names, blocked)
+                if move is None:
+                    break  # arrived or no progress possible -> re-plan
+                action = _resolve_action(move, available)
+                if action is None:
+                    break
+                state_before = str(frame.state); levels_before = frame.levels_completed
+                before_grid = frame.frame[0]; before_objs = extract_objects(before_grid)
+                nxt = env.step(action)
+                action_counter += 1
+                steps_taken += 1
+                if nxt is None:
+                    blocked.add(move); continue
+                after_grid = nxt.frame[0]; after_objs = extract_objects(after_grid)
+                d = diff_objects(before_objs, after_objs, before_grid, after_grid)
+                world_graph.observe(levels_before, action.name, d, nxt.levels_completed > levels_before, action_counter)
+                _record_step(action_counter - 1, f"{move}[auto]", thought, state_before, levels_before, 0.0, nxt)
+                last_action_name = f"{move}[auto]"
+                frame = nxt
+                # update prev for next plan's delta/image
+                prev_grid, prev_objects = before_grid, before_objs
+                if nxt.state is GameState.WIN or nxt.levels_completed > levels_before:
+                    logger.info("[pilot] level/ win change during autopilot at action %d", action_counter); break
+                if not (d.moved or d.appeared or d.disappeared or d.changed_cells):
+                    blocked.add(move); continue  # no-op: try a different action next
+                # relocate player + target
+                new_player = _find_object(after_objs, p_color, p_size, player_yx)
+                if new_player is None:
+                    break
+                player_yx = (new_player.centroid_y, new_player.centroid_x)
+                new_target = _find_object(after_objs, t_color, t_size, target_yx)
+                if new_target is None:
+                    break  # target gone (collected!) -> re-plan
+                target_yx = (new_target.centroid_y, new_target.centroid_x)
+                if abs(player_yx[0]-target_yx[0]) + abs(player_yx[1]-target_yx[1]) <= 1:
+                    break  # reached -> re-plan
+            if steps_taken == 0:
+                # Autopilot could not move toward the target with known vectors.
+                # Break the stall: take one forced exploration action (least-mapped
+                # control) and tell the LLM so it picks a reachable target next.
+                explore = _least_observed_action(world_graph, frame.levels_completed, available)
+                state_before = str(frame.state); levels_before = frame.levels_completed
+                before_grid = frame.frame[0]; before_objs = extract_objects(before_grid)
+                nxt = env.step(explore)
+                action_counter += 1
+                if nxt is not None:
+                    d = diff_objects(before_objs, extract_objects(nxt.frame[0]), before_grid, nxt.frame[0])
+                    world_graph.observe(levels_before, explore.name, d, nxt.levels_completed > levels_before, action_counter)
+                    _record_step(action_counter - 1, f"{explore.name}[explore]", thought, state_before, levels_before, 0.0, nxt)
+                    prev_grid, prev_objects = before_grid, before_objs
+                    last_action_name = f"{explore.name}[explore]"
+                    frame = nxt
+                autopilot_note = (
+                    f"AUTOPILOT COULD NOT REACH {nav_id}: no known action reduces the distance "
+                    f"(the path may be blocked or require an unmapped control). I took one exploration "
+                    f"step ({explore.name}) instead. Pick a DIFFERENT, reachable target or keep exploring "
+                    f"to map controls."
+                )
+            world_graph.save(WORLD_GRAPH_DIR)
+        else:
+            # Single LLM-chosen action (explore / interact / click).
+            action = _resolve_action(chosen.get("name", ""), available) or rng.choice(available)
+            cdata = chosen.get("data") or {}
+            if action.is_complex():
+                cx = cy = None
+                if "target_object_id" in cdata and cdata["target_object_id"] in obj_lookup:
+                    o = obj_lookup[cdata["target_object_id"]]; cx, cy = o.centroid_x, o.centroid_y
+                elif "x" in cdata:
+                    try: cx, cy = int(cdata["x"]), int(cdata.get("y", 0))
+                    except (TypeError, ValueError): cx = cy = None
+                if cx is None: cx, cy = rng.randint(0, 63), rng.randint(0, 63)
+                action.set_data({"x": max(0, min(63, cx)), "y": max(0, min(63, cy))})
+            action.reasoning = thought[:200]
+            state_before = str(frame.state); levels_before = frame.levels_completed
+            before_grid = frame.frame[0]; before_objs = detected
+            nxt = env.step(action)
+            action_counter += 1
+            if nxt is None:
+                _record_step(action_counter - 1, action.name + "[REJECTED]", thought, state_before, levels_before, cost.usd, frame)
+                continue
+            d = diff_objects(before_objs, extract_objects(nxt.frame[0]), before_grid, nxt.frame[0])
+            world_graph.observe(levels_before, action.name, d, nxt.levels_completed > levels_before, action_counter)
+            world_graph.save(WORLD_GRAPH_DIR)
+            _record_step(action_counter - 1, action.name, thought, state_before, levels_before, cost.usd, nxt)
+            last_action_name = action.name
+            frame = nxt
+
+        graph.save(HYP_DIR)
+        logger.info("[pilot] plan@%d levels=%d/%d usd=$%.4f total=$%.4f", action_counter, frame.levels_completed, traj.win_levels, cost.usd, traj.total_usd)
+        if traj.total_usd > per_game_budget_usd:
+            logger.warning("Budget $%.2f exceeded; halting", per_game_budget_usd); break
+
+    traj.finished_at = datetime.now(timezone.utc).isoformat()
+    traj.final_state = str(frame.state) if frame else "?"
+    traj.levels_completed = frame.levels_completed if frame else 0
+    return traj, graph
+
+
+# --------------------------------------------------------------------------- #
 # Entry point
 # --------------------------------------------------------------------------- #
 
 
-MODES = ("naked", "hypothesis-loop", "memory-augmented", "anti-lockin", "perception-aware", "perception-loose", "perception-diff", "vision", "vision-graph")
+MODES = ("naked", "hypothesis-loop", "memory-augmented", "anti-lockin", "perception-aware", "perception-loose", "perception-diff", "vision", "vision-graph", "vision-pilot")
 
 
 def _format_priors(priors: list[tuple[Any, float]]) -> str:
@@ -768,6 +1020,19 @@ def main() -> int:
             max_actions=args.max_actions, per_game_budget_usd=per_game_budget,
             memory_priors=priors, mode_label="vision-graph",
             use_world_graph=True,
+        )
+        graph.save(HYP_DIR)
+    elif args.mode == "vision-pilot":
+        from src.memory import MemoryStore
+        store = MemoryStore()
+        query = f"Starting game {args.game}. What general lessons from past games apply?"
+        priors = store.retrieve(query, k=3)
+        logger.info("Retrieved %d priors from memory.db (vision-pilot mode)", len(priors))
+        traj, graph = play_game_autopilot(
+            arcade=arcade, client=client, game_id=args.game,
+            scorecard_id=scorecard_id, seed=args.seed,
+            max_actions=args.max_actions, per_game_budget_usd=per_game_budget,
+            memory_priors=priors,
         )
         graph.save(HYP_DIR)
     else:

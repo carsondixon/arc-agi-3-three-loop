@@ -1,0 +1,84 @@
+You are playing an interactive game on a 64x64 grid of colored cells. You have no instructions and no stated goal -- you must discover the rules through play. You are given the state as IMAGES (rendered pixel art), not text.
+
+ATTACHED IMAGES (in order)
+- First action: ONE image (CURRENT frame).
+- Otherwise THREE: (1) PREVIOUS frame, (2) CURRENT frame, (3) CHANGES image (changed cells painted RED -- exactly what just happened).
+
+============================================================================
+YOU HAVE AN AUTOPILOT. Use it for navigation; don't micro-steer.
+============================================================================
+The harness can move the player FOR you. If you identify the player and a
+target to reach, set:
+  "player_object_id": "<the avatar's object id from DETECTED OBJECTS>"
+  "navigate_to": "<the target object id to move the player onto>"
+and the harness will automatically take multiple precise steps to drive the
+player onto that target, using the MEASURED movement vectors below. You do
+NOT need to plan each step -- that is what failed before (oscillating near a
+target). Just pick the right target.
+
+Use "navigate_to" to REACH or COLLECT something (e.g. move onto a
+collectible/goal). Set "navigate_to": null and give a concrete
+"chosen_action" instead when you need to:
+  - explore to learn the controls (early game, before vectors are known),
+  - interact in place (e.g. ACTION5), or
+  - click (ACTION6) -- set chosen_action.data {{"target_object_id": "..."}} or {{"x":..,"y":..}}.
+
+The harness still records ground truth. Read the LEARNED TRANSITION MODEL:
+
+{transition_model}
+
+GUIDANCE
+1. EARLY: if movement vectors are unknown, set navigate_to=null and use
+   chosen_action to try each action once and learn the controls.
+2. ONCE you know the controls AND see a target: set player_object_id +
+   navigate_to and let the autopilot reach it. Pick the NEAREST useful target.
+3. Identify the goal: things that DON'T move with your actions are candidate
+   goals/collectibles/walls. A common win is "move player onto each
+   collectible" or "reach the goal".
+4. If a navigate_to attempt didn't reach the target (autopilot reports it),
+   the path is blocked -- pick a different target or an exploring action.
+
+GAME INFO
+- Game id: {game_id}
+- Levels remaining: {win_levels_remaining} / {win_levels_total}
+- Current game state: {game_state}
+- Step: {step_index}
+
+COLOR LEGEND (names match the rendered image)
+{color_legend}
+
+{delta_section}
+
+DETECTED OBJECTS (connected components, sorted by size; coords are grid (y,x))
+{object_inventory}
+
+CURRENT HYPOTHESIS GRAPH
+{hypothesis_graph}
+
+RECENT ACTION HISTORY (last {history_len})
+{action_history}
+
+AVAILABLE ACTIONS (chosen_action must be one of these)
+{available_actions}
+
+Reply with a single JSON object, no markdown fences, no prose:
+
+{{
+  "verification": "<did your last action/plan do what you expected? cite the CHANGES image>",
+  "player_object_id": "<the avatar's object id, or null if unknown>",
+  "navigate_to": "<target object id to drive the player onto, or null>",
+  "graph_update": {{
+    "goal_hypothesis": "<current best guess at the win condition>",
+    "objects": {{
+      "<object_id>": {{"description": "<loc+color+shape>", "role_hypothesis": "<player_avatar|goal|wall|hazard|collectible|trigger|display|unknown>", "confidence": <0..1>}}
+    }},
+    "open_questions": ["<question>"],
+    "remove_object_ids": []
+  }},
+  "chosen_action": {{
+    "name": "<one of: {available_action_names}>",
+    "expected_outcome": "<what should change if your model is right>",
+    "data": {{}}
+  }},
+  "thought": "<one short sentence: which target you're navigating to, or what you're testing>"
+}}
