@@ -43,6 +43,7 @@ from dotenv import load_dotenv
 
 from src.claude_client import ClaudeClient
 from src.hypothesis import HypothesisGraph, Prediction
+from src.world_graph import WorldGraph
 from src.perception import (
     color_legend,
     color_legend_visual,
@@ -66,9 +67,11 @@ HYPOTHESIS_V3_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v3.txt
 HYPOTHESIS_V4_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v4.txt"
 HYPOTHESIS_V5_PROMPT_PATH = PROJECT_ROOT / "prompts" / "hypothesis_action_v5.txt"
 VISION_PROMPT_PATH = PROJECT_ROOT / "prompts" / "vision_action.txt"
+VISION_GRAPH_PROMPT_PATH = PROJECT_ROOT / "prompts" / "vision_graph_action.txt"
 CONFIG_PATH = PROJECT_ROOT / "config" / "models.yaml"
 TRAJ_DIR = PROJECT_ROOT / "data" / "trajectories"
 HYP_DIR = PROJECT_ROOT / "data" / "hypotheses"
+WORLD_GRAPH_DIR = PROJECT_ROOT / "data" / "world_graphs"
 
 SOURCE_URL = "https://github.com/carsondixon/arc-agi-3-three-loop"
 SCORECARD_HOST = "https://three.arcprize.org"
@@ -340,8 +343,12 @@ def play_game_hypothesis_loop(
     use_loose_commitment_prompt: bool = False,
     use_frame_diff: bool = False,
     use_vision: bool = False,
+    use_world_graph: bool = False,
 ) -> tuple[Trajectory, HypothesisGraph]:
-    if use_vision:
+    if use_world_graph:
+        prompt_template = VISION_GRAPH_PROMPT_PATH.read_text()
+        use_vision = True
+    elif use_vision:
         prompt_template = VISION_PROMPT_PATH.read_text()
     elif use_frame_diff:
         prompt_template = HYPOTHESIS_V5_PROMPT_PATH.read_text()
@@ -364,6 +371,7 @@ def play_game_hypothesis_loop(
     rng = random.Random(seed)
     history: deque[tuple[str, str]] = deque(maxlen=HISTORY_LEN)
     graph = HypothesisGraph(game_id=game_id, scorecard_id=scorecard_id)
+    world_graph = WorldGraph(game_id=game_id, scorecard_id=scorecard_id) if use_world_graph else None
     prev_grid = None
     prev_objects: list = []
     last_action_name = "(none)"
@@ -445,6 +453,10 @@ def play_game_hypothesis_loop(
             fmt_kwargs["n_objects"] = len(obj_lookup)
         if show_delta:
             fmt_kwargs["delta_section"] = delta_section
+        if use_world_graph and world_graph is not None:
+            fmt_kwargs["transition_model"] = world_graph.render_for_prompt(
+                frame.levels_completed, [a.name for a in available]
+            )
 
         prompt = priors_section + prompt_template.format(**fmt_kwargs)
 
@@ -542,6 +554,21 @@ def play_game_hypothesis_loop(
             graph.save(HYP_DIR)
             continue
 
+        # World graph: record what this action objectively did (before vs after).
+        # NOTE: use next_frame here -- `frame` is not reassigned until below.
+        if use_world_graph and world_graph is not None:
+            after_grid = next_frame.frame[0]
+            after_objs = extract_objects(after_grid)
+            step_delta = diff_objects(detected, after_objs, grid, after_grid)
+            world_graph.observe(
+                level=levels_before,
+                action=action.name,
+                delta=step_delta,
+                level_advanced=next_frame.levels_completed > levels_before,
+                step=step_index,
+            )
+            world_graph.save(WORLD_GRAPH_DIR)
+
         frame = next_frame
         traj.steps.append(Step(
             step_index=step_index, action=action_label, thought=thought,
@@ -573,7 +600,7 @@ def play_game_hypothesis_loop(
 # --------------------------------------------------------------------------- #
 
 
-MODES = ("naked", "hypothesis-loop", "memory-augmented", "anti-lockin", "perception-aware", "perception-loose", "perception-diff", "vision")
+MODES = ("naked", "hypothesis-loop", "memory-augmented", "anti-lockin", "perception-aware", "perception-loose", "perception-diff", "vision", "vision-graph")
 
 
 def _format_priors(priors: list[tuple[Any, float]]) -> str:
@@ -720,6 +747,20 @@ def main() -> int:
             max_actions=args.max_actions, per_game_budget_usd=per_game_budget,
             memory_priors=priors, mode_label="vision",
             use_vision=True,
+        )
+        graph.save(HYP_DIR)
+    elif args.mode == "vision-graph":
+        from src.memory import MemoryStore
+        store = MemoryStore()
+        query = f"Starting game {args.game}. What general lessons from past games apply?"
+        priors = store.retrieve(query, k=3)
+        logger.info("Retrieved %d priors from memory.db (vision-graph mode)", len(priors))
+        traj, graph = play_game_hypothesis_loop(
+            arcade=arcade, client=client, game_id=args.game,
+            scorecard_id=scorecard_id, seed=args.seed,
+            max_actions=args.max_actions, per_game_budget_usd=per_game_budget,
+            memory_priors=priors, mode_label="vision-graph",
+            use_world_graph=True,
         )
         graph.save(HYP_DIR)
     else:

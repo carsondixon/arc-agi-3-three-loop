@@ -1,0 +1,92 @@
+{
+  "game_id": "ls20",
+  "scorecard_id": "2bd30d4f-ffb1-4b47-acb0-17b5032edafe",
+  "seed": 0,
+  "mode": "vision-graph",
+  "started_at": "2026-05-26T05:47:36.834384+00:00",
+  "finished_at": "2026-05-26T05:48:50.536706+00:00",
+  "total_usd": 0.167319,
+  "steps": [
+    {
+      "step_index": 0,
+      "action": "ACTION1",
+      "thought": "Test ACTION1 to see if it moves the player avatar upward, identifying both the control and the avatar.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.022569,
+      "expected_outcome": "CHANGES image shows a small cluster of cells moving upward, indicating player avatar moved up",
+      "falsifying_observation": "CHANGES image is all black (no movement) or shows movement in a different direction",
+      "rule_id": "R1",
+      "verification": "First action, no prior prediction to verify."
+    },
+    {
+      "step_index": 1,
+      "action": "ACTION1",
+      "thought": "Player avatar (brown+magenta) is at row ~40-43, goal appears to be at row ~12 - keep pressing ACTION1 (up) to navigate toward it.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.029085,
+      "expected_outcome": "CHANGES image shows brown (O_9_3) and magenta (O_c_1) objects moving further up by ~5 cells, getting closer to O_5_2 at row 12",
+      "falsifying_observation": "CHANGES image is all black or objects move in a different direction",
+      "rule_id": "R1",
+      "verification": "Partial match: CHANGES image shows O_9_3 (brown) moved from (48,36) to (43,36) and O_c_1 (magenta) moved from (46,36) to (40,36) - both moved UP by ~5-6 cells. This suggests ACTION1 = UP and these objects are the player avatar (stacked blue+orange player sprite). The prediction was correct in direction."
+    },
+    {
+      "step_index": 2,
+      "action": "ACTION1",
+      "thought": "Player is at row ~36-38, goal is at row ~12, so I need ~5-6 more ACTION1 presses to reach it - keep pressing up.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.030183,
+      "expected_outcome": "CHANGES image shows brown (O_9_3) and magenta (O_c_1) moving further up by ~4-5 cells, now around row 31-34, getting closer to goal O_5_2 at row 12",
+      "falsifying_observation": "CHANGES image is all black, or objects move in a direction other than up",
+      "rule_id": "R1",
+      "verification": "Prediction held: CHANGES image shows O_9_3 (brown) moved from (43,36) to (38,36) [-5 in y, i.e., up] and O_c_1 (magenta) moved from (40,36) to (36,36) [-4 in y, up]. ACTION1 confirmed as 'move up'."
+    },
+    {
+      "step_index": 3,
+      "action": "ACTION1",
+      "thought": "Player is at row ~30-33, goal is at row ~12, so I need ~3-4 more ACTION1 presses to reach it - continuing upward navigation.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.026469,
+      "expected_outcome": "CHANGES image shows brown O_9_3 and magenta O_c_1 moving further up by ~5 cells, reaching approximately row 25-28, getting much closer to goal O_5_2 at row 12",
+      "falsifying_observation": "CHANGES image is all black, or objects move in a direction other than up, or level advances",
+      "rule_id": "R1",
+      "verification": "Prediction held: CHANGES image shows brown O_9_3 moved from (38,36) to (33,36) [-5 in y, upward] and magenta O_c_1 moved from (36,36) to (30,36) [-6 in y, upward]. ACTION1 confirmed moves player up."
+    },
+    {
+      "step_index": 4,
+      "action": "ACTION1",
+      "thought": "Player is at row ~26-28, goal is at row ~12, so I need ~2-3 more ACTION1 presses to reach the goal.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.028554000000000003,
+      "expected_outcome": "CHANGES image shows brown O_9_3 and magenta O_c_1 moving further up by ~4-5 cells, reaching approximately row 21-24, getting very close to goal O_5_2 at row 12",
+      "falsifying_observation": "CHANGES image is all black, or objects move in wrong direction, or level advances immediately",
+      "rule_id": "R1",
+      "verification": "Prediction partially held: CHANGES image shows brown O_9_3 moved from (33,36) to (28,36) which is -5 in y (upward), and magenta O_c_1 moved from (30,36) to (26,36) which is -4 upward. However the changes report says 'MOVED +2 in y (down)' for the large green blob and '+1 in x (right)' for light_blue - these are background/world elements shifting, not the player. The player (brown+magenta) did move upward as predicted. R1 confirmed again."
+    },
+    {
+      "step_index": 5,
+      "action": "ACTION1",
+      "thought": "Player is at row ~20-23, goal is at row ~12, so one or two more ACTION1 presses should reach the goal.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.030459,
+      "expected_outcome": "CHANGES image shows brown O_9_3 and magenta O_c_1 moving further up by ~5 cells, reaching approximately row 15-18, very close to or at goal O_5_2 at row 12. Level may advance.",
+      "falsifying_observation": "CHANGES image is all black, or objects move in wrong direction, or player stops before reaching goal due to wall",
+      "rule_id": "R1",
+      "verification": "Prediction held: CHANGES image shows brown O_9_3 moved from (28,36) to (23,36) and magenta O_c_1 moved from (26,36) to (20,36), both moving upward by ~5-6 cells, consistent with R1 (ACTION1=up)."
+    }
+  ],
+  "final_state": "GameState.NOT_FINISHED",
+  "levels_completed": 0,
+  "win_levels": 7
+}

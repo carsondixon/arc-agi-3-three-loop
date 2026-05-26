@@ -1,0 +1,92 @@
+{
+  "game_id": "ls20",
+  "scorecard_id": "a4b989b9-09a5-4c6a-a56c-21cdb60075eb",
+  "seed": 0,
+  "mode": "vision-graph",
+  "started_at": "2026-05-26T05:50:22.453916+00:00",
+  "finished_at": "2026-05-26T05:51:25.244991+00:00",
+  "total_usd": 0.15379199999999998,
+  "steps": [
+    {
+      "step_index": 0,
+      "action": "ACTION1",
+      "thought": "Test ACTION1 to see which object moves and in which direction, identifying the player avatar.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.021803999999999997,
+      "expected_outcome": "CHANGES image shows a small cluster of cells moving upward \u2014 the player avatar shifts up by 1-2 rows",
+      "falsifying_observation": "CHANGES image is all black, or movement is in a different direction",
+      "rule_id": "R1",
+      "verification": "First action \u2014 no prior frame to verify."
+    },
+    {
+      "step_index": 1,
+      "action": "ACTION1",
+      "thought": "Player is at ~(43,36) and goal appears to be at ~(12,36), so I need to keep pressing ACTION1 to move up toward the goal.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.028614,
+      "expected_outcome": "CHANGES image shows brown+magenta cluster moving further up by ~5 rows, from ~(43,36) toward (38,36)",
+      "falsifying_observation": "CHANGES image is all black, or movement is in a different direction, or a different object moves",
+      "rule_id": "R1",
+      "verification": "Prediction held: CHANGES image shows O_9_3 (brown) moved from (48,36) to (43,36) and O_c_1 (magenta) moved from (46,36) to (40,36), both shifting up by ~5-6 rows. ACTION1 moves the player upward. The player avatar appears to be the brown+magenta cluster (O_9_3 + O_c_1), not O_5_2."
+    },
+    {
+      "step_index": 2,
+      "action": "ACTION1",
+      "thought": "Player is at ~(38,36) and goal is at ~(12,36); keep pressing ACTION1 to move up toward the goal.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.027021,
+      "expected_outcome": "CHANGES image shows brown+magenta cluster moving up by ~5 rows, from ~(38,36) to ~(33,36)",
+      "falsifying_observation": "CHANGES image is all black, or movement is in a different direction, or player stops before reaching goal",
+      "rule_id": "R1",
+      "verification": "Prediction held: CHANGES image shows brown (O_9_3) moved from (43,36) to (38,36) \u2014 up by 5 rows \u2014 and magenta (O_c_1) moved from (40,36) to (36,36) \u2014 up by ~4 rows. ACTION1=up confirmed again."
+    },
+    {
+      "step_index": 3,
+      "action": "ACTION1",
+      "thought": "Player is ~18 rows from goal at (12,36); keep pressing ACTION1 to move up.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.024903,
+      "expected_outcome": "CHANGES image shows brown+magenta cluster moving up by ~5 rows, from ~(30-33,36) to ~(25-28,36)",
+      "falsifying_observation": "CHANGES image is all black, or movement is in a different direction, or player stops unexpectedly",
+      "rule_id": "R1",
+      "verification": "Prediction held: CHANGES image shows brown object moved from (38,36) to (33,36) \u2014 up by 5 rows \u2014 and magenta moved from (36,36) to (30,36) \u2014 up by ~6 rows. Consistent with R1."
+    },
+    {
+      "step_index": 4,
+      "action": "ACTION1",
+      "thought": "Player is ~14-16 rows from goal; keep pressing ACTION1 to move up toward the gray rect at (12,36).",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.025512,
+      "expected_outcome": "CHANGES image shows brown+magenta cluster moving up by ~4-5 rows, from ~(26-28,36) to ~(21-24,36)",
+      "falsifying_observation": "CHANGES image is all black, or movement is in a different direction, or player stops unexpectedly",
+      "rule_id": "R1",
+      "verification": "Prediction held: CHANGES image shows brown (O_9_3) moved from (33,36) to (28,36) and magenta (O_c_1) moved from (30,36) to (26,36), both moving upward by ~4-5 rows. R1 confirmed again."
+    },
+    {
+      "step_index": 5,
+      "action": "ACTION1",
+      "thought": "Player is ~8-11 rows from goal at (12,36); keep pressing ACTION1 to move up toward it.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.025938,
+      "expected_outcome": "CHANGES image shows brown+magenta cluster moving up by ~5-6 rows, from ~(20-23,36) to ~(14-18,36), getting very close to or reaching the gray goal at (12,36)",
+      "falsifying_observation": "CHANGES image is all black, or movement is in a different direction, or player stops unexpectedly short",
+      "rule_id": "R1",
+      "verification": "Prediction held: CHANGES image shows brown (O_9_3) moved from (28,36) to (23,36) and magenta (O_c_1) moved from (26,36) to (20,36), both moving up by ~5-6 rows, consistent with R1."
+    }
+  ],
+  "final_state": "GameState.NOT_FINISHED",
+  "levels_completed": 0,
+  "win_levels": 7
+}

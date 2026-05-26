@@ -1,0 +1,21 @@
+{
+  "game_id": "ls20",
+  "scorecard_id": "2bd30d4f-ffb1-4b47-acb0-17b5032edafe",
+  "effects": {
+    "0": {
+      "ACTION1": {
+        "action": "ACTION1",
+        "count": 6,
+        "noop_count": 6,
+        "moved_count": 0,
+        "sum_dy": 0,
+        "sum_dx": 0,
+        "appeared_count": 0,
+        "disappeared_count": 0,
+        "level_advanced_count": 0,
+        "last_step": 5
+      }
+    }
+  },
+  "transitions": 6
+}

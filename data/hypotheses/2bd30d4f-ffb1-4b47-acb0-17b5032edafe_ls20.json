@@ -1,0 +1,96 @@
+{
+  "game_id": "ls20",
+  "scorecard_id": "2bd30d4f-ffb1-4b47-acb0-17b5032edafe",
+  "rules": {
+    "R1": {
+      "id": "R1",
+      "text": "ACTION1 moves player up by ~5-6 cells",
+      "confidence": 0.99,
+      "tests_passed": 5,
+      "tests_failed": 0,
+      "last_updated_step": 5
+    },
+    "R2": {
+      "id": "R2",
+      "text": "ACTION2 moves player down",
+      "confidence": 0.4,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 5
+    },
+    "R3": {
+      "id": "R3",
+      "text": "ACTION3 moves player left",
+      "confidence": 0.4,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 5
+    },
+    "R4": {
+      "id": "R4",
+      "text": "ACTION4 moves player right",
+      "confidence": 0.4,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 5
+    }
+  },
+  "objects": {
+    "O_3_1": {
+      "id": "O_3_1",
+      "description": "green blob at (14,36) - appeared near goal area",
+      "role_hypothesis": "wall",
+      "confidence": 0.55
+    },
+    "O_9_3": {
+      "id": "O_9_3",
+      "description": "brown rect now at (23,36), moving up with ACTION1",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.98
+    },
+    "O_c_1": {
+      "id": "O_c_1",
+      "description": "magenta rect now at (20,36), moving up with ACTION1",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.98
+    },
+    "O_5_2": {
+      "id": "O_5_2",
+      "description": "gray rect at (12,36), bbox 9-15,33-39 - small box near top of playfield",
+      "role_hypothesis": "goal",
+      "confidence": 0.82
+    },
+    "O_b_1": {
+      "id": "O_b_1",
+      "description": "light_blue wide horizontal bar at bottom row 62",
+      "role_hypothesis": "display",
+      "confidence": 0.7
+    },
+    "O_9_4": {
+      "id": "O_9_4",
+      "description": "brown blob at (57,5), bottom-left area",
+      "role_hypothesis": "display",
+      "confidence": 0.5
+    },
+    "O_4_2": {
+      "id": "O_4_2",
+      "description": "off-black blob at (38,30), did not move",
+      "role_hypothesis": "wall",
+      "confidence": 0.55
+    }
+  },
+  "goal_hypothesis": "Move the player avatar (brown O_9_3 + magenta O_c_1) upward to reach the gray box O_5_2 at row ~12, col 36 (the black box visible at top center of the playfield)",
+  "open_questions": [
+    "Player is now at row ~20-23, goal at row ~12 - need ~1-2 more ACTION1 presses",
+    "Will level advance when player reaches O_5_2 at row 12?",
+    "Is O_3_1 (green blob at row 14) blocking the path to the goal?"
+  ],
+  "last_prediction": {
+    "step_index": 5,
+    "action": "ACTION1",
+    "rule_id": "R1",
+    "expected_outcome": "CHANGES image shows brown O_9_3 and magenta O_c_1 moving further up by ~5 cells, reaching approximately row 15-18, very close to or at goal O_5_2 at row 12. Level may advance.",
+    "falsifying_observation": "CHANGES image is all black, or objects move in wrong direction, or player stops before reaching goal due to wall"
+  },
+  "step_count": 5
+}

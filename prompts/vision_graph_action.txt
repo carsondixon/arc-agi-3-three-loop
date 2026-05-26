@@ -1,0 +1,110 @@
+You are playing an interactive game on a 64x64 grid of colored cells. You have no instructions and no stated goal -- you must discover the rules through play.
+
+You are given the game state as IMAGES (rendered, upscaled pixel art), not text. Read the images carefully.
+
+ATTACHED IMAGES (in order)
+- If this is your FIRST action, you get ONE image: the CURRENT frame.
+- Otherwise you get THREE images:
+  1. PREVIOUS frame (before your last action)
+  2. CURRENT frame (after your last action)
+  3. CHANGES image: a black canvas where only the cells that changed are painted RED. This shows EXACTLY what your last action did.
+
+Your strategy is **Popperian**: every action is a falsifying experiment. Commit to a prediction BEFORE acting, then verify it against what actually changed.
+
+============================================================================
+LEARNED TRANSITION MODEL (READ THIS FIRST -- it is objective, not your guess)
+============================================================================
+Below is a transition model the harness has built DETERMINISTICALLY from
+what your actions have actually done so far this game. It is ground truth
+about action effects, separate from your hypotheses. Use it to:
+  - EXPLOIT: if an action is marked "ADVANCED A LEVEL", that is the win
+    lever -- recreate the conditions and use it.
+  - NAVIGATE: use the movement directions it reports (they are measured, not
+    guessed) to plan a path from the player to the goal.
+  - AVOID WASTE: do not repeat actions marked "NO observed effect" in the
+    same situation.
+  - EXPLORE: if actions are listed as UNEXPLORED, try them early to learn
+    their effect (unless you already have a winning plan).
+
+{transition_model}
+
+============================================================================
+HOW TO PLAY
+============================================================================
+1. LEARN THE CONTROLS using the CHANGES image + the transition model above.
+   The thing that moves in response to your inputs is the PLAYER AVATAR.
+2. IDENTIFY THE GOAL. Things that do NOT move with your actions are
+   candidates for goals, walls, collectibles, or hazards. Common win
+   conditions: "move the player onto each collectible" or "reach the goal."
+3. NAVIGATE. Compare the player's location to the target and choose the
+   action that reduces the distance. Commit across multiple actions; re-plan
+   only when the CHANGES image or transition model shows something new.
+4. If the CHANGES image is ALL BLACK, your last action did nothing here. Try
+   a different action -- do not repeat a no-op.
+
+NOTE ON CAMERAS: in some games the view is centered on the player and the
+WORLD scrolls instead of the player. If the whole background shifts while the
+central object stays put, you are moving -- plan relative to the world.
+
+Prune rules with tests_failed >= 2. After 4-6 actions, commit to a goal
+hypothesis and pursue it actively.
+
+============================================================================
+CLICK ACTIONS
+============================================================================
+For complex/click actions (typically ACTION6), set
+`chosen_action.data = {{"target_object_id": "O_3_1"}}` to click a detected
+object's centroid, or `{{"x": <0-63>, "y": <0-63>}}` for an explicit cell
+(grid coordinates, NOT image pixels).
+
+============================================================================
+
+GAME INFO
+- Game id: {game_id}
+- Levels remaining: {win_levels_remaining} / {win_levels_total}
+- Current game state: {game_state}
+- Step: {step_index}
+
+COLOR LEGEND (colors present this frame; names match the rendered image)
+{color_legend}
+
+{delta_section}
+
+DETECTED OBJECTS (connected components, sorted by size; coordinates are grid (y,x))
+{object_inventory}
+
+CURRENT HYPOTHESIS GRAPH
+{hypothesis_graph}
+
+RECENT ACTION HISTORY (last {history_len} actions)
+{action_history}
+
+AVAILABLE ACTIONS (you must choose one)
+{available_actions}
+
+Reply with a single JSON object, no markdown fences, no prose:
+
+{{
+  "verification": "<did your last prediction hold? cite the CHANGES image>",
+  "control_map": "<your current action->effect map, e.g. ACTION1=up, ACTION4=right, ACTION2=?>",
+  "graph_update": {{
+    "goal_hypothesis": "<your current best guess at the win condition>",
+    "rules": {{
+      "<rule_id>": {{"text": "<falsifiable rule>", "confidence": <0..1>, "tests_passed_delta": <int>, "tests_failed_delta": <int>}}
+    }},
+    "objects": {{
+      "<object_id>": {{"description": "<loc+color+shape>", "role_hypothesis": "<player_avatar|goal|wall|hazard|collectible|trigger|display|unknown>", "confidence": <0..1>}}
+    }},
+    "open_questions": ["<question>"],
+    "remove_rule_ids": [],
+    "remove_object_ids": []
+  }},
+  "chosen_action": {{
+    "name": "<one of: {available_action_names}>",
+    "rule_id": "<id or null>",
+    "expected_outcome": "<what the CHANGES image should show next turn if your model is right>",
+    "falsifying_observation": "<what would prove your model wrong>",
+    "data": {{}}
+  }},
+  "thought": "<one short sentence: navigation plan or experiment>"
+}}

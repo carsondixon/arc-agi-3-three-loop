@@ -1,0 +1,434 @@
+{
+  "game_id": "su15",
+  "scorecard_id": "58f0d77a-f1e9-4f9f-9201-ef5ecb939f6e",
+  "rules": {
+    "R1": {
+      "id": "R1",
+      "text": "O_f_1 (purple, centroid ~(5,31)) is the player avatar",
+      "confidence": 0.15,
+      "tests_passed": 0,
+      "tests_failed": 2,
+      "last_updated_step": 2
+    },
+    "R2": {
+      "id": "R2",
+      "text": "O_f_2 (purple, centroid ~(59,4)) may be a second player or goal marker",
+      "confidence": 0.4,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 0
+    },
+    "R3": {
+      "id": "R3",
+      "text": "ACTION6 is a click action targeting specific grid coordinates",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 6
+    },
+    "R4": {
+      "id": "R4",
+      "text": "The dotted line between O_9_1 and O_f_2 indicates a trajectory or goal path",
+      "confidence": 0.5,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 1
+    },
+    "R5": {
+      "id": "R5",
+      "text": "ACTION7 is a no-op or has no effect in current state",
+      "confidence": 0.99,
+      "tests_passed": 5,
+      "tests_failed": 0,
+      "last_updated_step": 40
+    },
+    "R6": {
+      "id": "R6",
+      "text": "O_9_1 (blue blob) moves when clicked directly via ACTION6",
+      "confidence": 0.15,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 3
+    },
+    "R7": {
+      "id": "R7",
+      "text": "O_f_2 (purple, centroid ~(59,4)) is the goal destination; clicking it may trigger movement",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 3
+    },
+    "R8": {
+      "id": "R8",
+      "text": "ACTION7 moves the blue circle (player) in some direction",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 5
+    },
+    "R9": {
+      "id": "R9",
+      "text": "Clicking on O_f_2 (the goal) will move O_9_1 toward it or complete the level",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 4
+    },
+    "R10": {
+      "id": "R10",
+      "text": "The white cross (+) is a cursor/player; clicking its exact grid position moves it",
+      "confidence": 0.45,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 13
+    },
+    "R11": {
+      "id": "R11",
+      "text": "ACTION7 cycles through states or moves the player incrementally",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 5
+    },
+    "R12": {
+      "id": "R12",
+      "text": "Clicking the white cross (+) at approximately (y=59, x=4) via ACTION6 will move the player or trigger interaction",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 6
+    },
+    "R13": {
+      "id": "R13",
+      "text": "The white cross is a separate interactive cursor that can be clicked to select destination",
+      "confidence": 0.5,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 5
+    },
+    "R14": {
+      "id": "R14",
+      "text": "Clicking midpoint of dotted line triggers movement",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 7
+    },
+    "R15": {
+      "id": "R15",
+      "text": "The white cross is a movable cursor; clicking a destination moves the cursor there, then ACTION7 confirms the move",
+      "confidence": 0.4,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 7
+    },
+    "R16": {
+      "id": "R16",
+      "text": "Clicking on O_9_1 (blue circle) selects it",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 8
+    },
+    "R18": {
+      "id": "R18",
+      "text": "The game requires clicking the white cross cursor to move it to a destination \u2014 the cross is the player, not O_9_1",
+      "confidence": 0.35,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 8
+    },
+    "R17": {
+      "id": "R17",
+      "text": "Clicking at (y=57, x=7) triggers movement",
+      "confidence": 0.05,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 9
+    },
+    "R23": {
+      "id": "R23",
+      "text": "The game may be purely observational/animated with no interactive elements",
+      "confidence": 0.97,
+      "tests_passed": 24,
+      "tests_failed": 0,
+      "last_updated_step": 43
+    },
+    "R26": {
+      "id": "R26",
+      "text": "ACTION6 with object_id targeting O_f_2 will trigger movement or level completion",
+      "confidence": 0.02,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 13
+    },
+    "R28": {
+      "id": "R28",
+      "text": "The white cross is at approximately grid (y=41, x=8)",
+      "confidence": 0.02,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 15
+    },
+    "R29": {
+      "id": "R29",
+      "text": "Clicking O_9_1 (blue circle) first selects it, then clicking O_f_2 sets destination",
+      "confidence": 0.02,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 16
+    },
+    "R20": {
+      "id": "R20",
+      "text": "Clicking O_3_1 (green rect, centroid y=15,x=48) selects/moves the player",
+      "confidence": 0.02,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 16
+    },
+    "R31": {
+      "id": "R31",
+      "text": "The game requires clicking the destination (O_f_2) when the white cross is already selected/active",
+      "confidence": 0.35,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 16
+    },
+    "R30": {
+      "id": "R30",
+      "text": "The white cross is the player avatar at approximately grid (y=43, x=8); clicking it will select or move it",
+      "confidence": 0.02,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 17
+    },
+    "R32": {
+      "id": "R32",
+      "text": "Clicking directly on O_9_1 (blue circle) launches/moves it",
+      "confidence": 0.02,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 18
+    },
+    "R33": {
+      "id": "R33",
+      "text": "The white cross is a visual indicator of the trajectory endpoint, not a clickable object",
+      "confidence": 0.45,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 17
+    },
+    "R36": {
+      "id": "R36",
+      "text": "The white cross is at grid coordinates approximately (y=43, x=9) and clicking it exactly will select/move it",
+      "confidence": 0.02,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 20
+    },
+    "R42": {
+      "id": "R42",
+      "text": "The white cross is a visual indicator only; the actual interaction is clicking the destination O_f_2 to set trajectory",
+      "confidence": 0.3,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 22
+    },
+    "R47": {
+      "id": "R47",
+      "text": "ACTION7 launches/fires the blue circle along the dotted trajectory",
+      "confidence": 0.02,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 25
+    },
+    "R49": {
+      "id": "R49",
+      "text": "Clicking O_9_1 then O_f_2 in sequence sets trajectory",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 39
+    },
+    "R48": {
+      "id": "R48",
+      "text": "Clicking ABOVE and LEFT of white cross moves trajectory endpoint",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 26
+    },
+    "R51": {
+      "id": "R51",
+      "text": "Clicking O_f_1 (purple at y=5, x=31) triggers a game action",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 27
+    },
+    "R53": {
+      "id": "R53",
+      "text": "The white cross is at approximately grid (y=42, x=8) - try clicking exactly there",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 28
+    },
+    "R55": {
+      "id": "R55",
+      "text": "Clicking along dotted line closer to blue circle adjusts trajectory",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 29
+    },
+    "R57": {
+      "id": "R57",
+      "text": "The white cross is at exactly grid (y=42, x=7)",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 30
+    },
+    "R58": {
+      "id": "R58",
+      "text": "Clicking the white cross at (y=41, x=7) will produce a visible change",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 30
+    },
+    "R60": {
+      "id": "R60",
+      "text": "Clicking the blue circle O_9_1 at its exact centroid (y=15, x=48) will launch it",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 31
+    },
+    "R62": {
+      "id": "R62",
+      "text": "The white cross is at approximately (y=42, x=8) - try clicking that exact spot one more time",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 32
+    },
+    "R63": {
+      "id": "R63",
+      "text": "Clicking on the purple O_f_1 at top (y=5, x=31) launches the blue circle",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 33
+    },
+    "R67": {
+      "id": "R67",
+      "text": "Clicking on O_f_2 at bottom-left triggers launch",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 34
+    },
+    "R68": {
+      "id": "R68",
+      "text": "Clicking in the top dark bar (y=0-9) area triggers interaction",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 36
+    },
+    "R46": {
+      "id": "R46",
+      "text": "The white cross is at approximately grid (y=42, x=8)",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 37
+    },
+    "R71": {
+      "id": "R71",
+      "text": "Clicking at (y=27, x=20) along dotted line midpoint changes trajectory",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 38
+    },
+    "R72": {
+      "id": "R72",
+      "text": "Clicking at (y=5, x=5) top-left corner triggers interaction",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 41
+    },
+    "R73": {
+      "id": "R73",
+      "text": "The game is waiting for a time-based trigger; repeated ACTION7 presses may eventually fire",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 42
+    },
+    "R75": {
+      "id": "R75",
+      "text": "Clicking in upper-right quadrant near blue circle adjusts aim",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 43
+    }
+  },
+  "objects": {
+    "O_5_1": {
+      "id": "O_5_1",
+      "description": "Large black rect covering most of grid, background",
+      "role_hypothesis": "wall",
+      "confidence": 0.8
+    },
+    "O_4_1": {
+      "id": "O_4_1",
+      "description": "Off-black/dark rect at top rows 0-9, full width",
+      "role_hypothesis": "display",
+      "confidence": 0.6
+    },
+    "O_9_1": {
+      "id": "O_9_1",
+      "description": "Blue blob at y=15, x=48 with green center",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.5
+    },
+    "O_3_1": {
+      "id": "O_3_1",
+      "description": "Green rect at y=15, x=48, inside blue blob",
+      "role_hypothesis": "unknown",
+      "confidence": 0.3
+    },
+    "O_f_1": {
+      "id": "O_f_1",
+      "description": "Purple small rect at y=5, x=31 top-center",
+      "role_hypothesis": "display",
+      "confidence": 0.5
+    },
+    "O_f_2": {
+      "id": "O_f_2",
+      "description": "Purple small rect at y=59, x=4 bottom-left",
+      "role_hypothesis": "goal",
+      "confidence": 0.6
+    }
+  },
+  "goal_hypothesis": "After 42+ steps with zero changes from any action, this game is likely purely observational/animated OR requires a drag mechanism not supported by single clicks. The dotted line shows a trajectory from blue circle to purple goal. The game may auto-play without input.",
+  "open_questions": [
+    "Has ANY action EVER produced a change in 42+ steps? Answer: NO",
+    "Is this a purely observational game that auto-completes?",
+    "Does the game require waiting rather than clicking?"
+  ],
+  "last_prediction": {
+    "step_index": 43,
+    "action": "ACTION7",
+    "rule_id": "R5",
+    "expected_outcome": "No change - ACTION7 continues to be a no-op",
+    "falsifying_observation": "Any visible change in the grid would falsify R5 and R23"
+  },
+  "step_count": 43
+}

@@ -1,0 +1,90 @@
+{
+  "game_id": "ls20",
+  "scorecard_id": "a4b989b9-09a5-4c6a-a56c-21cdb60075eb",
+  "rules": {
+    "R1": {
+      "id": "R1",
+      "text": "ACTION1 moves player up by ~5-6 rows",
+      "confidence": 0.99,
+      "tests_passed": 5,
+      "tests_failed": 0,
+      "last_updated_step": 5
+    },
+    "R2": {
+      "id": "R2",
+      "text": "ACTION2 moves player down",
+      "confidence": 0.4,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 2
+    },
+    "R3": {
+      "id": "R3",
+      "text": "ACTION3 moves player left",
+      "confidence": 0.4,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 2
+    },
+    "R4": {
+      "id": "R4",
+      "text": "ACTION4 moves player right",
+      "confidence": 0.4,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 2
+    }
+  },
+  "objects": {
+    "O_5_2": {
+      "id": "O_5_2",
+      "description": "gray rect at (12,36), stationary",
+      "role_hypothesis": "goal",
+      "confidence": 0.8
+    },
+    "O_9_3": {
+      "id": "O_9_3",
+      "description": "brown rect now at (23,36), moving up with ACTION1",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.95
+    },
+    "O_c_1": {
+      "id": "O_c_1",
+      "description": "magenta rect now at (20,36), moving up with ACTION1",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.95
+    },
+    "O_3_1": {
+      "id": "O_3_1",
+      "description": "large green blob filling playfield",
+      "role_hypothesis": "wall",
+      "confidence": 0.5
+    },
+    "O_b_1": {
+      "id": "O_b_1",
+      "description": "light blue rect at bottom (62,34)",
+      "role_hypothesis": "display",
+      "confidence": 0.7
+    },
+    "O_9_4": {
+      "id": "O_9_4",
+      "description": "brown blob at (57,5) \u2014 in bottom-left box",
+      "role_hypothesis": "unknown",
+      "confidence": 0.3
+    }
+  },
+  "goal_hypothesis": "Move the player avatar (brown+magenta cluster) up to the gray rect goal at (12,36)",
+  "open_questions": [
+    "Player cluster is now at ~(20-23,36), goal at ~(12,36) \u2014 about 8-11 rows away, ~2 more ACTION1 presses needed",
+    "What do ACTION2, ACTION3, ACTION4 do?",
+    "Is there a wall or obstacle blocking upward movement before reaching (12,36)?"
+  ],
+  "last_prediction": {
+    "step_index": 5,
+    "action": "ACTION1",
+    "rule_id": "R1",
+    "expected_outcome": "CHANGES image shows brown+magenta cluster moving up by ~5-6 rows, from ~(20-23,36) to ~(14-18,36), getting very close to or reaching the gray goal at (12,36)",
+    "falsifying_observation": "CHANGES image is all black, or movement is in a different direction, or player stops unexpectedly short"
+  },
+  "step_count": 5
+}
