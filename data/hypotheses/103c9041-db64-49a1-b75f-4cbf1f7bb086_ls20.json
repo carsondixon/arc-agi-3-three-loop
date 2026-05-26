@@ -1,0 +1,246 @@
+{
+  "game_id": "ls20",
+  "scorecard_id": "103c9041-db64-49a1-b75f-4cbf1f7bb086",
+  "rules": {
+    "R7": {
+      "id": "R7",
+      "text": "ACTION1 moves O_b_1 DOWN by 1 (y increases)",
+      "confidence": 0.6,
+      "tests_passed": 16,
+      "tests_failed": 5,
+      "last_updated_step": 64
+    },
+    "R_avatar_magenta": {
+      "id": "R_avatar_magenta",
+      "text": "The magenta/brown cluster is the player avatar",
+      "confidence": 0.2,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 53
+    },
+    "R_action4_right": {
+      "id": "R_action4_right",
+      "text": "ACTION4 moves the green progress indicator O_3_3 right by 1 cell",
+      "confidence": 0.9,
+      "tests_passed": 3,
+      "tests_failed": 0,
+      "last_updated_step": 69
+    },
+    "R_action1_left": {
+      "id": "R_action1_left",
+      "text": "ACTION1 moves brown/magenta avatar LEFT",
+      "confidence": 0.3,
+      "tests_passed": 10,
+      "tests_failed": 9,
+      "last_updated_step": 75
+    },
+    "R_goal_gray": {
+      "id": "R_goal_gray",
+      "text": "Gray box O_5_2 at column 12, row 36 is the goal - avatar approaching",
+      "confidence": 0.75,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 74
+    },
+    "R_action3_up": {
+      "id": "R_action3_up",
+      "text": "ACTION3 moves avatar UP",
+      "confidence": 0.1,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 63
+    },
+    "R_avatar_lb": {
+      "id": "R_avatar_lb",
+      "text": "O_b_1 (light_blue bar) is the player avatar",
+      "confidence": 0.15,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 54
+    },
+    "R_action1_down": {
+      "id": "R_action1_down",
+      "text": "ACTION1 moves O_b_1 down by 1 cell",
+      "confidence": 0.65,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 64
+    },
+    "R_avatar_brown_magenta": {
+      "id": "R_avatar_brown_magenta",
+      "text": "The brown/magenta cluster is the player avatar",
+      "confidence": 0.92,
+      "tests_passed": 6,
+      "tests_failed": 1,
+      "last_updated_step": 73
+    },
+    "R_action2_down": {
+      "id": "R_action2_down",
+      "text": "ACTION2 moves the brown/magenta avatar DOWN by ~4-5 cells",
+      "confidence": 0.92,
+      "tests_passed": 3,
+      "tests_failed": 1,
+      "last_updated_step": 73
+    },
+    "R_action2_right": {
+      "id": "R_action2_right",
+      "text": "ACTION2 moves avatar RIGHT - FALSIFIED",
+      "confidence": 0.05,
+      "tests_passed": 1,
+      "tests_failed": 1,
+      "last_updated_step": 65
+    },
+    "R_avatar_digits": {
+      "id": "R_avatar_digits",
+      "text": "The 0/1 digit pattern around rows 31-33, cols 19-21 is the player avatar",
+      "confidence": 0.6,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 64
+    },
+    "R_action3_right": {
+      "id": "R_action3_right",
+      "text": "ACTION3 moves the green progress indicator right by 1 and may move avatar",
+      "confidence": 0.5,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 63
+    },
+    "R_gray_timer": {
+      "id": "R_gray_timer",
+      "text": "Gray objects cycle/teleport each action as a countdown timer - not the player avatar",
+      "confidence": 0.8,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "last_updated_step": 69
+    },
+    "R_action2_try": {
+      "id": "R_action2_try",
+      "text": "ACTION2 may move avatar or trigger something different from ACTION1",
+      "confidence": 0.5,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 68
+    },
+    "R_avatar_digits_0_1": {
+      "id": "R_avatar_digits_0_1",
+      "text": "The 0/1 digit pattern at rows 31-33 cols 19-21 is the player avatar",
+      "confidence": 0.8,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 75
+    },
+    "R_static_puzzle": {
+      "id": "R_static_puzzle",
+      "text": "The game is a static visual puzzle requiring decoding, not navigation",
+      "confidence": 0.2,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 70
+    },
+    "R_wall_left": {
+      "id": "R_wall_left",
+      "text": "Avatar was blocked at x~16 - now falsified since it moved past x=16",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 74
+    },
+    "R_action3_unknown": {
+      "id": "R_action3_unknown",
+      "text": "ACTION3 effect unknown - needs testing",
+      "confidence": 0.5,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 75
+    }
+  },
+  "objects": {
+    "O_b_1": {
+      "id": "O_b_1",
+      "description": "light_blue bar at right edge (62,40)",
+      "role_hypothesis": "display",
+      "confidence": 0.7
+    },
+    "O_4_1": {
+      "id": "O_4_1",
+      "description": "large yellow blob covering most of grid - background",
+      "role_hypothesis": "wall",
+      "confidence": 0.7
+    },
+    "O_3_1": {
+      "id": "O_3_1",
+      "description": "green blob at (14,36) - moved with avatar, may be trail",
+      "role_hypothesis": "unknown",
+      "confidence": 0.5
+    },
+    "O_c_1": {
+      "id": "O_c_1",
+      "description": "magenta rect at (16,36)",
+      "role_hypothesis": "display",
+      "confidence": 0.55
+    },
+    "O_9_3": {
+      "id": "O_9_3",
+      "description": "brown rect at (18,36)",
+      "role_hypothesis": "display",
+      "confidence": 0.55
+    },
+    "O_5_2": {
+      "id": "O_5_2",
+      "description": "gray rect at (12,36) - stationary, avatar approaching",
+      "role_hypothesis": "goal",
+      "confidence": 0.75
+    },
+    "O_4_2": {
+      "id": "O_4_2",
+      "description": "yellow blob at (38,30) size=100 - obstacle within corridor",
+      "role_hypothesis": "wall",
+      "confidence": 0.55
+    },
+    "O_3_2": {
+      "id": "O_3_2",
+      "description": "small green rect at (62,14) size=4 - moved right by 1 with ACTION4",
+      "role_hypothesis": "display",
+      "confidence": 0.5
+    },
+    "O_3_3": {
+      "id": "O_3_3",
+      "description": "green rect at (62,21) moving right each ACTION4",
+      "role_hypothesis": "display",
+      "confidence": 0.85
+    },
+    "O_9_1": {
+      "id": "O_9_1",
+      "description": "brown digit cluster near (12,36)",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.5
+    },
+    "O_5_1": {
+      "id": "O_5_1",
+      "description": "gray rect at top (26,2) - large horizontal bar",
+      "role_hypothesis": "display",
+      "confidence": 0.7
+    },
+    "O_5_3": {
+      "id": "O_5_3",
+      "description": "gray blob at (58,6) - teleported from (12,36) after ACTION4",
+      "role_hypothesis": "display",
+      "confidence": 0.75
+    }
+  },
+  "goal_hypothesis": "The 0/1 digit pattern at rows 31-33 cols 19-21 is the player avatar; need to navigate it to a goal. The yellow block O_4_2 at (38,30) or the magenta/brown cluster may be the goal.",
+  "open_questions": [
+    "Does ACTION3 move the 0/1 digit avatar?",
+    "What is the actual goal - reach yellow O_4_2, or something else?",
+    "Why does ACTION1 keep failing to move the avatar left?"
+  ],
+  "last_prediction": {
+    "step_index": 75,
+    "action": "ACTION3",
+    "rule_id": "R_action3_unknown",
+    "expected_outcome": "The 0/1 digit pattern at rows 31-33 moves in some direction, OR a new object appears/changes",
+    "falsifying_observation": "Nothing changes, or only the gray timer changes with no avatar movement"
+  },
+  "step_count": 75
+}

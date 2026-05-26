@@ -1,0 +1,79 @@
+{
+  "game_id": "ls20",
+  "scorecard_id": "25ea06e0-18ba-4075-b13e-837fc215b19a",
+  "seed": 0,
+  "mode": "perception-diff",
+  "started_at": "2026-05-25T17:39:20.403001+00:00",
+  "finished_at": "2026-05-25T17:40:45.026700+00:00",
+  "total_usd": 0.162243,
+  "steps": [
+    {
+      "step_index": 0,
+      "action": "ACTION4",
+      "thought": "Test ACTION4 first to see if it moves the avatar rightward toward the magenta goal.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.027318000000000002,
+      "expected_outcome": "CHANGES shows the small digit-pattern cluster (0/1 cells near col 19-21, rows 31-33) moving right by ~4 cells.",
+      "falsifying_observation": "No movement of any small object, or a different object moves, or movement is in a non-rightward direction.",
+      "rule_id": "R2",
+      "verification": "First action \u2014 no prior frame to verify."
+    },
+    {
+      "step_index": 1,
+      "action": "ACTION2",
+      "thought": "Test ACTION2 to determine if it moves the avatar left (opposite of ACTION4=right).",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.030843,
+      "expected_outcome": "CHANGES shows O_c_1 and O_9_3 moving left by ~5 cells.",
+      "falsifying_observation": "No movement, or movement in a non-leftward direction.",
+      "rule_id": "R5",
+      "verification": "PARTIAL: ACTION4 moved brown (O_9_3) and magenta (O_c_1) objects rightward by 5 cells, not the digit-pattern cluster. The objects I thought were goals moved \u2014 so they may be the player avatar, not the goal."
+    },
+    {
+      "step_index": 2,
+      "action": "ACTION1",
+      "thought": "Test ACTION1 to discover its directional effect on the green avatar O_3_2.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.037281,
+      "expected_outcome": "CHANGES shows O_3_2 moving in some direction (up, down, or left) \u2014 revealing ACTION1's effect.",
+      "falsifying_observation": "O_3_2 does not move, or a completely different object moves.",
+      "rule_id": "R3",
+      "verification": "FAILED: R5 predicted O_c_1/O_9_3 moving left, but instead O_3_2 (small green 4-cell rect) moved right by 1. The magenta/brown cluster did not move. R5 is falsified."
+    },
+    {
+      "step_index": 3,
+      "action": "ACTION3",
+      "thought": "The brown+magenta cluster is the real avatar; now test ACTION3 to map another direction before committing to navigation toward the digit pattern goal.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.032058,
+      "expected_outcome": "CHANGES shows O_c_1 and O_9_3 moving in some direction (down, left, or right), revealing ACTION3's effect on the player avatar.",
+      "falsifying_observation": "O_c_1 and O_9_3 do not move, or a completely different object moves.",
+      "rule_id": "R6",
+      "verification": "CHANGES shows O_9_3 (brown) moved from (48,41)->(43,41) [-5 in y (up)] and O_c_1 (magenta) moved from (46,41)->(40,41) [-6 in y (up)]. O_3_2 is NOT listed as moving. So ACTION1 moved the brown+magenta cluster upward, NOT O_3_2. This falsifies R3 (O_3_2 as player avatar) and suggests the brown+magenta cluster IS the player avatar."
+    },
+    {
+      "step_index": 4,
+      "action": "ACTION1",
+      "thought": "Avatar is at ~(40,36); goal 0/1 pattern is up-left at rows 31-33, cols 19-21; use ACTION1 to move up toward it while confirming ACTION1=up.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.034742999999999996,
+      "expected_outcome": "CHANGES shows O_c_1 and O_9_3 moving upward by ~5 cells (y decreases by ~5), confirming ACTION1=up.",
+      "falsifying_observation": "O_c_1 and O_9_3 do not move upward, or move in a different direction.",
+      "rule_id": "R7",
+      "verification": "Prediction held: CHANGES shows O_9_3 (brown) moved from (43,41)->(43,36) [-5 in x, i.e. left] and O_c_1 (magenta) moved from (40,41)->(40,36) [-5 in x, left]. ACTION3 moves the avatar LEFT by 5."
+    }
+  ],
+  "final_state": "GameState.NOT_FINISHED",
+  "levels_completed": 0,
+  "win_levels": 7
+}

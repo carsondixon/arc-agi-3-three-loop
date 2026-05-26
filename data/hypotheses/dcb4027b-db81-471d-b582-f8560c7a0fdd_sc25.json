@@ -1,0 +1,119 @@
+{
+  "game_id": "sc25",
+  "scorecard_id": "dcb4027b-db81-471d-b582-f8560c7a0fdd",
+  "rules": {
+    "R102": {
+      "id": "R102",
+      "text": "This game is purely observational/animated with no effective player input mechanism available through ACTION1-6 with or without coordinates",
+      "confidence": 0.99,
+      "tests_passed": 24,
+      "tests_failed": 0,
+      "last_updated_step": 73
+    }
+  },
+  "objects": {
+    "O_2_1": {
+      "id": "O_2_1",
+      "description": "Red vertical bar cols 19-22, rows 17-38",
+      "role_hypothesis": "display",
+      "confidence": 0.95
+    },
+    "O_3_1": {
+      "id": "O_3_1",
+      "description": "Large green blob centroid (55,30) bbox (47-63,22-38)",
+      "role_hypothesis": "display",
+      "confidence": 0.95
+    },
+    "O_a_1": {
+      "id": "O_a_1",
+      "description": "White rect cols 18-21, rows 13-16, near top-left cluster",
+      "role_hypothesis": "display",
+      "confidence": 0.8
+    },
+    "O_9_1": {
+      "id": "O_9_1",
+      "description": "Brown blob cols 17-22, rows 12-16, top-left cluster",
+      "role_hypothesis": "display",
+      "confidence": 0.6
+    },
+    "O_e_1": {
+      "id": "O_e_1",
+      "description": "Navy bar at bottom rows 62-63, cols 34-63",
+      "role_hypothesis": "display",
+      "confidence": 0.95
+    },
+    "O_5_1": {
+      "id": "O_5_1",
+      "description": "Large gray region covering most of grid, background",
+      "role_hypothesis": "wall",
+      "confidence": 0.95
+    },
+    "O_2_4": {
+      "id": "O_2_4",
+      "description": "Red cluster at cols 51-58, rows 12-19, top-right area",
+      "role_hypothesis": "display",
+      "confidence": 0.7
+    },
+    "O_3_2": {
+      "id": "O_3_2",
+      "description": "Green blob at cols 50-59, rows 11-20, centroid (54,16) \u2014 part of structured top-right pattern",
+      "role_hypothesis": "display",
+      "confidence": 0.5
+    },
+    "O_2_2": {
+      "id": "O_2_2",
+      "description": "Small red 3x3 square at cols 49-51, rows 24-26, upper-left corner of green region",
+      "role_hypothesis": "display",
+      "confidence": 0.8
+    },
+    "O_2_3": {
+      "id": "O_2_3",
+      "description": "Small red 3x3 square at cols 49-51, rows 34-36, lower-left corner of green region",
+      "role_hypothesis": "display",
+      "confidence": 0.8
+    },
+    "O_2_5": {
+      "id": "O_2_5",
+      "description": "Small red 3x3 square at cols 54-56, rows 29-31, center of green blob region",
+      "role_hypothesis": "display",
+      "confidence": 0.85
+    },
+    "O_2_6": {
+      "id": "O_2_6",
+      "description": "Small red 3x3 square at cols 54-56, rows 29-31, center of green blob region",
+      "role_hypothesis": "display",
+      "confidence": 0.7
+    },
+    "O_2_7": {
+      "id": "O_2_7",
+      "description": "Small red 3x3 square at cols 59-61, rows 34-36, lower-right of green blob region",
+      "role_hypothesis": "display",
+      "confidence": 0.9
+    },
+    "O_9_2": {
+      "id": "O_9_2",
+      "description": "Brown rect cols 19-22, rows 35-36, below red bar",
+      "role_hypothesis": "display",
+      "confidence": 0.85
+    },
+    "O_a_2": {
+      "id": "O_a_2",
+      "description": "White rect cols 19-22, rows 37-38, below red bar",
+      "role_hypothesis": "display",
+      "confidence": 0.9
+    }
+  },
+  "goal_hypothesis": "This game is purely observational/animated with no effective player input discoverable through any available action type. All actions including click variants on all major objects have produced zero effect over 73 steps.",
+  "open_questions": [
+    "Is there any interaction mechanism at all, or is this purely observational?",
+    "Does the bottom pattern encode a puzzle requiring a very specific untried click coordinate?"
+  ],
+  "last_prediction": {
+    "step_index": 73,
+    "action": "ACTION6",
+    "rule_id": "R102",
+    "expected_outcome": "No change to grid state; game remains completely static",
+    "falsifying_observation": "Any visible change to any cell in the grid"
+  },
+  "step_count": 73
+}
