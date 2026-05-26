@@ -5,17 +5,65 @@
     "0": {
       "ACTION1": {
         "action": "ACTION1",
-        "count": 1,
+        "count": 34,
+        "noop_count": 0,
+        "moved_count": 34,
+        "sum_dy": -111,
+        "sum_dx": 9,
+        "appeared_count": 19,
+        "disappeared_count": 18,
+        "level_advanced_count": 0,
+        "last_step": 194
+      },
+      "ACTION2": {
+        "action": "ACTION2",
+        "count": 32,
+        "noop_count": 3,
+        "moved_count": 29,
+        "sum_dy": 63,
+        "sum_dx": -31,
+        "appeared_count": 10,
+        "disappeared_count": 10,
+        "level_advanced_count": 0,
+        "last_step": 193
+      },
+      "ACTION3": {
+        "action": "ACTION3",
+        "count": 54,
+        "noop_count": 3,
+        "moved_count": 51,
+        "sum_dy": 6,
+        "sum_dx": -106,
+        "appeared_count": 31,
+        "disappeared_count": 31,
+        "level_advanced_count": 0,
+        "last_step": 165
+      },
+      "ACTION4": {
+        "action": "ACTION4",
+        "count": 68,
+        "noop_count": 9,
+        "moved_count": 57,
+        "sum_dy": 1,
+        "sum_dx": 70,
+        "appeared_count": 37,
+        "disappeared_count": 37,
+        "level_advanced_count": 0,
+        "last_step": 192
+      },
+      "ACTION5": {
+        "action": "ACTION5",
+        "count": 6,
         "noop_count": 0,
         "moved_count": 1,
-        "sum_dy": -4,
-        "sum_dx": 0,
-        "appeared_count": 0,
-        "disappeared_count": 0,
+        "sum_dy": 0,
+        "sum_dx": -1,
+        "appeared_count": 3,
+        "disappeared_count": 3,
         "level_advanced_count": 0,
-        "last_step": 1
+        "last_step": 72
       }
     }
   },
-  "transitions": 1
+  "transitions": 194
 }

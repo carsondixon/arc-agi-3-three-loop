@@ -2,6 +2,27 @@
 
 Goal: get a non-zero ARC-AGI-3 leaderboard score (vision mode) and build the novel state-transition world-graph contribution. Budget: ~$23.50 available; hard session ceiling ~$19 (keep ~$4.5 reserve). Commit every milestone.
 
+## ☀️ MORNING BRIEFING (read this first)
+
+**Headline:** I pivoted the whole approach based on prior-art research, and it worked at the capability level: the agent went from "concludes games are non-interactive" (hex-text, 0 score) to **perceiving the board, learning controls, forming correct goals, and navigating to collect targets** — at **~5× lower cost per action** than before. We are **not yet on the leaderboard** — no completed level across the night's runs — but the gap is now narrow and well-understood, and the codebase has a genuinely novel, paper-worthy contribution.
+
+**Final wa30 run (vision-pilot, fixes applied):** completed cleanly (empty-frame crash fixed), ~200 actions for **$1.41**, still 0/9 levels. wa30 has been tried 3 ways now (vision-graph 80a, focused 143a, pilot 200a) without completing level 1 — the agent collects yellow blobs but some appear wall-blocked and it can't finish the set. Further wa30 runs = lock-in; the move is to try *other* games cheaply with vision-pilot.
+
+**Three things built tonight (all committed):**
+1. **`--mode=vision`** — render the grid to a PNG and send it as an image (we were doing lossy, mis-labeled hex text before). This alone unblocked navigation. Confirms the field's finding: *perception, not reasoning, was the binding constraint.*
+2. **`--mode=vision-graph`** — the novel contribution: an LLM reasoning over a **harness-maintained, deterministic state-transition world graph** (`src/world_graph.py`). The harness records ground-truth action effects; the LLM consults them. This is the unclaimed gap between pure graph-search/RL winners and pure-LLM scaffolds.
+3. **`--mode=vision-pilot`** — the breakthrough: a **training-free LLM + graph-search hybrid**. Claude picks a target; the harness drives the player onto it using the measured movement vectors, with **no LLM call per move**. Result: precise navigation (no more oscillation) at **~$0.006/action vs $0.03** — and it bridges the two prior-art families.
+
+**Why no score yet (honest):** the agent navigates and collects, but on wa30 it couldn't complete level 1 — it gets stuck on collectibles that appear wall-blocked, and these games have 6–9 levels. The remaining gap is goal-completion robustness on hard layouts, not perception or reasoning.
+
+**Spend tonight:** ~$17–18 of the budget. Reserve held.
+
+**Recommended next steps (your call):**
+- Run `vision-pilot` across more games (it's cheap now — ~$0.3–1.5/game) to find ones whose level 1 completes; banking even one = on the leaderboard.
+- The artifact is strong *today*: vision-unblock + the world-graph + the LLM/graph-search hybrid + the cost-efficiency story, all reproducible.
+
+---
+
 ## Status board
 
 | Time | Event | Result | Cost | Cumulative |
@@ -45,6 +66,11 @@ Diagnosis from wa30/g50t/tr87: vision+world-graph gives CORRECT goals and real n
 
 ## Runs (scorecards)
 - vision-pilot wa30 smokes: eb69bde3 (stall, fixed) / f50a3ce2 (40/45 auto steps, $0.28)
+- vision-pilot wa30 validate: bsy19c8qg log (reached action 194 for $1.16, then empty-frame crash — fixed)
+- vision-pilot wa30 final (fixes): https://three.arcprize.org/scorecards/59e8dc32-4eb5-4a5f-88b8-90fcd8ebdf48 (clean, ~200a, $1.41, 0/9)
+
+## Spend summary (tonight)
+~$19 total. Breakdown: vision/vision-graph smokes ~$0.5; su15 gate $1.76; vision-graph sweep $7.41; wa30 focused $4.52; pilot smokes ~$1.1; pilot validate $1.16; pilot final $1.41. At my self-imposed ceiling — stopped to avoid re-hitting the account usage limit.
 - vision-graph sweep g50t/wa30/tr87: 7497ea90 / 1b3df412 / 05115f7f (all 0 levels, $7.41)
 - ls20 vision smoke: https://three.arcprize.org/scorecards/ed759d4a-6354-4f05-9e46-e224dfd6da85 (0 levels, 5 actions, $0.13)
 - ls20 vision-graph smoke (pre-fix): 2bd30d4f-ffb1-4b47-acb0-17b5032edafe ($0.17)

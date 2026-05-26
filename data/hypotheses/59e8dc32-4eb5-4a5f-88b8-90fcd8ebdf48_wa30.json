@@ -1,0 +1,87 @@
+{
+  "game_id": "wa30",
+  "scorecard_id": "59e8dc32-4eb5-4a5f-88b8-90fcd8ebdf48",
+  "rules": {},
+  "objects": {
+    "O_1_1": {
+      "id": "O_1_1",
+      "description": "Large light-gray background",
+      "role_hypothesis": "wall",
+      "confidence": 0.8
+    },
+    "O_7_1": {
+      "id": "O_7_1",
+      "description": "Orange line at bottom left",
+      "role_hypothesis": "display",
+      "confidence": 0.75
+    },
+    "O_9_2": {
+      "id": "O_9_2",
+      "description": "Brown blob near center (30,34)",
+      "role_hypothesis": "hazard",
+      "confidence": 0.4
+    },
+    "O_2_1": {
+      "id": "O_2_1",
+      "description": "Red rect near center (30,34)",
+      "role_hypothesis": "hazard",
+      "confidence": 0.4
+    },
+    "O_4_1": {
+      "id": "O_4_1",
+      "description": "Yellow blob at (26,46) with brown center",
+      "role_hypothesis": "collectible",
+      "confidence": 0.9
+    },
+    "O_4_2": {
+      "id": "O_4_2",
+      "description": "Yellow blob at (30,18) with brown center",
+      "role_hypothesis": "collectible",
+      "confidence": 0.9
+    },
+    "O_4_3": {
+      "id": "O_4_3",
+      "description": "Yellow blob at (38,34) with brown center - nearest collectible",
+      "role_hypothesis": "collectible",
+      "confidence": 0.9
+    },
+    "O_e_1": {
+      "id": "O_e_1",
+      "description": "Green rect at (33,42) - player avatar",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.95
+    },
+    "O_9_3": {
+      "id": "O_9_3",
+      "description": "Small brown rect inside yellow blob O_4_2",
+      "role_hypothesis": "unknown",
+      "confidence": 0.3
+    },
+    "O_9_4": {
+      "id": "O_9_4",
+      "description": "Small brown rect inside yellow blob O_4_3",
+      "role_hypothesis": "unknown",
+      "confidence": 0.3
+    },
+    "O_4_4": {
+      "id": "O_4_4",
+      "description": "Yellow line at bottom right",
+      "role_hypothesis": "display",
+      "confidence": 0.75
+    },
+    "O_9_1": {
+      "id": "O_9_1",
+      "description": "Small brown rect inside yellow blob at (26,46)",
+      "role_hypothesis": "unknown",
+      "confidence": 0.3
+    }
+  },
+  "goal_hypothesis": "Navigate the green player avatar onto each yellow collectible (with brown centers) to collect them.",
+  "open_questions": [
+    "Why does ACTION5 frequently have no effect?",
+    "What happens when player reaches a yellow collectible?",
+    "Are the yellow blobs moving independently or linked to player movement?"
+  ],
+  "last_prediction": null,
+  "step_count": 139
+}

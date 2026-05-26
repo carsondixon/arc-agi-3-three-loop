@@ -5,77 +5,83 @@
   "objects": {
     "O_1_1": {
       "id": "O_1_1",
-      "description": "Large light-gray background filling most of grid",
+      "description": "Large light-gray background",
       "role_hypothesis": "wall",
       "confidence": 0.7
     },
     "O_7_1": {
       "id": "O_7_1",
-      "description": "Pink/orange horizontal line at bottom row 63",
+      "description": "Orange line at bottom row 63",
       "role_hypothesis": "display",
+      "confidence": 0.7
+    },
+    "O_2_1": {
+      "id": "O_2_1",
+      "description": "Red rect at (30,34) - part of player sprite",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.8
+    },
+    "O_4_1": {
+      "id": "O_4_1",
+      "description": "Yellow blob at (22,22) - collectible",
+      "role_hypothesis": "collectible",
+      "confidence": 0.85
+    },
+    "O_4_2": {
+      "id": "O_4_2",
+      "description": "Yellow blob at (26,46) - collectible",
+      "role_hypothesis": "collectible",
+      "confidence": 0.85
+    },
+    "O_4_3": {
+      "id": "O_4_3",
+      "description": "Yellow blob at (30,18) - nearest collectible target",
+      "role_hypothesis": "collectible",
+      "confidence": 0.85
+    },
+    "O_e_1": {
+      "id": "O_e_1",
+      "description": "Navy rect at (22,18) - player avatar",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.95
+    },
+    "O_9_1": {
+      "id": "O_9_1",
+      "description": "Small brown rect at (22,22) paired with yellow blob",
+      "role_hypothesis": "collectible",
+      "confidence": 0.6
+    },
+    "O_9_3": {
+      "id": "O_9_3",
+      "description": "Brown blob at (30,34) - part of player sprite",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.8
+    },
+    "O_9_4": {
+      "id": "O_9_4",
+      "description": "Small brown rect at (30,18) paired with yellow blob",
+      "role_hypothesis": "collectible",
       "confidence": 0.6
     },
     "O_9_2": {
       "id": "O_9_2",
-      "description": "Blue blob at ~(30,34), medium size",
-      "role_hypothesis": "unknown",
-      "confidence": 0.3
-    },
-    "O_2_1": {
-      "id": "O_2_1",
-      "description": "Red rect at ~(30,34), overlapping blue blob",
-      "role_hypothesis": "player_avatar",
-      "confidence": 0.5
-    },
-    "O_4_1": {
-      "id": "O_4_1",
-      "description": "Yellow blob at ~(26,46)",
+      "description": "Small brown rect at (26,46) paired with yellow blob",
       "role_hypothesis": "collectible",
-      "confidence": 0.5
+      "confidence": 0.6
     },
-    "O_4_2": {
-      "id": "O_4_2",
-      "description": "Yellow blob at ~(30,18)",
-      "role_hypothesis": "collectible",
-      "confidence": 0.5
-    },
-    "O_4_3": {
-      "id": "O_4_3",
-      "description": "Yellow blob at ~(38,34)",
-      "role_hypothesis": "collectible",
-      "confidence": 0.5
-    },
-    "O_e_1": {
-      "id": "O_e_1",
-      "description": "Green rect at ~(50,34)",
-      "role_hypothesis": "goal",
-      "confidence": 0.4
-    },
-    "O_9_1": {
-      "id": "O_9_1",
-      "description": "Small brown rect at ~(26,46) inside yellow",
-      "role_hypothesis": "collectible",
-      "confidence": 0.4
-    },
-    "O_9_3": {
-      "id": "O_9_3",
-      "description": "Small brown rect at ~(30,18) inside yellow",
-      "role_hypothesis": "collectible",
-      "confidence": 0.4
-    },
-    "O_9_4": {
-      "id": "O_9_4",
-      "description": "Small brown rect at ~(38,34) inside yellow",
-      "role_hypothesis": "collectible",
-      "confidence": 0.4
+    "O_4_4": {
+      "id": "O_4_4",
+      "description": "Yellow line at bottom row 63",
+      "role_hypothesis": "display",
+      "confidence": 0.7
     }
   },
-  "goal_hypothesis": "Unknown -- need to discover controls first. Possibly move player avatar onto collectibles (the small yellow/brown objects).",
+  "goal_hypothesis": "Collect all yellow blobs by moving the player (navy rect O_e_1) onto them. Collect all 3 yellow blobs to complete the level.",
   "open_questions": [
-    "Which object is the player avatar?",
-    "What do ACTION1-5 do (movement directions, interact)?",
-    "What is the win condition -- collect all yellow objects? Reach green?"
+    "Does collecting all 3 yellow blobs complete the level?",
+    "Why does the player seem to have two components (navy rect and red/brown at 30,34)?",
+    "Are the brown rects paired with yellow blobs part of the collectible or obstacles?"
   ],
   "last_prediction": null,
-  "step_count": 0
+  "step_count": 186
 }
