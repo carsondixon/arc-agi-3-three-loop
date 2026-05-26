@@ -95,8 +95,16 @@ class HypothesisGraph:
             for o in self.objects.values():
                 lines.append(f"  - [{o.id}] {o.description} -- role: {o.role_hypothesis} (conf {o.confidence:.2f})")
         if self.rules:
-            lines.append("\nRULES (active hypotheses):")
-            for r in sorted(self.rules.values(), key=lambda r: -r.confidence):
+            # Cap what we show: a long stale rule list bloats the prompt and
+            # drowns the model. Show the most-confident, most-recent rules only.
+            RULE_CAP = 15
+            ranked = sorted(
+                self.rules.values(),
+                key=lambda r: (-r.confidence, -r.last_updated_step),
+            )
+            shown = ranked[:RULE_CAP]
+            lines.append(f"\nRULES (top {len(shown)} of {len(self.rules)} by confidence):")
+            for r in shown:
                 lines.append(
                     f"  - [{r.id}] {r.text} (conf {r.confidence:.2f}, "
                     f"passed {r.tests_passed}, failed {r.tests_failed})"

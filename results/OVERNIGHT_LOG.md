@@ -9,6 +9,15 @@ Goal: get a non-zero ARC-AGI-3 leaderboard score (vision mode) and build the nov
 | start | Phase 0 vision smoke (ls20, 5a) | PASS — maps controls, navigates | $0.13 | $0.13 |
 | — | Phase 1 gate su15 (fixed cam, 80a) | running | — | — |
 
+## Game selection (free research, no Claude calls)
+25 envs total. Tags: `keyboard` = movement-only (best fit for vision navigation), `click`/`keyboard_click` = pointer puzzles (harder for us). Camera classification of the keyboard games:
+- **g50t**: fixed camera, actions [1-4] movement — UNTESTED, top candidate.
+- **wa30**: fixed camera, actions [1-5] movement+interact — UNTESTED, top candidate.
+- **tr87**: fixed camera, actions [1-4] — tested w/ hex-text before (symmetric-failure game); retry with vision.
+- **ls20**: 16x16 follow camera (the reference-frame trap), 7 levels.
+- su15 (the gate) is actually `click`, not keyboard — explains slow scoring; clicks are harder for navigation-style play.
+Plan: prioritize g50t + wa30 (fixed-cam movement) with vision for a first score; use ls20 for the vision vs vision-graph head-to-head (novelty test).
+
 ## Decisions log
 - Vision confirmed as the unblock (Phase 0). Hex-text modes abandoned.
 - Camera classification: su15/sc25 = fixed camera (full 64x64, clean test); ls20 = 16x16 follow-camera (reference-frame trap).

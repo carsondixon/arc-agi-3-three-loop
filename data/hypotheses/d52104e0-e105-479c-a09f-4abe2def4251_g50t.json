@@ -1,0 +1,102 @@
+{
+  "game_id": "g50t",
+  "scorecard_id": "d52104e0-e105-479c-a09f-4abe2def4251",
+  "rules": {
+    "R1": {
+      "id": "R1",
+      "text": "O_9_3 (brown rect at y=10,x=16) is the player avatar and moves with ACTION1",
+      "confidence": 0.2,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 1
+    },
+    "R2": {
+      "id": "R2",
+      "text": "O_9_4 (brown blob at y=52,x=47) is the goal/target",
+      "confidence": 0.3,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 0
+    },
+    "R3": {
+      "id": "R3",
+      "text": "O_8_1 (red blob centroid y=32,x=30) is the player avatar and moves with ACTION1",
+      "confidence": 0.2,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 1
+    },
+    "R4": {
+      "id": "R4",
+      "text": "ACTION2 moves the player avatar upward or in some direction",
+      "confidence": 0.5,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 1
+    }
+  },
+  "objects": {
+    "O_5_1": {
+      "id": "O_5_1",
+      "description": "large black blob covering most of grid, walls/maze",
+      "role_hypothesis": "wall",
+      "confidence": 0.7
+    },
+    "O_8_1": {
+      "id": "O_8_1",
+      "description": "red blob centroid y=32,x=30, medium, inside maze",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.4
+    },
+    "O_9_6": {
+      "id": "O_9_6",
+      "description": "brown horizontal line at row 63, full width",
+      "role_hypothesis": "display",
+      "confidence": 0.6
+    },
+    "O_9_3": {
+      "id": "O_9_3",
+      "description": "brown rect at y=10,x=16, small, top-left area of maze",
+      "role_hypothesis": "player_avatar",
+      "confidence": 0.4
+    },
+    "O_9_4": {
+      "id": "O_9_4",
+      "description": "brown blob at y=52,x=47, small, bottom-right area",
+      "role_hypothesis": "goal",
+      "confidence": 0.5
+    },
+    "O_1_1": {
+      "id": "O_1_1",
+      "description": "blue rect at (2,6), small, top area",
+      "role_hypothesis": "display",
+      "confidence": 0.5
+    },
+    "O_9_1": {
+      "id": "O_9_1",
+      "description": "brown rect at (2,2), small, top-left",
+      "role_hypothesis": "display",
+      "confidence": 0.5
+    },
+    "O_9_2": {
+      "id": "O_9_2",
+      "description": "brown line at (5,2), tiny",
+      "role_hypothesis": "display",
+      "confidence": 0.5
+    }
+  },
+  "goal_hypothesis": "Move player avatar (likely O_9_3 blue/brown square or O_8_1 red blob) to reach O_9_4 (brown blob at bottom-right)",
+  "open_questions": [
+    "Which object is the player avatar?",
+    "What do ACTION2-5 do?",
+    "Is the win condition reaching O_9_4 with the player?"
+  ],
+  "last_prediction": {
+    "step_index": 1,
+    "action": "ACTION2",
+    "rule_id": "R4",
+    "expected_outcome": "Some object (O_9_3 or O_8_1) shifts position, visible as red cells in CHANGES image",
+    "falsifying_observation": "CHANGES image is all black (no effect)"
+  },
+  "step_count": 1
+}

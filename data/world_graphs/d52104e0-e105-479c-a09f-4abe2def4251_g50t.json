@@ -1,0 +1,33 @@
+{
+  "game_id": "g50t",
+  "scorecard_id": "d52104e0-e105-479c-a09f-4abe2def4251",
+  "effects": {
+    "0": {
+      "ACTION1": {
+        "action": "ACTION1",
+        "count": 1,
+        "noop_count": 1,
+        "moved_count": 0,
+        "sum_dy": 0,
+        "sum_dx": 0,
+        "appeared_count": 0,
+        "disappeared_count": 0,
+        "level_advanced_count": 0,
+        "last_step": 0
+      },
+      "ACTION2": {
+        "action": "ACTION2",
+        "count": 1,
+        "noop_count": 0,
+        "moved_count": 1,
+        "sum_dy": 0,
+        "sum_dx": -1,
+        "appeared_count": 0,
+        "disappeared_count": 0,
+        "level_advanced_count": 0,
+        "last_step": 1
+      }
+    }
+  },
+  "transitions": 2
+}

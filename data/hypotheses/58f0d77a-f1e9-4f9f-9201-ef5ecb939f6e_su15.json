@@ -38,9 +38,9 @@
       "id": "R5",
       "text": "ACTION7 is a no-op or has no effect in current state",
       "confidence": 0.99,
-      "tests_passed": 5,
+      "tests_passed": 11,
       "tests_failed": 0,
-      "last_updated_step": 40
+      "last_updated_step": 55
     },
     "R6": {
       "id": "R6",
@@ -148,11 +148,11 @@
     },
     "R23": {
       "id": "R23",
-      "text": "The game may be purely observational/animated with no interactive elements",
-      "confidence": 0.97,
-      "tests_passed": 24,
+      "text": "The game is purely observational/animated with no interactive elements accessible via ACTION6/ACTION7",
+      "confidence": 0.99,
+      "tests_passed": 40,
       "tests_failed": 0,
-      "last_updated_step": 43
+      "last_updated_step": 59
     },
     "R26": {
       "id": "R26",
@@ -250,14 +250,6 @@
       "tests_failed": 1,
       "last_updated_step": 39
     },
-    "R48": {
-      "id": "R48",
-      "text": "Clicking ABOVE and LEFT of white cross moves trajectory endpoint",
-      "confidence": 0.01,
-      "tests_passed": 0,
-      "tests_failed": 1,
-      "last_updated_step": 26
-    },
     "R51": {
       "id": "R51",
       "text": "Clicking O_f_1 (purple at y=5, x=31) triggers a game action",
@@ -273,14 +265,6 @@
       "tests_passed": 0,
       "tests_failed": 1,
       "last_updated_step": 28
-    },
-    "R55": {
-      "id": "R55",
-      "text": "Clicking along dotted line closer to blue circle adjusts trajectory",
-      "confidence": 0.01,
-      "tests_passed": 0,
-      "tests_failed": 1,
-      "last_updated_step": 29
     },
     "R57": {
       "id": "R57",
@@ -370,13 +354,61 @@
       "tests_failed": 1,
       "last_updated_step": 42
     },
-    "R75": {
-      "id": "R75",
-      "text": "Clicking in upper-right quadrant near blue circle adjusts aim",
+    "R76": {
+      "id": "R76",
+      "text": "The game requires clicking at a very specific pixel-precise location on the white cross cursor to interact",
+      "confidence": 0.25,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 44
+    },
+    "R79": {
+      "id": "R79",
+      "text": "Try clicking at a completely unexplored region - the top-center purple marker O_f_1 at (y=5, x=31) may be a button",
+      "confidence": 0.1,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 45
+    },
+    "R78": {
+      "id": "R78",
+      "text": "Clicking white cross at (y=42, x=8) will select/move it",
       "confidence": 0.01,
       "tests_passed": 0,
       "tests_failed": 1,
-      "last_updated_step": 43
+      "last_updated_step": 46
+    },
+    "R80": {
+      "id": "R80",
+      "text": "Try clicking at the white cross position which appears to be around (y=42, x=8)",
+      "confidence": 0.01,
+      "tests_passed": 0,
+      "tests_failed": 1,
+      "last_updated_step": 50
+    },
+    "R_new1": {
+      "id": "R_new1",
+      "text": "Clicking anywhere on the grid produces no change - the game state is frozen or requires an external trigger",
+      "confidence": 0.9,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 52
+    },
+    "R_drag": {
+      "id": "R_drag",
+      "text": "The game requires a click-and-drag mechanic: click on the blue circle and drag to set trajectory direction, then release to launch",
+      "confidence": 0.35,
+      "tests_passed": 0,
+      "tests_failed": 0,
+      "last_updated_step": 55
+    },
+    "R_newclick": {
+      "id": "R_newclick",
+      "text": "Clicking anywhere on the grid produces no change",
+      "confidence": 0.95,
+      "tests_passed": 1,
+      "tests_failed": 0,
+      "last_updated_step": 56
     }
   },
   "objects": {
@@ -394,7 +426,7 @@
     },
     "O_9_1": {
       "id": "O_9_1",
-      "description": "Blue blob at y=15, x=48 with green center",
+      "description": "Blue blob at y=15, x=48 - stationary for all 55+ steps",
       "role_hypothesis": "player_avatar",
       "confidence": 0.5
     },
@@ -414,21 +446,20 @@
       "id": "O_f_2",
       "description": "Purple small rect at y=59, x=4 bottom-left",
       "role_hypothesis": "goal",
-      "confidence": 0.6
+      "confidence": 0.55
     }
   },
-  "goal_hypothesis": "After 42+ steps with zero changes from any action, this game is likely purely observational/animated OR requires a drag mechanism not supported by single clicks. The dotted line shows a trajectory from blue circle to purple goal. The game may auto-play without input.",
+  "goal_hypothesis": "This game appears non-interactive via ACTION6/ACTION7 in this SDK configuration after 59 steps. No click or button press has produced any visible change. The game may require a drag mechanic, a different SDK action, or may be waiting for an autonomous animation trigger.",
   "open_questions": [
-    "Has ANY action EVER produced a change in 42+ steps? Answer: NO",
-    "Is this a purely observational game that auto-completes?",
-    "Does the game require waiting rather than clicking?"
+    "Does the game require a drag mechanic not supported by this SDK?",
+    "Is there a time-based autonomous trigger that will eventually fire?"
   ],
   "last_prediction": {
-    "step_index": 43,
+    "step_index": 59,
     "action": "ACTION7",
     "rule_id": "R5",
-    "expected_outcome": "No change - ACTION7 continues to be a no-op",
-    "falsifying_observation": "Any visible change in the grid would falsify R5 and R23"
+    "expected_outcome": "All black CHANGES image - no effect",
+    "falsifying_observation": "Any visible change in the grid"
   },
-  "step_count": 43
+  "step_count": 59
 }

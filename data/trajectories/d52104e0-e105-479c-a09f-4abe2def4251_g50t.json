@@ -1,0 +1,40 @@
+{
+  "game_id": "g50t",
+  "scorecard_id": "d52104e0-e105-479c-a09f-4abe2def4251",
+  "seed": 0,
+  "mode": "vision-graph",
+  "started_at": "2026-05-26T05:57:07.041101+00:00",
+  "finished_at": "2026-05-26T05:57:31.423199+00:00",
+  "total_usd": 0.047142,
+  "steps": [
+    {
+      "step_index": 0,
+      "action": "ACTION1",
+      "thought": "First experiment: try ACTION1 to identify which object moves and establish the control map.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.022683000000000002,
+      "expected_outcome": "Some object moves \u2014 likely O_9_3 or O_8_1 shifts position, visible as red cells in CHANGES image",
+      "falsifying_observation": "CHANGES image is all black (no effect)",
+      "rule_id": "R1",
+      "verification": "First action \u2014 no prior frame to verify."
+    },
+    {
+      "step_index": 1,
+      "action": "ACTION2",
+      "thought": "ACTION1 did nothing; try ACTION2 to find which action moves the player avatar.",
+      "state_before": "GameState.NOT_FINISHED",
+      "state_after": "GameState.NOT_FINISHED",
+      "levels_completed_after": 0,
+      "usd": 0.024459,
+      "expected_outcome": "Some object (O_9_3 or O_8_1) shifts position, visible as red cells in CHANGES image",
+      "falsifying_observation": "CHANGES image is all black (no effect)",
+      "rule_id": "R4",
+      "verification": "CHANGES image is all black \u2014 ACTION1 had zero visible effect, falsifying R1's prediction that some object would move."
+    }
+  ],
+  "final_state": "GameState.NOT_FINISHED",
+  "levels_completed": 0,
+  "win_levels": 7
+}
